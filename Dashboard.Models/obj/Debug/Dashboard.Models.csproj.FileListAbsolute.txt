@@ -1,0 +1,4 @@
+C:\dev\dashboard\Optus\Dashboard.Models\bin\Debug\Dashboard.Models.dll
+C:\dev\dashboard\Optus\Dashboard.Models\bin\Debug\Dashboard.Models.pdb
+C:\dev\dashboard\Optus\Dashboard.Models\obj\Debug\Dashboard.Models.dll
+C:\dev\dashboard\Optus\Dashboard.Models\obj\Debug\Dashboard.Models.pdb

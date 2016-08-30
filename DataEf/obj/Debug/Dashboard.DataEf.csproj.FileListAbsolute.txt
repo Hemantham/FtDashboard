@@ -1,0 +1,10 @@
+C:\dev\dashboard\Optus\DataEf\obj\Debug\Dashboard.DataEf.csprojResolveAssemblyReference.cache
+C:\dev\dashboard\Optus\DataEf\bin\Debug\DataEf.dll.config
+C:\dev\dashboard\Optus\DataEf\bin\Debug\DataEf.dll
+C:\dev\dashboard\Optus\DataEf\bin\Debug\DataEf.pdb
+C:\dev\dashboard\Optus\DataEf\bin\Debug\EntityFramework.dll
+C:\dev\dashboard\Optus\DataEf\bin\Debug\EntityFramework.SqlServer.dll
+C:\dev\dashboard\Optus\DataEf\bin\Debug\EntityFramework.xml
+C:\dev\dashboard\Optus\DataEf\bin\Debug\EntityFramework.SqlServer.xml
+C:\dev\dashboard\Optus\DataEf\obj\Debug\DataEf.dll
+C:\dev\dashboard\Optus\DataEf\obj\Debug\DataEf.pdb

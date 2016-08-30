@@ -1,0 +1,7 @@
+C:\dev\dashboard\Optus\Domain\bin\Debug\Domain.dll
+C:\dev\dashboard\Optus\Domain\bin\Debug\Domain.pdb
+C:\dev\dashboard\Optus\Domain\bin\Debug\Dashboard.Models.dll
+C:\dev\dashboard\Optus\Domain\bin\Debug\Dashboard.Models.pdb
+C:\dev\dashboard\Optus\Domain\obj\Debug\Dashboard.Domain.csprojResolveAssemblyReference.cache
+C:\dev\dashboard\Optus\Domain\obj\Debug\Domain.dll
+C:\dev\dashboard\Optus\Domain\obj\Debug\Domain.pdb

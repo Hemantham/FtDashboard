@@ -1,0 +1,10 @@
+C:\dev\dashboard\Optus\Dashboard.Test\bin\Debug\Dashboard.Test.dll
+C:\dev\dashboard\Optus\Dashboard.Test\bin\Debug\Dashboard.Test.pdb
+C:\dev\dashboard\Optus\Dashboard.Test\bin\Debug\Dashboard.Models.dll
+C:\dev\dashboard\Optus\Dashboard.Test\bin\Debug\Domain.dll
+C:\dev\dashboard\Optus\Dashboard.Test\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\dev\dashboard\Optus\Dashboard.Test\bin\Debug\Dashboard.Models.pdb
+C:\dev\dashboard\Optus\Dashboard.Test\bin\Debug\Domain.pdb
+C:\dev\dashboard\Optus\Dashboard.Test\obj\Debug\Dashboard.Test.csprojResolveAssemblyReference.cache
+C:\dev\dashboard\Optus\Dashboard.Test\obj\Debug\Dashboard.Test.dll
+C:\dev\dashboard\Optus\Dashboard.Test\obj\Debug\Dashboard.Test.pdb
