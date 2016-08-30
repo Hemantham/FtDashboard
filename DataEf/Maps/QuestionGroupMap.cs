@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Dashboard.API.Domain;
 
 namespace DataEf.Maps
 {
-    public class QuestionMap : EntityTypeConfiguration<Question>
+    public class QuestionGroupMap : EntityTypeConfiguration<QuestionGroup>
     {
-        public QuestionMap()
+        public QuestionGroupMap()
         {
-            ToTable("Question");
+            ToTable("QuestionGroup");
 
             HasKey(x => x.Id);
-            HasOptional(x => x.QuestionGroup);
             Property(x => x.Code).HasMaxLength(100);
             Property(x => x.Text).HasMaxLength(300);
         }

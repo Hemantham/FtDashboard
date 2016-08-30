@@ -58,10 +58,13 @@
       <Project>{CFEB4184-FA03-4345-8B01-98450A7F10C9}</Project>
       <Name>Dashboard.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Domain\Dashboard.Domain.csproj">
+    <ProjectReference Include="..\Domain\Dashboard.API.csproj">
       <Project>{0ce238e4-6643-4df2-b694-bd308ef84de7}</Project>
-      <Name>Dashboard.Domain</Name>
+      <Name>Dashboard.API</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

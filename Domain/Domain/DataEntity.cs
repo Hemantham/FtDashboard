@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain
+namespace Dashboard.API.Domain
 {
-    public class QuestionGroup
+    public class DataEntity
     {
-        public string Code { get; set; }
-        public string Text { get; set; }
+        public long Id { get; set; }
     }
 }

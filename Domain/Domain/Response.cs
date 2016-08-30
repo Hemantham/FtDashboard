@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Domain
+namespace Dashboard.API.Domain
 {
-    public class Response
+    public class Response : DataEntity
     {
         public ResponseType ResponseType { get; set; }
         public string ResponseId { get; set; }
-        public long InputId { get; set; }
+        public long? InputId { get; set; }
         public string Email { get; set; }
         public DateTime CompletionDate { get; set; }
         public string Answer { get; set; }

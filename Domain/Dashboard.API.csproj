@@ -7,8 +7,8 @@
     <ProjectGuid>{0CE238E4-6643-4DF2-B694-BD308EF84DE7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Domain</RootNamespace>
-    <AssemblyName>Domain</AssemblyName>
+    <RootNamespace>Dashboard.API</RootNamespace>
+    <AssemblyName>Dashboard.API</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,10 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="QuestionGroup.cs" />
-    <Compile Include="Response.cs" />
+    <Compile Include="Domain\DataEntity.cs" />
+    <Compile Include="Domain\QuestionGroup.cs" />
+    <Compile Include="Domain\Response.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Question.cs" />
+    <Compile Include="Domain\Question.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dashboard.Models\Dashboard.Models.csproj">

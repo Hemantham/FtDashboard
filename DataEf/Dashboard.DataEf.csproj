@@ -41,6 +41,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -51,16 +52,33 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Context\DashboardContext.cs" />
+    <Compile Include="Context\ForethoughtRepository.cs" />
+    <Compile Include="Context\UnitofWork.cs" />
     <Compile Include="Maps\QuestionMap.cs" />
+    <Compile Include="Maps\QuestionGroupMap.cs" />
     <Compile Include="Maps\ResponseMap.cs" />
+    <Compile Include="Migrations\201608300740468_first.cs" />
+    <Compile Include="Migrations\201608300740468_first.Designer.cs">
+      <DependentUpon>201608300740468_first.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Context\" />
+    <EmbeddedResource Include="Migrations\201608300740468_first.resx">
+      <DependentUpon>201608300740468_first.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Dashboard.API.csproj">
+      <Project>{0ce238e4-6643-4df2-b694-bd308ef84de7}</Project>
+      <Name>Dashboard.API</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

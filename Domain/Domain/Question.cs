@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Dashboard.Models;
-using Microsoft.Win32;
 
-namespace Domain
+namespace Dashboard.API.Domain
 {
-    public class Question
+    public class Question : DataEntity
     {
         public string Code { get; set; }
         public string Text { get; set; }
@@ -110,7 +107,7 @@ namespace Domain
                 .Where(
                     rg => rg.Any(r => r.Question.Code == "GROUPS" && r.Answer == "CONSUMER") &&
                           rg.Any(r => r.Question.Code == "CHURNER_FLAG" && r.Answer == "CHURNER") &&
-                          rg.Any(r => r.Question.Code == "OLDPRODUCT" && r.Answer == "Overall Fixed")); // filter by the cuts/filters , etc
+                          rg.Any(r => r.Question.Code == "OLDPRODUCT" && r.Answer == "Overall Fixed")).ToList(); // filter by the cuts/filters , etc
 
             var datafields = filteredResponsesGroupes.Select(rg =>
                     new
@@ -120,7 +117,7 @@ namespace Domain
                         XAxisLable = rg.Any(r => r.Question.Code == "ANALYSED_Week") ?  rg.First(r => r.Question.Code == "ANALYSED_Week").Answer : string.Empty,
                         XAxisId =  rg.Any(r => r.Question.Code == "ANALYSED_Week_#") ? long.Parse(rg.First(r => r.Question.Code == "ANALYSED_Week_#").Answer) : 0
                     })
-                .GroupBy(d => d.XAxisId);
+                .GroupBy(d => d.XAxisId).ToList();
 
              return  datafields.SelectMany(xg => 
                           xg.GroupBy(vg => vg.Data)
