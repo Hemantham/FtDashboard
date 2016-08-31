@@ -1,9 +1,0 @@
-C:\dev\dashboard\ftdashboard\Domain\bin\Debug\Dashboard.API.dll
-C:\dev\dashboard\ftdashboard\Domain\bin\Debug\Dashboard.API.pdb
-C:\dev\dashboard\ftdashboard\Domain\bin\Debug\Dashboard.Models.dll
-C:\dev\dashboard\ftdashboard\Domain\bin\Debug\Dashboard.Models.pdb
-C:\dev\dashboard\ftdashboard\Domain\obj\Debug\Dashboard.API.csprojResolveAssemblyReference.cache
-C:\dev\dashboard\ftdashboard\Domain\obj\Debug\Dashboard.API.dll
-C:\dev\dashboard\ftdashboard\Domain\obj\Debug\Dashboard.API.pdb
-C:\dev\dashboard\ftdashboard\Domain\bin\Debug\Ninject.dll
-C:\dev\dashboard\ftdashboard\Domain\bin\Debug\Ninject.xml
