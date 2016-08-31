@@ -41,8 +41,10 @@ namespace Dashboard.Rest.Controllers
                         Code = "OLDPRODUCT",
                         Answer = "Overall Fixed"
                     },
-
-                }
+                },
+                FieldOfInterest = "CHURN1",
+                XAxisId = "ANALYSED_Week_#",
+                XAxislable = "ANALYSED_Week",
             });
 
             return chartvalues;

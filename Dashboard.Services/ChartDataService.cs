@@ -37,10 +37,10 @@ namespace Dashboard.Services
             var datafields = filteredResponsesGroupes.Select(rg =>
                     new
                     {
-                        Data = rg.Any() ? rg.First(r => r.Question.Code == "CHRUN1").Answer : string.Empty, //select the field we are interested in for charting,
+                        Data = rg.FirstOrDefault(r => r.Question.Code == criteria.FieldOfInterest)?.Answer, //select the field we are interested in for charting,
                         Id = rg.Key,
-                        XAxisLable = rg.Any(r => r.Question.Code == "ANALYSED_Week") ? rg.First(r => r.Question.Code == "ANALYSED_Week").Answer : string.Empty,
-                        XAxisId = rg.Any(r => r.Question.Code == "ANALYSED_Week_#") ? long.Parse(rg.First(r => r.Question.Code == "ANALYSED_Week_#").Answer) : 0
+                        XAxisLable =  rg.FirstOrDefault(r => r.Question.Code == criteria.XAxislable)?.Answer ,
+                        XAxisId = rg.Any(r => r.Question.Code == criteria.XAxisId) ? long.Parse(rg.First(r => r.Question.Code == criteria.XAxisId).Answer) : 0
                     })
                 .GroupBy(d => d.XAxisId).ToList();
 

@@ -11,6 +11,7 @@ namespace Dashboard.Models
         public IEnumerable<ChartFilter> Filters { get; set; }
         public string XAxislable { get; set; }
         public string XAxisId { get; set; }
+        public string FieldOfInterest { get; set; }
 
     }
 }
