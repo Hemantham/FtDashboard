@@ -21,7 +21,7 @@ namespace DataEf.Context
             modelBuilder.Configurations.Add(new ResponseMap());
             modelBuilder.Configurations.Add(new QuestionGroupMap());
 
-            Database.SetInitializer(new CreateDatabaseIfNotExists<DashboardContext>());
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<DashboardContext>());
         }
     }
 }

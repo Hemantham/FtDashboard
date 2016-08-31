@@ -15,11 +15,13 @@ namespace DataEf.Context
     {
         private readonly DbContext _context;
         private readonly DbSet<TEntity> _dbSet;
+        private IQueryable<TEntity> _query;
 
         public ForethoughtRepository(DbContext context)
         {
             _context = context;
             _dbSet = context.Set<TEntity>();
+            _query = _dbSet;
         }
 
         //Get : Filter, pass the lamda expression (filter), incldude properties - comma delimitted list
@@ -28,26 +30,26 @@ namespace DataEf.Context
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = "")
         {
-            IQueryable<TEntity> query = _dbSet;
+           // IQueryable<TEntity> _query = _dbSet;
 
             if (filter != null)
             {
-                query = query.Where(filter);
+                _query = _query.Where(filter);
             }
 
             foreach (var includeProperty in includeProperties.Split
                 (new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
-                query = query.Include(includeProperty);
+                _query = _query.Include(includeProperty);
             }
 
             if (orderBy != null)
             {
-                return orderBy(query).ToList();
+                return orderBy(_query).ToList();
             }
             else
             {
-                return query.ToList();
+                return _query.ToList();
             }
         }
 
@@ -58,43 +60,43 @@ namespace DataEf.Context
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = "")
         {
-            IQueryable<TEntity> query = _dbSet;
+           //IQueryable<TEntity> _query = _dbSet;
 
             if (filter != null)
             {
-                query = query.Where(filter);
+                _query = _query.Where(filter);
             }
 
             foreach (var includeProperty in includeProperties.Split
                 (new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
-                query = query.Include(includeProperty);
+                _query = _query.Include(includeProperty);
             }
 
             if (orderBy != null)
             {
-                return orderBy(query);
+                return orderBy(_query);
             }
-            return query;
+            return _query;
         }
 
         //Count the number of objects : For ex: Count of series in a chart etc
         public virtual int Count( Expression<Func<TEntity, bool>> filter = null )
         {
-            IQueryable<TEntity> query = _dbSet;
+           // IQueryable<TEntity> query = _dbSet;
 
-            return filter != null ? query.Count(filter) : query.ToList().Count;
+            return filter != null ? _query.Count(filter) : _query.ToList().Count;
         }
 
        //Max : call max on repository. Like the database. Max value for the passed in field for the whole repo.
         public virtual T Max<T>(
            Expression<Func<TEntity, T>> filter = null)
         {
-            IQueryable<TEntity> query = _dbSet;
+          //  IQueryable<TEntity> _query = _dbSet;
 
             if (filter != null)
             {
-                return   query.Max(filter);
+                return   _query.Max(filter);
             }
             else
             {
@@ -107,19 +109,19 @@ namespace DataEf.Context
             Expression<Func<TEntity, bool>> filter = null,            
             string includeProperties = "")
         {
-            IQueryable<TEntity> query = _dbSet;
+         //  IQueryable<TEntity> _query = _dbSet;
 
             if (filter != null)
             {
-                query = query.Where(filter);
+                _query = _query.Where(filter);
             }
 
             foreach (var includeProperty in includeProperties.Split
                 (new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
-                query = query.Include(includeProperty);
+                _query = _query.Include(includeProperty);
             }
-            return query?.FirstOrDefault();
+            return _query?.FirstOrDefault();
         }
 
         //Get by the ID
@@ -161,6 +163,10 @@ namespace DataEf.Context
             _context.SaveChanges();
         }
 
-
+        public virtual ForethoughtRepository<TEntity> Include<TProperty>(Expression<Func<TEntity,TProperty>> expression)
+        {
+           _query = _dbSet.Include(expression);
+           return this;
+        }
     }
 }

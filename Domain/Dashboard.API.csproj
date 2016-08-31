@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\IChartDataService.cs" />
     <Compile Include="Domain\DataEntity.cs" />
     <Compile Include="Domain\QuestionGroup.cs" />
     <Compile Include="Domain\Response.cs" />

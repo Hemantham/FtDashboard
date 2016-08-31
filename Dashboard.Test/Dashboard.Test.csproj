@@ -35,7 +35,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -50,13 +64,25 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="ChartDataServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Dashboard.Bootstrapper\Dashboard.Bootstrapper.csproj">
+      <Project>{3a657d2a-3127-4e3d-a32f-bfe5e9e453b5}</Project>
+      <Name>Dashboard.Bootstrapper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Dashboard.Models\Dashboard.Models.csproj">
       <Project>{CFEB4184-FA03-4345-8B01-98450A7F10C9}</Project>
       <Name>Dashboard.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Dashboard.Services\Dashboard.Services.csproj">
+      <Project>{d31488f2-ed52-4c08-bd60-a4bcf1a37f80}</Project>
+      <Name>Dashboard.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataEf\Dashboard.DataEf.csproj">
+      <Project>{6a2bf22d-fa7e-49dd-9869-260e0732c2fc}</Project>
+      <Name>Dashboard.DataEf</Name>
     </ProjectReference>
     <ProjectReference Include="..\Domain\Dashboard.API.csproj">
       <Project>{0ce238e4-6643-4df2-b694-bd308ef84de7}</Project>
@@ -65,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

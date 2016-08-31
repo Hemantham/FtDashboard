@@ -54,7 +54,8 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Context\DashboardContext.cs" />
     <Compile Include="Context\ForethoughtRepository.cs" />
-    <Compile Include="Context\UnitofWork.cs" />
+    <Compile Include="Context\IUnitOfWork.cs" />
+    <Compile Include="Context\EfUnitofWork.cs" />
     <Compile Include="Maps\QuestionMap.cs" />
     <Compile Include="Maps\QuestionGroupMap.cs" />
     <Compile Include="Maps\ResponseMap.cs" />
@@ -62,12 +63,19 @@
     <Compile Include="Migrations\201608300740468_first.Designer.cs">
       <DependentUpon>201608300740468_first.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608310039425_m2.cs" />
+    <Compile Include="Migrations\201608310039425_m2.Designer.cs">
+      <DependentUpon>201608310039425_m2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201608300740468_first.resx">
       <DependentUpon>201608300740468_first.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608310039425_m2.resx">
+      <DependentUpon>201608310039425_m2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
