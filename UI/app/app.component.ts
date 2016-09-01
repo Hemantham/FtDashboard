@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
+import { Chart } from './Charts/chart.component';
+
 
 @Component({
     selector: 'my-app',
-    template: '<h1>Dashboard App</h1>'
+    templateUrl: 'app/templates/AppComponent.html',
+    directives: [Chart]
 })
 export class AppComponent { }

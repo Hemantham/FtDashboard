@@ -89,3 +89,4 @@ C:\dev\dashboard\ftdashboard\UI\bin\System.Web.Helpers.xml
 C:\dev\dashboard\ftdashboard\UI\bin\System.Web.Mvc.xml
 C:\dev\dashboard\ftdashboard\UI\obj\Debug\Optus.dll
 C:\dev\dashboard\ftdashboard\UI\obj\Debug\Optus.pdb
+C:\dev\dashboard\ftdashboard\UI\obj\Debug\Dashboard.UI.csprojResolveAssemblyReference.cache
