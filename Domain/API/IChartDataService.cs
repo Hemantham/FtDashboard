@@ -9,7 +9,7 @@ namespace Dashboard.API.API
 {
     public interface IChartDataService
     {
-        IEnumerable<ChartEntry> GetChartEntries(ChartSearchCriteria criteria);
+        IEnumerable<ChartEntry> GetChartValues(ChartSearchCriteria criteria);
 
     }
 }

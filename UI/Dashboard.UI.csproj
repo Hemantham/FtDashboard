@@ -163,6 +163,7 @@
     <TypeScriptCompile Include="app\Charts\domain\chart.domain.ts" />
     <TypeScriptCompile Include="app\Charts\services\chart.services.ts" />
     <TypeScriptCompile Include="app\main.ts" />
+    <TypeScriptCompile Include="app\rxjs-operators.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

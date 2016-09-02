@@ -7,4 +7,6 @@ import { Chart } from './Charts/chart.component';
     templateUrl: 'app/templates/AppComponent.html',
     directives: [Chart]
 })
-export class AppComponent { }
+export class AppComponent {
+  
+}

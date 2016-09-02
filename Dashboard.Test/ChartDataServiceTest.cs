@@ -25,7 +25,7 @@ namespace Dashboard.Test
         public void TestGetChartEntries()
         {
             var time1 = DateTime.Now;
-            var charts = _chartDataService.GetChartEntries(
+            var charts = _chartDataService.GetChartValues(
                     new ChartSearchCriteria
                     {
                         Filters =  new List<ChartFilter>

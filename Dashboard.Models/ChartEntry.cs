@@ -15,4 +15,6 @@ namespace Dashboard.Models
         public string Series { get; set; }
       
     }
+
+
 }

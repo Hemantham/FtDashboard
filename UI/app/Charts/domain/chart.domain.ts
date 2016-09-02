@@ -15,4 +15,13 @@ export class ChartSeriesModel {
 export class DataPointModel {
     x: any;
     y: any;
+    label: string;
+}
+
+export class ChartEntry {
+    Value: number;
+    XAxisLable: string;
+    XAxisValue: any;
+    XAxisId: number;
+    Series: string;
 }

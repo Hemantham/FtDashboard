@@ -17,8 +17,14 @@ namespace Dashboard.Services
             _unitOfWork = unitOfWork;
         }
 
+
+        //public IEnumerable<ChartEntry> GetChartWithValues(ChartSearchCriteria criteria)
+        //{
+            
+        //}
+
         //todo : performance
-        public IEnumerable<ChartEntry> GetChartEntries(ChartSearchCriteria criteria)
+        public IEnumerable<ChartEntry> GetChartValues(ChartSearchCriteria criteria)
         {
             var responses = _unitOfWork.GetRepository<Response>()
                 .Include(response => response.Question)

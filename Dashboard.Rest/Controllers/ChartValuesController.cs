@@ -22,7 +22,7 @@ namespace Dashboard.Rest.Controllers
         // GET api/values
         public IEnumerable<ChartEntry> Get()
         {
-            var chartvalues = _chartDataService.GetChartEntries(new ChartSearchCriteria
+            var chartvalues = _chartDataService.GetChartValues(new ChartSearchCriteria
             {
                 Filters = new List<ChartFilter>
                 {
