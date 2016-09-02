@@ -120,6 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\templates\AppComponent.html" />
+    <Content Include="app\Charts\templates\ChartComponent.html" />
     <Content Include="Global.asax" />
     <Content Include="index.html" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />

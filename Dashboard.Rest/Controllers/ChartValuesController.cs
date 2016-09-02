@@ -22,6 +22,11 @@ namespace Dashboard.Rest.Controllers
         // GET api/values
         public IEnumerable<ChartEntry> Get()
         {
+            return GetChartEntries();
+        }
+
+        private IEnumerable<ChartEntry> GetChartEntries()
+        {
             var chartvalues = _chartDataService.GetChartValues(new ChartSearchCriteria
             {
                 Filters = new List<ChartFilter>
@@ -57,8 +62,10 @@ namespace Dashboard.Rest.Controllers
         }
 
         // POST api/values
-        public void Post([FromBody]string value)
+        [HttpPost]
+        public IEnumerable<ChartEntry> Post([FromBody]ChartSearchCriteria chartCriteria)
         {
+            return GetChartEntries();
         }
 
         // PUT api/values/5

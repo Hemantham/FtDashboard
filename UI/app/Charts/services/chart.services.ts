@@ -1,8 +1,8 @@
-﻿import {ChartModel, ChartSeriesModel, DataPointModel, ChartEntry} from '../domain/chart.domain'
+﻿import {ChartModel, ChartSeriesModel, DataPointModel, ChartEntry , ChartSearchCriteria} from '../domain/chart.domain'
 import * as Enumerable from "linq-es2015";
 
 import { Injectable }     from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, Request, Headers, RequestOptions } from '@angular/http';
 import { Observable }     from 'rxjs/Observable';
 import '../../rxjs-operators'
 
@@ -12,10 +12,15 @@ export class ChartValueService {
 
     private heroesUrl = 'http://localhost/Dashboard.Rest/api/ChartValues';  // URL to web API
 
-    getCharts(): Observable<ChartEntry[]> {
-        return this.http.get(this.heroesUrl)
-                    .map(this.extractData)
-                    .catch(this.handleError);
+    getCharts(chartCriteria: ChartSearchCriteria): Observable<ChartEntry[]> {
+        
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http
+            .post(this.heroesUrl,JSON.stringify({ chartCriteria }),options)
+            .map(this.extractData)
+            .catch(this.handleError);
     }
 
     private extractData(res: Response): ChartModel {
@@ -23,8 +28,8 @@ export class ChartValueService {
 
         let chart: ChartModel = new ChartModel();
 
-        chart.xAxislable = 'This is X';
-        chart.yAxislable = 'This is Y';
+        chart.xAxislable = "This is X";
+        chart.yAxislable = "This is Y";
 
         var chartsList = Enumerable.asEnumerable(body);
 
@@ -44,7 +49,7 @@ export class ChartValueService {
                 return serieModel;
             }).ToArray();
 
-        return chart; //new Array<ChartEntry>();}
+        return chart;
     }
 
     private handleError(error: any) {

@@ -1,7 +1,7 @@
-﻿import {Component, OnInit} from '@angular/core';
+﻿import {Component, OnInit, Input} from '@angular/core';
 import {ChartValueService} from './services/chart.services'
 import {nvD3} from 'ng2-nvd3';
-import Chartdomain = require("./domain/chart.domain");
+import * as Chartdomain from "./domain/chart.domain";
 import * as Enumerable from "linq-es2015";
 declare let d3: any;
 
@@ -9,10 +9,7 @@ declare let d3: any;
     selector: 'chart',
     directives: [nvD3],
     providers: [ChartValueService],
-    template: ` <div>
-                  <nvd3 [options]="options" [data]="data"></nvd3>
-                </div>
-              `
+    templateUrl: 'app/charts/templates/ChartComponent.html'
 })
 
 export class Chart implements OnInit {
@@ -20,6 +17,9 @@ export class Chart implements OnInit {
     options: any;
     data: any;
     private service: ChartValueService;
+
+    //this component takes in parameters from outside
+    @Input() chartCriteria: Chartdomain.ChartSearchCriteria;
 
     constructor(service: ChartValueService) {
         this.service = service;
@@ -35,8 +35,8 @@ export class Chart implements OnInit {
                         label: dp.label
                     };
                 })
-        };
-       });
+            };
+        });
     }
 
     ngOnInit() {
@@ -66,24 +66,22 @@ export class Chart implements OnInit {
                     axisLabel: 'Y Axis',
                     axisLabelDistance: -10
                 },
-                rotateLabels : 0 ,     //Angle to rotate x-axis labels.
-                showControls : true,   //Allow user to switch between 'Grouped' and 'Stacked' mode.
-                groupSpacing : 0.1   //Distance between each group of bars.
+                rotateLabels: 0,     //Angle to rotate x-axis labels.
+                showControls: true,   //Allow user to switch between 'Grouped' and 'Stacked' mode.
+                groupSpacing: 0.1   //Distance between each group of bars.
             }
         }
 
-        //this.data = () => {
-
-            this.service.getCharts()
-                .subscribe(
-                (heroes: any) => {
-                    let test: any = this.getBarChartValues(heroes);
-                    this.data = test;
-                },
-                error => this.errorMessage = <any>error
+        this.service.getCharts(this.chartCriteria)
+            .subscribe(
+            (heroes: any) => {
+                let test: any = this.getBarChartValues(heroes);
+                this.data = test;
+            },
+            error => this.errorMessage = <any>error
             );
 
-       //     return this.getBarChartValues(this.service.getCharts());
+        //     return this.getBarChartValues(this.service.getCharts());
 
         //};
 
