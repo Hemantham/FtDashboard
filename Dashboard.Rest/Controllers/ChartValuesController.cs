@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Dashboard.API.API;
 using Dashboard.Models;
+using Dashboard.Rest.Models.Charts;
 
 namespace Dashboard.Rest.Controllers
 {
@@ -25,34 +26,59 @@ namespace Dashboard.Rest.Controllers
             return GetChartEntries();
         }
 
-        private IEnumerable<ChartEntry> GetChartEntries()
+        private IEnumerable<ChartEntry> GetChartEntries(ChartSearchCriteria chartCriteria = null)
         {
-            var chartvalues = _chartDataService.GetChartValues(new ChartSearchCriteria
-            {
-                Filters = new List<ChartFilter>
-                {
-                    new ChartFilter
-                    {
-                        Code = "GROUPS",
-                        Answer = "CONSUMER"
-                    },
-                    new ChartFilter
-                    {
-                        Code = "CHURNER_FLAG",
-                        Answer = "CHURNER"
-                    },
-                    new ChartFilter
-                    {
-                        Code = "OLDPRODUCT",
-                        Answer = "Overall Fixed"
-                    },
-                },
-                FieldOfInterest = "CHURN1",
-                XAxisId = "ANALYSED_Week_#",
-                XAxislable = "ANALYSED_Week",
-            });
+            //var chartvalues = _chartDataService.GetChartValues(new ChartSearchCriteria
+            //{
+            //    Filters = new List<ChartFilter>
+            //    {
+            //        new ChartFilter
+            //        {
+            //            Code = "GROUPS",
+            //            Answer = "CONSUMER"
+            //        },
+            //        new ChartFilter
+            //        {
+            //            Code = "CHURNER_FLAG",
+            //            Answer = "CHURNER"
+            //        },
+            //        new ChartFilter
+            //        {
+            //            Code = "OLDPRODUCT",
+            //            Answer = "Overall Fixed"
+            //        },
+            //    },
+            //    FieldOfInterest = "CHURN1",
+            //    XAxisId = "ANALYSED_Week_#",
+            //    XAxislable = "ANALYSED_Week",
+            //});
 
-            return chartvalues;
+            return  _chartDataService.GetChartValues(chartCriteria ??
+                new ChartSearchCriteria
+                    {
+                        Filters = new List<ChartFilter>
+                    {
+                        new ChartFilter
+                        {
+                            Code = "GROUPS",
+                            Answer = "CONSUMER"
+                        },
+                        new ChartFilter
+                        {
+                            Code = "CHURNER_FLAG",
+                            Answer = "CHURNER"
+                        },
+                        new ChartFilter
+                        {
+                            Code = "OLDPRODUCT",
+                            Answer = "Overall Fixed"
+                        },
+                    },
+                        FieldOfInterest = "CHURN1",
+                        XAxisId = "ANALYSED_Week_#",
+                        XAxislable = "ANALYSED_Week",
+                    }
+                );
         }
 
         // GET api/values/5
@@ -63,9 +89,9 @@ namespace Dashboard.Rest.Controllers
 
         // POST api/values
         [HttpPost]
-        public IEnumerable<ChartEntry> Post([FromBody]ChartSearchCriteria chartCriteria)
+        public IEnumerable<ChartEntry> Post([FromBody]ChartCriteriaViewModel chartCriteriaViewModel)
         {
-            return GetChartEntries();
+            return GetChartEntries(chartCriteriaViewModel.chartCriteria);
         }
 
         // PUT api/values/5

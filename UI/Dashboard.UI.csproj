@@ -121,11 +121,15 @@
   <ItemGroup>
     <Content Include="app\templates\AppComponent.html" />
     <Content Include="app\Charts\templates\ChartComponent.html" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="index.html" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
-    <Content Include="styles.css" />
+    <Content Include="Styles\font-awesome.min.css" />
+    <Content Include="Styles\styles.css" />
+    <Content Include="Styles\sb-admin-2.css" />
+    <Content Include="systemjs.config.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -144,6 +148,11 @@
     <Content Include="package.json" />
     <Content Include="tsconfig.json" />
     <Content Include="typings.json" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -157,8 +166,8 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="app\app.component.spec.ts" />
-    <TypeScriptCompile Include="app\app.component.ts" />
+    <TypeScriptCompile Include="app\chartcontainer.component.spec.ts" />
+    <TypeScriptCompile Include="app\chartcontainer.component.ts" />
     <TypeScriptCompile Include="app\app.module.ts" />
     <TypeScriptCompile Include="app\Charts\chart.component.ts" />
     <TypeScriptCompile Include="app\Charts\domain\chart.domain.ts" />

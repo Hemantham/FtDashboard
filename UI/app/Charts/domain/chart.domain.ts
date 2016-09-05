@@ -38,6 +38,7 @@ export class ChartFilter {
     public Answer: string;
 }
 export class ChartSearchCriteria {
+
     public  Filters : ChartFilter[];
     public  XAxislable : string ;
     public  XAxisId: string ;
