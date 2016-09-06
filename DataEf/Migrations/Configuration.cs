@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using Dashboard.API.Domain;
 
 namespace DataEf.Migrations
@@ -13,6 +14,17 @@ namespace DataEf.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+        }
+
+        private string GetChurn1(int random)
+        {
+            switch (random)
+            {
+                case 1: return "Network";
+                case 2: return "Plans / pricing / inclusions";
+                default:
+                    return "Customer Service";
+            }
         }
 
         protected override void Seed(DataEf.Context.DashboardContext context)
@@ -42,7 +54,7 @@ namespace DataEf.Migrations
 
             var questionCHRUN1 = new Question
             {
-                Code = "CHRUN1",
+                Code = "CHURN1",
             };
 
             var questionANALYSED_Week = new Question
@@ -55,10 +67,13 @@ namespace DataEf.Migrations
                 Code = "ANALYSED_Week_#",
             };
 
-            for (var i = 1; i <= 10000; i++)
+            var random = new Random();
+            for (var i = 1; i <= 100; i++)
             {
 
-                var chrun1 = i % 2 == 0 ? "Network" : "Plans / pricing / inclusions";
+                var chrun1 = GetChurn1(random.Next(1, 4));
+
+                var week = random.Next(1, 4);
 
                 responses.Add(
                     new Response
@@ -110,7 +125,7 @@ namespace DataEf.Migrations
                     new Response
                     {
                         Question = questionANALYSED_Week,
-                        Answer = "Week 1",
+                        Answer = $"Week {week}",
                         ResponseId = i.ToString(),
                         InputId = i,
                         ResponseType = ResponseType.text,
@@ -121,7 +136,7 @@ namespace DataEf.Migrations
                     new Response
                     {
                         Question = questionANALYSED_WeekNo,
-                        Answer = "1",
+                        Answer = $"{week}",
                         ResponseId = i.ToString(),
                         InputId = i,
                         ResponseType = ResponseType.text,
@@ -135,6 +150,131 @@ namespace DataEf.Migrations
                 context.Set<Response>().Add(response);
                 context.SaveChanges();
             }
+
+
+        
+
+            var churn1 =
+                    new DashboardView
+                    {
+                        FieldOfInterest = "CHURN1",
+                        Name = "Broad reason for Churn",
+                        ViewSplits = new List<ViewSplit>
+                        {
+                            new ViewSplit
+                            {
+                                SplitName = "Tech Type (vic)",
+                                SplitField = "TechType",
+                                SplitType = SplitType.All,
+                                Filter = new Filter
+                                {
+                                    FilterString = "STATE='VIC'",
+                                    Name = "State Filter"
+                                }
+                            }
+                            ,
+                            new ViewSplit
+                            {
+                                SplitName = "Tech Type",
+                                SplitField = "TechType",
+                                SplitType = SplitType.All,
+                            }
+                        }
+                    };
+
+            context.Set<DashboardView>().Add(churn1);
+            context.SaveChanges();
+
+
+            var CHURN2A =
+                    new DashboardView
+                    {
+                        FieldOfInterest = "CHURN2A",
+                        Name = "Specific Reason for churn",
+                        ViewSplits = new List<ViewSplit>
+                        {
+
+                            new ViewSplit
+                            {
+                                SplitName = "Tech Type",
+                                SplitField = "TechType",
+                                SplitType = SplitType.All,
+                            },
+                            new ViewSplit
+                            {
+                                SplitType = SplitType.Mutiple,
+                                SplitName = "Select Broad Reasons",
+                                SplitField = "CHURN1",
+                            }
+                        },
+                        Parent = churn1
+                    };
+
+
+            context.Set<DashboardView>().Add(CHURN2A);
+            context.SaveChanges();
+
+
+            var np1 = new DashboardView
+                {
+                    FieldOfInterest = "NP1",
+                    Name = "New Provider",
+                    ViewSplits = new List<ViewSplit>
+                    {
+                        new ViewSplit
+                        {
+                            SplitType = SplitType.Mutiple,
+                            SplitName = "Select Competitor",
+                            SplitField = "NP1",
+                        }
+                    }
+                };
+
+            context.Set<DashboardView>().Add(np1);
+            context.SaveChanges();
+
+            foreach (var product in new[]
+                                        {
+                                                new {P = "SMB", F = @"[GROUPS] = 'SMALL BUSINESS' AND CHURNER_FLAG = 'CHURNER'"},
+                                                new
+                                                {
+                                                    P = "Fixed",
+                                                    F = @"[GROUPS] = 'CONSUMER' AND OLDPRODUCT = 'Overall Fixed' AND CHURNER_FLAG = 'CHURNER'"
+                                                }
+                                            })
+            {
+
+                var p = new Product
+                {
+                    Name = product.P,
+                    Code = product.P,
+                    Filter = new Filter
+                    {
+                        Name = $"{product.P} Filter",
+                        FilterString = product.F
+                    },
+                    DashboardViews = new List<DashboardView>()
+                };
+
+                p.DashboardViews.Add(np1);
+                p.DashboardViews.Add(churn1);
+                p.DashboardViews.Add(CHURN2A);
+
+                context.Set<Product>().Add(p);
+                context.SaveChanges();
+            }
+
+          
+
+
+            
+
+          
+
+
+
+          
+
         }
     }
 }

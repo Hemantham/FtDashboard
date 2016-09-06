@@ -56,27 +56,23 @@
     <Compile Include="Context\ForethoughtRepository.cs" />
     <Compile Include="Context\IUnitOfWork.cs" />
     <Compile Include="Context\EfUnitofWork.cs" />
+    <Compile Include="Maps\FilterMap.cs" />
+    <Compile Include="Maps\ProductMap.cs" />
+    <Compile Include="Maps\ViewSplitMap.cs" />
+    <Compile Include="Maps\DashboardViewMap.cs" />
     <Compile Include="Maps\QuestionMap.cs" />
     <Compile Include="Maps\QuestionGroupMap.cs" />
     <Compile Include="Maps\ResponseMap.cs" />
-    <Compile Include="Migrations\201608300740468_first.cs" />
-    <Compile Include="Migrations\201608300740468_first.Designer.cs">
-      <DependentUpon>201608300740468_first.cs</DependentUpon>
+    <Compile Include="Migrations\201609060503494_newentities.cs" />
+    <Compile Include="Migrations\201609060503494_newentities.Designer.cs">
+      <DependentUpon>201609060503494_newentities.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201608310039425_m2.cs" />
-    <Compile Include="Migrations\201608310039425_m2.Designer.cs">
-      <DependentUpon>201608310039425_m2.cs</DependentUpon>
+    <Compile Include="Migrations\201609060519247_mig1.cs" />
+    <Compile Include="Migrations\201609060519247_mig1.Designer.cs">
+      <DependentUpon>201609060519247_mig1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201608300740468_first.resx">
-      <DependentUpon>201608300740468_first.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608310039425_m2.resx">
-      <DependentUpon>201608310039425_m2.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -87,6 +83,14 @@
       <Project>{0ce238e4-6643-4df2-b694-bd308ef84de7}</Project>
       <Name>Dashboard.API</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201609060503494_newentities.resx">
+      <DependentUpon>201609060503494_newentities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609060519247_mig1.resx">
+      <DependentUpon>201609060519247_mig1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -41,7 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\IChartDataService.cs" />
+    <Compile Include="Domain\ViewSplit.cs" />
     <Compile Include="Domain\DataEntity.cs" />
+    <Compile Include="Domain\Filter.cs" />
+    <Compile Include="Domain\DashboardView.cs" />
+    <Compile Include="Domain\Product.cs" />
     <Compile Include="Domain\QuestionGroup.cs" />
     <Compile Include="Domain\Response.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

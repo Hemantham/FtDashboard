@@ -41,7 +41,8 @@ export class ChartValueService {
                                     .asEnumerable(values)
                                     .Select((datavalue) => {
                                         let seriesData: DataPointModel = new DataPointModel();
-                                        seriesData.x = datavalue.Value;
+                                        seriesData.y = datavalue.Value;
+                                        seriesData.x = datavalue.XAxisId;
                                         seriesData.label = datavalue.XAxisLable;
                                         return seriesData;
                                             })

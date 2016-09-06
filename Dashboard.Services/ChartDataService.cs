@@ -59,7 +59,9 @@ namespace Dashboard.Services
                               XAxisId = vg.Any() ? vg.First().XAxisId : 0,
                               Series = vg.Key,
                           })
-               ).ToList();
+               )
+               .OrderBy(df=>df.XAxisId)
+               .ToList();
         }
     }
 }
