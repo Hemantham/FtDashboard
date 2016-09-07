@@ -10,8 +10,10 @@ namespace Dashboard.API.Domain
     {
         public string Name { get; set; }
         public string Code { get; set; }
-        public ICollection<DashboardView> DashboardViews { get; set; }
+        public ICollection<ProductView> ProductViews { get; set; }
         public Filter Filter { get; set; }
+
+
 
     }
 }

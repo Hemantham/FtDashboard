@@ -1,15 +1,14 @@
 
 import { Component } from '@angular/core';
-import { Chart } from './Charts/chart.component';
-import { ChartSearchCriteria, ChartFilter } from './charts/domain/chart.domain';
-
+import { Chart } from '../charts/chart.component';
+import { ChartSearchCriteria, ChartFilter } from '../charts/domain/chart.domain';
 
 @Component({
     selector: 'chart-container',
-    templateUrl: 'app/templates/AppComponent.html',
+    templateUrl: 'app/charts/templates/ChartContainerComponent.html',
     directives: [Chart]
 })
-export class AppComponent {
+export class ChartContainerComponent {
     criteria: ChartSearchCriteria;
     constructor() {
         this.criteria = new ChartSearchCriteria();

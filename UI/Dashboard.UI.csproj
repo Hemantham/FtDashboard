@@ -119,8 +119,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\templates\AppComponent.html" />
+    <Content Include="app\Charts\templates\ChartContainerComponent.html" />
     <Content Include="app\Charts\templates\ChartComponent.html" />
+    <Content Include="app\Dashboards\templates\DashboardComponent.html" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="index.html" />
@@ -161,17 +162,21 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="app\templates\" />
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="app\chartcontainer.component.spec.ts" />
-    <TypeScriptCompile Include="app\chartcontainer.component.ts" />
+    <TypeScriptCompile Include="app\Charts\chartcontainer.component.spec.ts" />
+    <TypeScriptCompile Include="app\Charts\chartcontainer.component.ts" />
     <TypeScriptCompile Include="app\app.module.ts" />
     <TypeScriptCompile Include="app\Charts\chart.component.ts" />
     <TypeScriptCompile Include="app\Charts\domain\chart.domain.ts" />
     <TypeScriptCompile Include="app\Charts\services\chart.services.ts" />
+    <TypeScriptCompile Include="app\Dashboards\dashboard.component.ts" />
+    <TypeScriptCompile Include="app\Dashboards\domain\dashboard.domain.ts" />
+    <TypeScriptCompile Include="app\Dashboards\services\dashboard.services.ts" />
     <TypeScriptCompile Include="app\main.ts" />
     <TypeScriptCompile Include="app\rxjs-operators.ts" />
   </ItemGroup>

@@ -151,35 +151,13 @@ namespace DataEf.Migrations
                 context.SaveChanges();
             }
 
-
-        
-
             var churn1 =
                     new DashboardView
                     {
                         FieldOfInterest = "CHURN1",
                         Name = "Broad reason for Churn",
-                        ViewSplits = new List<ViewSplit>
-                        {
-                            new ViewSplit
-                            {
-                                SplitName = "Tech Type (vic)",
-                                SplitField = "TechType",
-                                SplitType = SplitType.All,
-                                Filter = new Filter
-                                {
-                                    FilterString = "STATE='VIC'",
-                                    Name = "State Filter"
-                                }
-                            }
-                            ,
-                            new ViewSplit
-                            {
-                                SplitName = "Tech Type",
-                                SplitField = "TechType",
-                                SplitType = SplitType.All,
-                            }
-                        }
+                        Code = "Broad reason for Churn",
+                      
                     };
 
             context.Set<DashboardView>().Add(churn1);
@@ -191,22 +169,7 @@ namespace DataEf.Migrations
                     {
                         FieldOfInterest = "CHURN2A",
                         Name = "Specific Reason for churn",
-                        ViewSplits = new List<ViewSplit>
-                        {
-
-                            new ViewSplit
-                            {
-                                SplitName = "Tech Type",
-                                SplitField = "TechType",
-                                SplitType = SplitType.All,
-                            },
-                            new ViewSplit
-                            {
-                                SplitType = SplitType.Mutiple,
-                                SplitName = "Select Broad Reasons",
-                                SplitField = "CHURN1",
-                            }
-                        },
+                        Code = "Specific Reason for churn",
                         Parent = churn1
                     };
 
@@ -219,15 +182,7 @@ namespace DataEf.Migrations
                 {
                     FieldOfInterest = "NP1",
                     Name = "New Provider",
-                    ViewSplits = new List<ViewSplit>
-                    {
-                        new ViewSplit
-                        {
-                            SplitType = SplitType.Mutiple,
-                            SplitName = "Select Competitor",
-                            SplitField = "NP1",
-                        }
-                    }
+                    Code = "New Provider",
                 };
 
             context.Set<DashboardView>().Add(np1);
@@ -253,15 +208,78 @@ namespace DataEf.Migrations
                         Name = $"{product.P} Filter",
                         FilterString = product.F
                     },
-                    DashboardViews = new List<DashboardView>()
+                   
                 };
-
-                p.DashboardViews.Add(np1);
-                p.DashboardViews.Add(churn1);
-                p.DashboardViews.Add(CHURN2A);
 
                 context.Set<Product>().Add(p);
                 context.SaveChanges();
+
+                p.ProductViews = new List<ProductView>();
+
+                p.ProductViews.Add(new ProductView
+                {
+                    Product = p,
+                    DashboardView = churn1,
+                    ViewSplits = new List<ViewSplit>
+                        {
+                            new ViewSplit
+                            {
+                                SplitName = "Tech Type (vic)",
+                                SplitField = "TechType",
+                                SplitType = SplitType.All,
+                                Filter = new Filter
+                                {
+                                    FilterString = "STATE='VIC'",
+                                    Name = "State Filter"
+                                }
+                            }
+                            ,
+                            new ViewSplit
+                            {
+                                SplitName = "Tech Type",
+                                SplitField = "TechType",
+                                SplitType = SplitType.All,
+                            }
+                        }
+                });
+
+                p.ProductViews.Add(new ProductView
+                {
+                    Product = p,
+                    DashboardView = CHURN2A,
+                    ViewSplits = new List<ViewSplit>
+                        {
+
+                            new ViewSplit
+                            {
+                                SplitName = "Tech Type",
+                                SplitField = "TechType",
+                                SplitType = SplitType.All,
+                            },
+                            new ViewSplit
+                            {
+                                SplitType = SplitType.Mutiple,
+                                SplitName = "Select Broad Reasons",
+                                SplitField = "CHURN1",
+                            }
+                        }
+                });
+                p.ProductViews.Add(new ProductView
+                {
+                    Product = p,
+                    DashboardView = np1,
+                    ViewSplits = new List<ViewSplit>
+                    {
+                        new ViewSplit
+                        {
+                            SplitType = SplitType.Mutiple,
+                            SplitName = "Select Competitor",
+                            SplitField = "NP1",
+                        }
+                    }
+                });
+
+             
             }
 
           

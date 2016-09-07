@@ -1,5 +1,5 @@
 /* tslint:disable:no-unused-variable */
-import { AppComponent } from './chartcontainer.component';
+import { ChartContainerComponent } from './chartcontainer.component';
 
 import { TestBed } from '@angular/core/testing';
 

@@ -24,7 +24,7 @@ namespace DataEf.Context
             modelBuilder.Configurations.Add(new ProductMap());
             modelBuilder.Configurations.Add(new ViewSplitMap());
             modelBuilder.Configurations.Add(new DashboardViewMap());
-
+            modelBuilder.Configurations.Add(new ProductViewMap());
 
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<DashboardContext>());
         }

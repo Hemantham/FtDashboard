@@ -16,13 +16,7 @@ namespace Dashboard.Services
         {
             _unitOfWork = unitOfWork;
         }
-
-
-        //public IEnumerable<ChartEntry> GetChartWithValues(ChartSearchCriteria criteria)
-        //{
-            
-        //}
-
+        
         //todo : performance
         public IEnumerable<ChartEntry> GetChartValues(ChartSearchCriteria criteria)
         {
@@ -62,6 +56,17 @@ namespace Dashboard.Services
                )
                .OrderBy(df=>df.XAxisId)
                .ToList();
+        }
+
+        public IEnumerable<Response> GetFieldValues(string questionCode)
+        {
+            return  _unitOfWork
+                .GetRepository<Response>()
+                .Include(r => r.Question)
+                .Get(r=> r.Question.Code == questionCode)
+                .GroupBy(r => r.Answer)
+                .Select(rg => rg.FirstOrDefault())
+                .Where(r=> r!= null);
         }
     }
 }

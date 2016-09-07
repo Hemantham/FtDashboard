@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\IChartDataService.cs" />
+    <Compile Include="API\IDashboardService.cs" />
+    <Compile Include="Domain\ProductView.cs" />
     <Compile Include="Domain\ViewSplit.cs" />
     <Compile Include="Domain\DataEntity.cs" />
     <Compile Include="Domain\Filter.cs" />
@@ -56,6 +58,63 @@
       <Project>{cfeb4184-fa03-4345-8b01-98450a7f10c9}</Project>
       <Name>Dashboard.Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Domain\TsTemplate.tst" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Domain\ChartEntry.ts">
+      <DependentUpon>TsTemplate.tst</DependentUpon>
+      <CustomToolNamespace>..\Dashboard.Models\ChartEntry.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\ChartFilter.ts">
+      <DependentUpon>TsTemplate.tst</DependentUpon>
+      <CustomToolNamespace>..\Dashboard.Models\ChartFilter.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\ChartSearchCriteria.ts">
+      <DependentUpon>TsTemplate.tst</DependentUpon>
+      <CustomToolNamespace>..\Dashboard.Models\ChartSearchCriteria.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Common.ts">
+      <DependentUpon>TsTemplate.tst</DependentUpon>
+      <CustomToolNamespace>..\Dashboard.Models\Constants\Common.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\ProductView.ts">
+      <DependentUpon>TsTemplate.tst</DependentUpon>
+      <CustomToolNamespace>Domain\ProductView.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\DashboardView.ts">
+      <DependentUpon>TsTemplate.tst</DependentUpon>
+      <CustomToolNamespace>Domain\DashboardView.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\DataEntity.ts">
+      <DependentUpon>TsTemplate.tst</DependentUpon>
+      <CustomToolNamespace>Domain\DataEntity.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Filter.ts">
+      <DependentUpon>TsTemplate.tst</DependentUpon>
+      <CustomToolNamespace>Domain\Filter.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Product.ts">
+      <DependentUpon>TsTemplate.tst</DependentUpon>
+      <CustomToolNamespace>Domain\Product.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Question.ts">
+      <DependentUpon>TsTemplate.tst</DependentUpon>
+      <CustomToolNamespace>Domain\Question.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\QuestionGroup.ts">
+      <DependentUpon>TsTemplate.tst</DependentUpon>
+      <CustomToolNamespace>Domain\QuestionGroup.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\Response.ts">
+      <DependentUpon>TsTemplate.tst</DependentUpon>
+      <CustomToolNamespace>Domain\Response.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Domain\ViewSplit.ts">
+      <DependentUpon>TsTemplate.tst</DependentUpon>
+      <CustomToolNamespace>Domain\ViewSplit.cs</CustomToolNamespace>
+    </TypeScriptCompile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

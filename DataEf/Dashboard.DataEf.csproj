@@ -56,6 +56,7 @@
     <Compile Include="Context\ForethoughtRepository.cs" />
     <Compile Include="Context\IUnitOfWork.cs" />
     <Compile Include="Context\EfUnitofWork.cs" />
+    <Compile Include="Maps\ProductViewMap.cs" />
     <Compile Include="Maps\FilterMap.cs" />
     <Compile Include="Maps\ProductMap.cs" />
     <Compile Include="Maps\ViewSplitMap.cs" />
@@ -63,13 +64,9 @@
     <Compile Include="Maps\QuestionMap.cs" />
     <Compile Include="Maps\QuestionGroupMap.cs" />
     <Compile Include="Maps\ResponseMap.cs" />
-    <Compile Include="Migrations\201609060503494_newentities.cs" />
-    <Compile Include="Migrations\201609060503494_newentities.Designer.cs">
-      <DependentUpon>201609060503494_newentities.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201609060519247_mig1.cs" />
-    <Compile Include="Migrations\201609060519247_mig1.Designer.cs">
-      <DependentUpon>201609060519247_mig1.cs</DependentUpon>
+    <Compile Include="Migrations\201609070324338_m1.cs" />
+    <Compile Include="Migrations\201609070324338_m1.Designer.cs">
+      <DependentUpon>201609070324338_m1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -85,11 +82,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201609060503494_newentities.resx">
-      <DependentUpon>201609060503494_newentities.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201609060519247_mig1.resx">
-      <DependentUpon>201609060519247_mig1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201609070324338_m1.resx">
+      <DependentUpon>201609070324338_m1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

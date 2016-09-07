@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Text;
@@ -15,14 +17,13 @@ namespace DataEf.Maps
             ToTable("DashboardView");
 
             HasKey(x => x.Id);
-            Property(x => x.FieldOfInterest).HasMaxLength(100);
-            Property(x => x.Name).HasMaxLength(300);
-            Property(x => x.Code).HasMaxLength(50);
+            Property(x => x.FieldOfInterest).HasMaxLength(200).IsRequired();
+            Property(x => x.Name).HasMaxLength(300).IsRequired();
+            Property(x => x.Code).HasMaxLength(200).IsRequired()
+                .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("IX_Code") { IsUnique = true }));
             HasOptional(x => x.Parent).WithOptionalDependent()
                 .Map(x=> x.MapKey("ParentId"));
-            HasMany(x => x.ViewSplits)
-                .WithOptional()
-                .Map(x=>x.MapKey("DashBoardViewId"));
+           
         }
     }
 }

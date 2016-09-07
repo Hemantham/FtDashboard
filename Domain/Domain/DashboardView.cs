@@ -11,9 +11,10 @@ namespace Dashboard.API.Domain
         public string Name { get; set; }
         public string Code { get; set; }
         public string FieldOfInterest { get; set; }
-        public ICollection<ViewSplit> ViewSplits { get; set; }
-        public ICollection<Product>  Products { get; set; }
-        public DashboardView Parent { get; set; } 
+        //public ICollection<ViewSplit> ViewSplits { get; set; }
+       // public ICollection<Product>  Products { get; set; }
+        public DashboardView Parent { get; set; }
+        public  short ViewOrder { get; set; }
     }
 
     public enum ChartType : short

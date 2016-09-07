@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Text;
@@ -13,9 +15,9 @@ namespace DataEf.Maps
         public QuestionGroupMap()
         {
             ToTable("QuestionGroup");
-
             HasKey(x => x.Id);
-            Property(x => x.Code).HasMaxLength(100);
+            Property(x => x.Code).HasMaxLength(200).IsRequired()
+                 .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("IX_Code") { IsUnique = true }));
             Property(x => x.Text).HasMaxLength(300);
         }
     }

@@ -16,7 +16,7 @@ namespace DataEf.Maps
 
             HasKey(x => x.Id);
             Property(x => x.Name).HasMaxLength(100);
-            Property(x => x.FilterString).HasMaxLength(1000);
+            Property(x => x.FilterString).HasMaxLength(1000).IsRequired();
         }
     }
 }

@@ -15,6 +15,7 @@ namespace Dashboard.Bootstrapper
         public override void Load()
         {
             Bind<IChartDataService>().To<ChartDataService>().InThreadScope();
+            Bind<IDashboardService>().To<DashboardService>().InThreadScope();
             Bind<IUnitOfWork>().To<EfUnitOfWork>().InThreadScope();
         }
     }
