@@ -1,4 +1,4 @@
-/// <reference path="../../typings/globals/jquery/index.d.ts" />
+//// <reference path="../../typings/globals/jquery/index.d.ts" />
 
 import { ChartContainerComponent } from "../charts/chartcontainer.component"
 import { Component, OnInit, Input, AfterContentInit, ViewChild, ElementRef  } from '@angular/core';
