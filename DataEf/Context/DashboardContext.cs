@@ -7,12 +7,14 @@ namespace DataEf.Context
     {
         public DashboardContext(string connection)  : base("name=" + connection)
         {
-           
+            this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.ProxyCreationEnabled = false;
         }
 
         public DashboardContext() : base("DefaultConnection")
         {
-
+            this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.ProxyCreationEnabled = false;
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

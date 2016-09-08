@@ -15,6 +15,7 @@ namespace Dashboard.API.Domain
        // public ICollection<Product>  Products { get; set; }
         public DashboardView Parent { get; set; }
         public  short ViewOrder { get; set; }
+        public ICollection<DashboardView> ChildrenViews { get; set; }
     }
 
     public enum ChartType : short

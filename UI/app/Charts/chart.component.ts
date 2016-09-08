@@ -122,26 +122,12 @@ export class Chart implements OnInit {
 
         this.options = this.getLineChartOptions();
 
-        this.service.getCharts(this.chartCriteria)
-            .subscribe(
-            (heroes: any) => {
-                
-                let test: any = this.getLineChartValues(heroes);;
-                //[
-                //    {
-                //            values: [{ x: 2, y: 10 }, { x: 3, y: 12 }, { x: 3, y: 20 }], //values - represents the array of {x,y} data points
-                //        key: 'Sine Wave', //key  - the name of the series.
-                //        color: '#ff7f0e' //color - optional: choose your own line color.
-                //    },
-                //    {
-                //        values: [{ x: 2, y: 5 }, { x: 3, y: 12 }, { x: 3, y: 30 }],
-                //        key: 'Cosine Wave',
-                //        color: '#2ca02c'
-                //    }
-                //];
-                this.data = test;
-            },
-            error => this.errorMessage = <any>error
+        this.service
+            .getCharts(this.chartCriteria)
+            .subscribe((heroes: any) => {
+                this.data = this.getLineChartValues(heroes);
+                },
+                error => this.errorMessage = <any>error
             );
 
         //     return this.getBarChartValues(this.service.getCharts());

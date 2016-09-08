@@ -165,7 +165,7 @@ namespace DataEf.Context
 
         public virtual ForethoughtRepository<TEntity> Include<TProperty>(Expression<Func<TEntity,TProperty>> expression)
         {
-           _query = _dbSet.Include(expression);
+           _query = _query.Include(expression);
            return this;
         }
     }

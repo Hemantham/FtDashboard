@@ -1,8 +1,8 @@
- // Find all classes with a name ending with Model
- export  class DashboardView {
-        constructor(public name: string, public code: string, public fieldOfInterest: string, public viewSplits: ViewSplit[], public products: Product[], public parent: DashboardView) {
-        }
+export class DashboardView {
+    constructor(public name: string, public code: string, public fieldOfInterest: string, public parent: DashboardView, public viewOrder: number) {
+    }
 }
+
 
 export class Filter {
     constructor(public filterString: string, public name: string) {
@@ -10,7 +10,12 @@ export class Filter {
 }
 
 export class Product {
-    constructor(public name: string, public code: string, public dashboardViews: DashboardView[], public filter: Filter) {
+    constructor(public name: string, public code: string, public productViews: ProductView[], public filter: Filter) {
+    }
+}
+
+export class ProductView {
+    constructor(public viewSplits: ViewSplit[], public dashboardView: DashboardView, public product: Product) {
     }
 }
 

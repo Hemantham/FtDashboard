@@ -38,14 +38,14 @@ namespace Dashboard.Rest.Controllers
 
         [HttpGet]
         [Route("api/products/{id:int}/views")]
-        private IEnumerable<ProductView> GetViews(int id)
+        public IEnumerable<ProductView> GetViews(int id)
         {
             return _service.GetProductViews(id);
         }
 
         [HttpGet]
         [Route("api/products/views/{id:int}")]
-        private ProductView GetView(int id)
+        public ProductView GetView(int id)
         {
             return _service.GetProductView(id);
         }

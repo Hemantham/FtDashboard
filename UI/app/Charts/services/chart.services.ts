@@ -14,11 +14,11 @@ export class ChartValueService {
 
     getCharts(chartCriteria: ChartSearchCriteria): Observable<ChartEntry[]> {
         
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
-
+       // let headers = new Headers({ 'Content-Type': 'application/json' });
+       // let options = new RequestOptions({ headers: headers });
+       // debugger;
         return this.http
-            .post(this.heroesUrl,JSON.stringify({ chartCriteria }),options)
+            .get(this.heroesUrl)
             .map(this.extractData)
             .catch(this.handleError);
     }
@@ -40,11 +40,11 @@ export class ChartValueService {
                 serieModel.data = Enumerable
                                     .asEnumerable(values)
                                     .Select((datavalue) => {
-                                        let seriesData: DataPointModel = new DataPointModel();
-                                        seriesData.y = datavalue.Value;
-                                        seriesData.x = datavalue.XAxisId;
-                                        seriesData.label = datavalue.XAxisLable;
-                                        return seriesData;
+                                                let seriesData: DataPointModel = new DataPointModel();
+                                                seriesData.y = datavalue.Value;
+                                                seriesData.x = datavalue.XAxisId;
+                                                seriesData.label = datavalue.XAxisLable;
+                                                return seriesData;
                                             })
                     .ToArray();
                 return serieModel;
@@ -61,7 +61,6 @@ export class ChartValueService {
         console.error(errMsg); // log to console instead
         return Observable.throw(errMsg);
     }
-
 }
 
 

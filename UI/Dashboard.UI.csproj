@@ -162,7 +162,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="app\templates\" />
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\" />
     <Folder Include="Models\" />

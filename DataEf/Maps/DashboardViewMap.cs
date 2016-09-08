@@ -21,7 +21,7 @@ namespace DataEf.Maps
             Property(x => x.Name).HasMaxLength(300).IsRequired();
             Property(x => x.Code).HasMaxLength(200).IsRequired()
                 .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("IX_Code") { IsUnique = true }));
-            HasOptional(x => x.Parent).WithOptionalDependent()
+            HasOptional(x => x.Parent).WithMany(x=> x.ChildrenViews)
                 .Map(x=> x.MapKey("ParentId"));
            
         }

@@ -21,6 +21,8 @@ namespace Dashboard.Rest.Controllers
         }
 
         // GET api/values
+        [HttpGet]
+        [Route("api/chartvalues")]
         public IEnumerable<ChartEntry> Get()
         {
             return GetChartEntries();
@@ -64,11 +66,12 @@ namespace Dashboard.Rest.Controllers
         }
 
         // POST api/values
-        [HttpPost]
-        public IEnumerable<ChartEntry> Post([FromBody]ChartCriteriaViewModel chartCriteriaViewModel)
-        {
-            return GetChartEntries(chartCriteriaViewModel.chartCriteria);
-        }
+        //[HttpPost]
+        //[Route("api/chartvalues")]
+        //public IEnumerable<ChartEntry> Post([FromBody]ChartCriteriaViewModel chartCriteriaViewModel)
+        //{
+        //    return GetChartEntries(chartCriteriaViewModel.chartCriteria);
+        //}
 
         // PUT api/values/5
         public void Put(int id, [FromBody]string value)
