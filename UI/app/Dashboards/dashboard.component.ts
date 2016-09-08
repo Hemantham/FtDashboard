@@ -1,10 +1,10 @@
-//// <reference path="../../typings/globals/jquery/index.d.ts" />
+
 
 import { ChartContainerComponent } from "../charts/chartcontainer.component"
 import { Component, OnInit, Input, AfterContentInit, ViewChild, ElementRef  } from '@angular/core';
 import { DashboardView,ProductView } from './domain/dashboard.domain';
 import { DashboardService }  from "../dashboards/services/dashboard.services";
-
+//import "babel-polyfill"
 
 
 //import {Router, ROUTER_DIRECTIVES, ActivatedRoute} from '@angular/router';

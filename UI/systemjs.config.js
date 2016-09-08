@@ -1,3 +1,4 @@
+///// <reference path="node_modules/babel-polyfill/dist/polyfill.js" />
 /**
  * System configuration for Angular 2 samples
  * Adjust as necessary for your application needs.
@@ -11,7 +12,9 @@
     'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
     'rxjs': 'node_modules/rxjs',
     'ng2-nvd3': 'node_modules/ng2-nvd3/build/lib/ng2-nvd3.js',
-    'linq-es2015' : 'node_modules/linq-es2015/dist/linq.min.js'
+    'linq-es2015': 'node_modules/linq-es5/dist/linq.js',    
+    'babel-polyfill': 'node_modules/babel-polyfill/dist/polyfill.js'
+
   };
 
   // packages tells the System loader how to load when no filename and/or no extension
