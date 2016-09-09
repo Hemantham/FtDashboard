@@ -67,6 +67,7 @@ body {
   right: 0;
   left: auto;
 }
+
 .sidebar .sidebar-nav.navbar-collapse {
   padding-left: 0;
   padding-right: 0;
@@ -99,6 +100,7 @@ body {
 .sidebar .nav-third-level li a {
   padding-left: 52px;
 }
+
 @media (min-width: 768px) {
   .sidebar {
     z-index: 1;

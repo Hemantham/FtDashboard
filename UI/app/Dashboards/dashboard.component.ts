@@ -21,11 +21,13 @@ declare var jQuery: any;
 
 export class DashboardComponent implements OnInit {
 
-    @ViewChild('sideMenu') sideMenu: ElementRef;
+    //@ViewChild('sideMenu') sideMenu: ElementRef;
 
-    dashboards: ProductView[];
-    errorMessage: any;
-    
+    public dashboards: ProductView[];
+    public errorMessage: any;
+
+
+
     private productId: number;
     private paramsSubscription: any;
     private listRendered : boolean = false;

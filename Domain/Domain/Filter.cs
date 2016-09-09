@@ -9,7 +9,6 @@ namespace Dashboard.API.Domain
     public class Filter : DataEntity
     {
         public string FilterString { get; set; }
-      
         public string Name { get; set; }
     }
 }

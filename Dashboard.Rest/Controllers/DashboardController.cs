@@ -43,6 +43,8 @@ namespace Dashboard.Rest.Controllers
             return _service.GetProductViews(id);
         }
 
+
+
         [HttpGet]
         [Route("api/products/views/{id:int}")]
         public ProductView GetView(int id)

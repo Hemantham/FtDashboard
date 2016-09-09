@@ -173,6 +173,7 @@
     <TypeScriptCompile Include="app\Charts\chart.component.ts" />
     <TypeScriptCompile Include="app\Charts\domain\chart.domain.ts" />
     <TypeScriptCompile Include="app\Charts\services\chart.services.ts" />
+    <TypeScriptCompile Include="app\Common\domain\common.domain.ts" />
     <TypeScriptCompile Include="app\Dashboards\dashboard.component.ts" />
     <TypeScriptCompile Include="app\Dashboards\domain\dashboard.domain.ts" />
     <TypeScriptCompile Include="app\Dashboards\services\dashboard.services.ts" />

@@ -28,19 +28,19 @@ namespace Dashboard.Test
             var charts = _chartDataService.GetChartValues(
                     new ChartSearchCriteria
                     {
-                        Filters =  new List<ChartFilter>
+                        Filters =  new List<ValueFilter>
                         {
-                            new ChartFilter
+                            new ValueFilter
                             {
                                 Code = "GROUPS",
                                 Answer = "CONSUMER"
                             },
-                            new ChartFilter
+                            new ValueFilter
                             {
                                  Code = "CHURNER_FLAG",
                                  Answer = "CHURNER"
                             },
-                            new ChartFilter
+                            new ValueFilter
                             {
                                  Code = "OLDPRODUCT",
                                  Answer = "Overall Fixed"

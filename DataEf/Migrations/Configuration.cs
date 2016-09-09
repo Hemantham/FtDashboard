@@ -249,7 +249,17 @@ namespace DataEf.Migrations
                     DashboardView = CHURN2A,
                     ViewSplits = new List<ViewSplit>
                         {
-
+                              new ViewSplit
+                            {
+                                SplitName = "Tech Type (vic)",
+                                SplitField = "TechType",
+                                SplitType = SplitType.All,
+                                Filter = new Filter
+                                {
+                                    FilterString = "STATE='VIC'",
+                                    Name = "State Filter"
+                                }
+                            },
                             new ViewSplit
                             {
                                 SplitName = "Tech Type",
