@@ -138,6 +138,14 @@ namespace Dashboard.Services
             );
         }
 
+        private static IEnumerable<IGrouping<string, Response>> FilterByQuestionAnswers(IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes, IEnumerable<Response> responses)
+        {
+            return filteredResponsesGroupes.Where(rg =>
+                                                       responses.All(rs =>
+                                                                              rg.Any(r => r.Question.Code == rs.Question.Code && r.Answer == rs.Answer))
+            );
+        }
+
         private IEnumerable<IGrouping<string, Response>> FilterByProduct(ProductView productView)
         {
             var productFilters = productView.Product?
