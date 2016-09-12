@@ -68,63 +68,63 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Models\TsTemplate.tst" />
+    <None Include="Domain\TsTemplate.tst" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Models\ChartEntry.ts">
+    <TypeScriptCompile Include="Domain\ChartEntry.ts">
       <DependentUpon>TsTemplate.tst</DependentUpon>
       <CustomToolNamespace>Models\ChartEntry.cs</CustomToolNamespace>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Models\ChartSearchCriteria.ts">
+    <TypeScriptCompile Include="Domain\ChartSearchCriteria.ts">
       <DependentUpon>TsTemplate.tst</DependentUpon>
       <CustomToolNamespace>Models\ChartSearchCriteria.cs</CustomToolNamespace>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Models\Common.ts">
+    <TypeScriptCompile Include="Domain\Common.ts">
       <DependentUpon>TsTemplate.tst</DependentUpon>
       <CustomToolNamespace>..\Dashboard.Models\Constants\Common.cs</CustomToolNamespace>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Models\DashboardView.ts">
+    <TypeScriptCompile Include="Domain\DashboardView.ts">
       <DependentUpon>TsTemplate.tst</DependentUpon>
       <CustomToolNamespace>Domain\DashboardView.cs</CustomToolNamespace>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Models\DataChart.ts">
+    <TypeScriptCompile Include="Domain\DataChart.ts">
       <DependentUpon>TsTemplate.tst</DependentUpon>
       <CustomToolNamespace>Models\DataChart.cs</CustomToolNamespace>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Models\DataEntity.ts">
+    <TypeScriptCompile Include="Domain\DataEntity.ts">
       <DependentUpon>TsTemplate.tst</DependentUpon>
       <CustomToolNamespace>Domain\DataEntity.cs</CustomToolNamespace>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Models\DataPoint.ts">
+    <TypeScriptCompile Include="Domain\DataPoint.ts">
       <DependentUpon>TsTemplate.tst</DependentUpon>
       <CustomToolNamespace>Models\DataPoint.cs</CustomToolNamespace>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Models\Filter.ts">
+    <TypeScriptCompile Include="Domain\Filter.ts">
       <DependentUpon>TsTemplate.tst</DependentUpon>
       <CustomToolNamespace>Domain\Filter.cs</CustomToolNamespace>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Models\Product.ts">
+    <TypeScriptCompile Include="Domain\Product.ts">
       <DependentUpon>TsTemplate.tst</DependentUpon>
       <CustomToolNamespace>Domain\Product.cs</CustomToolNamespace>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Models\ProductView.ts">
+    <TypeScriptCompile Include="Domain\ProductView.ts">
       <DependentUpon>TsTemplate.tst</DependentUpon>
       <CustomToolNamespace>Domain\ProductView.cs</CustomToolNamespace>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Models\Question.ts">
+    <TypeScriptCompile Include="Domain\Question.ts">
       <DependentUpon>TsTemplate.tst</DependentUpon>
       <CustomToolNamespace>Domain\Question.cs</CustomToolNamespace>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Models\QuestionGroup.ts">
+    <TypeScriptCompile Include="Domain\QuestionGroup.ts">
       <DependentUpon>TsTemplate.tst</DependentUpon>
       <CustomToolNamespace>Domain\QuestionGroup.cs</CustomToolNamespace>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Models\Response.ts">
+    <TypeScriptCompile Include="Domain\Response.ts">
       <DependentUpon>TsTemplate.tst</DependentUpon>
       <CustomToolNamespace>Domain\Response.cs</CustomToolNamespace>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Models\ViewSplit.ts">
+    <TypeScriptCompile Include="Domain\ViewSplit.ts">
       <DependentUpon>TsTemplate.tst</DependentUpon>
       <CustomToolNamespace>Domain\ViewSplit.cs</CustomToolNamespace>
     </TypeScriptCompile>

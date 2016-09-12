@@ -5,7 +5,9 @@ import { Component, OnInit, Input, AfterContentInit, ViewChild, ElementRef  } fr
 import { DashboardView,ProductView , ViewSplit } from './domain/dashboard.domain';
 import { DashboardService }  from "../dashboards/services/dashboard.services";
 import { ChartValueService } from "../Charts/services/chart.services";
-import { SELECT_DIRECTIVES } from 'ng2-select/ng2-select';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES, NgClass } from '@angular/common';
+//import { BUTTON_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
+import { SELECT_DIRECTIVES } from 'ng2-select';
 //import "babel-polyfill"
 
 //import {Router, ROUTER_DIRECTIVES, ActivatedRoute} from '@angular/router';
@@ -13,9 +15,9 @@ declare var jQuery: any;
 
 @Component({
     selector: 'chart-with-filters',
-    templateUrl: 'app/dashboards/templates/ChartsWithFilters.html',
+    template: `<div>stupid me</div>`, //'app/dashboards/templates/ChartsWithFilters.html',
     providers: [DashboardService, ChartValueService],
-    directives: [ChartContainerComponent, SELECT_DIRECTIVES]
+    directives: [ChartContainerComponent, SELECT_DIRECTIVES, NgClass, CORE_DIRECTIVES, FORM_DIRECTIVES]
 })
    
 
@@ -32,7 +34,7 @@ export class ChartsWithFilters implements OnInit {
         private chartService: ChartValueService
     ) {
         
-        this.viewid = 3;
+        this.viewid = 2;
         //this.paramsSubscription = this.activatedRoute.params.subscribe((params: any) => {
         //    this.productId = params['productid'];  //get your param
         //    alert(`${this.productId} is the productid`);
@@ -44,7 +46,7 @@ export class ChartsWithFilters implements OnInit {
          this.service.getView(this.viewid)
              .subscribe((response: ProductView) => {
                  this.dashboard = response;
-                 this.viewSplits = this.dashboard.viewSplits.filter(s => s.splitType === 'All');
+                 this.viewSplits = this.dashboard.ViewSplits.filter(s => s.SplitType === 'All');
                  },
             error => this.errorMessage = <any>error
         );

@@ -1,25 +1,37 @@
+/// <reference path="../../charts/domain/chart.domain.ts" />
+// Find all classes with a name ending with Model
+
+import {Question} from '../../charts/domain/chart.domain'
+
 export class DashboardView {
-    constructor(public name: string, public code: string, public fieldOfInterest: string, public parent: DashboardView, public viewOrder: number) {
+    constructor(public Name: string, public Code: string, public FieldOfInterest: Question[], public XAxislable: string, public XAxisId: string, public Parent: DashboardView, public ViewOrder: number, public ChildrenViews: DashboardView[], public ChartRenderType: string, public DataAnlysisType: string) {
+
     }
 }
 
-
+// Find all classes with a name ending with Model
 export class Filter {
-    constructor(public filterString: string, public name: string) {
+    constructor(public FilterString: string, public Name: string) {
+
     }
 }
 
+// Find all classes with a name ending with Model
 export class Product {
-    constructor(public name: string, public code: string, public productViews: ProductView[], public filter: Filter) {
+    constructor(public Name: string, public Code: string, public ProductViews: ProductView[], public Filter: Filter) {
+
     }
 }
 
+// Find all classes with a name ending with Model
 export class ProductView {
-    constructor(public viewSplits: ViewSplit[], public dashboardView: DashboardView, public product: Product) {
+    constructor(public ViewSplits: ViewSplit[], public DashboardView: DashboardView, public Product: Product) {
+
     }
 }
-
+// Find all classes with a name ending with Model
 export class ViewSplit {
-    constructor(public splitField: string, public splitName: string, public filter: Filter, public splitType: string) {
+    constructor(public SplitField: string, public SplitName: string, public Filter: Filter, public SplitType: string) {
+
     }
 }
