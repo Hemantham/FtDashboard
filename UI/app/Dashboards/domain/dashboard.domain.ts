@@ -20,6 +20,6 @@ export class ProductView {
 }
 
 export class ViewSplit {
-    constructor(public splitField: string, public splitName: string, public filter: Filter, public splitType: number) {
+    constructor(public splitField: string, public splitName: string, public filter: Filter, public splitType: string) {
     }
 }

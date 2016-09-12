@@ -57,6 +57,16 @@ namespace DataEf.Migrations
                 Code = "CHURN1",
             };
 
+            var questionCHRUN2a = new Question
+            {
+                Code = "CHURN2A",
+            };
+
+            var questionNP1 = new Question
+            {
+                Code = "NP1",
+            };
+
             var questionANALYSED_Week = new Question
             {
                 Code = "ANALYSED_Week",
@@ -83,7 +93,7 @@ namespace DataEf.Migrations
                         ResponseId = i.ToString(),
                         InputId = i,
                         CompletionDate = new DateTime(2016, 8, 8),
-                        ResponseType = ResponseType.text,
+                        ResponseType = ResponseType.Text,
 
                     });
 
@@ -94,7 +104,7 @@ namespace DataEf.Migrations
                         Answer = "CHURNER",
                         ResponseId = i.ToString(),
                         InputId = i,
-                        ResponseType = ResponseType.text,
+                        ResponseType = ResponseType.Text,
                         CompletionDate = new DateTime(2016, 8, 8)
                     });
 
@@ -106,7 +116,7 @@ namespace DataEf.Migrations
                         Answer = "Overall Fixed",
                         ResponseId = i.ToString(),
                         InputId = i,
-                        ResponseType = ResponseType.text,
+                        ResponseType = ResponseType.Text,
                         CompletionDate = new DateTime(2016, 8, 8)
                     });
 
@@ -117,7 +127,7 @@ namespace DataEf.Migrations
                         Answer = chrun1,
                         ResponseId = i.ToString(),
                         InputId = i,
-                        ResponseType = ResponseType.text,
+                        ResponseType = ResponseType.Text,
                         CompletionDate = new DateTime(2016, 8, 8)
                     });
 
@@ -128,7 +138,7 @@ namespace DataEf.Migrations
                         Answer = $"Week {week}",
                         ResponseId = i.ToString(),
                         InputId = i,
-                        ResponseType = ResponseType.text,
+                        ResponseType = ResponseType.Text,
                         CompletionDate = new DateTime(2016, 8, 8)
                     });
 
@@ -139,7 +149,7 @@ namespace DataEf.Migrations
                         Answer = $"{week}",
                         ResponseId = i.ToString(),
                         InputId = i,
-                        ResponseType = ResponseType.text,
+                        ResponseType = ResponseType.Text,
                         CompletionDate = new DateTime(2016, 8, 8)
                     });
 
@@ -154,10 +164,11 @@ namespace DataEf.Migrations
             var churn1 =
                     new DashboardView
                     {
-                        FieldOfInterest = "CHURN1",
+                        FieldOfInterest = new List<Question> { questionCHRUN1 },
                         Name = "Broad reason for Churn",
                         Code = "Broad reason for Churn",
-                      
+                        XAxisId = "ANALYSED_Week_#",
+                        XAxislable = "ANALYSED_Week"
                     };
 
             context.Set<DashboardView>().Add(churn1);
@@ -167,10 +178,12 @@ namespace DataEf.Migrations
             var CHURN2A =
                     new DashboardView
                     {
-                        FieldOfInterest = "CHURN2A",
+                        FieldOfInterest = new List<Question> { questionCHRUN2a } ,
                         Name = "Specific Reason for churn",
                         Code = "Specific Reason for churn",
-                        Parent = churn1
+                        Parent = churn1,
+                        XAxisId = "ANALYSED_Week_#",
+                        XAxislable = "ANALYSED_Week"
                     };
 
 
@@ -180,10 +193,12 @@ namespace DataEf.Migrations
 
             var np1 = new DashboardView
                 {
-                    FieldOfInterest = "NP1",
+                    FieldOfInterest = new List<Question> { questionNP1 },
                     Name = "New Provider",
                     Code = "New Provider",
-                };
+                    XAxisId = "ANALYSED_Week_#",
+                    XAxislable = "ANALYSED_Week"
+            };
 
             context.Set<DashboardView>().Add(np1);
             context.SaveChanges();

@@ -1,4 +1,6 @@
-﻿export class ChartModel {
+﻿import {ViewSplit} from "../../Dashboards/domain/dashboard.domain";
+
+export class ChartModel {
     public xAxislable: string;
     yAxislable: string;
     xAxisFormat: string;
@@ -26,22 +28,41 @@ export class ChartEntry {
     Series: string;
 }
 
-export class ChartFilter {
+//export class ChartFilter {
 
-    constructor(code: string, answer : string) {
+//    constructor(code: string, answer : string) {
         
-            this.Code = code;
-            this.Answer = answer;
-    }
+//            this.Code = code;
+//            this.Answer = answer;
+//    }
 
-    public Code: string;
-    public Answer: string;
-}
+//    public Code: string;
+//    public Answer: string;
+//}
+
 export class ChartSearchCriteria {
+    constructor(public selectedSplit: ViewSplit, public splitFilters: string[], public productViewId: number) {
+    }
+}
+// Find all classes with a name ending with Model
+export class FieldSearchCriteria {
+    constructor(public productViewId: number, public questionCode: string) {
+    }
+}
 
-    public  Filters : ChartFilter[];
-    public  XAxislable : string ;
-    public  XAxisId: string ;
-    public  FieldOfInterest: string;
 
+
+
+export class Response {
+    constructor(public responseType: string, public responseId: string, public inputId: number, public email: string, public completionDate: Date, public answer: string, public question: Question) {
+    }
+}
+export class Question {
+    constructor(public code: string, public text: string, public questionGroup: QuestionGroup) {
+    }
+}
+
+export class QuestionGroup {
+    constructor(public code: string, public text: string) {
+    }
 }

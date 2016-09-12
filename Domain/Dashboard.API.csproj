@@ -57,6 +57,7 @@
     <Compile Include="Models\ChartEntry.cs" />
     <Compile Include="Models\ChartSearchCriteria.cs" />
     <Compile Include="Models\DataChart.cs" />
+    <Compile Include="Models\DataPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Domain\Question.cs" />
   </ItemGroup>
@@ -94,6 +95,10 @@
     <TypeScriptCompile Include="Models\DataEntity.ts">
       <DependentUpon>TsTemplate.tst</DependentUpon>
       <CustomToolNamespace>Domain\DataEntity.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Models\DataPoint.ts">
+      <DependentUpon>TsTemplate.tst</DependentUpon>
+      <CustomToolNamespace>Models\DataPoint.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Models\Filter.ts">
       <DependentUpon>TsTemplate.tst</DependentUpon>

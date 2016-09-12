@@ -1,7 +1,8 @@
 
 import { Component } from '@angular/core';
 import { Chart } from '../charts/chart.component';
-import { ChartSearchCriteria, ChartFilter } from '../charts/domain/chart.domain';
+import { ChartSearchCriteria } from '../charts/domain/chart.domain';
+import { ViewSplit } from "../Dashboards/domain/dashboard.domain";
 
 @Component({
     selector: 'chart-container',
@@ -11,16 +12,7 @@ import { ChartSearchCriteria, ChartFilter } from '../charts/domain/chart.domain'
 export class ChartContainerComponent {
     criteria: ChartSearchCriteria;
     constructor() {
-        this.criteria = new ChartSearchCriteria();
-
-        this.criteria.Filters = [
-            new ChartFilter("GROUPS", "CONSUMER"),
-            new ChartFilter("CHURNER_FLAG", "CHURNER"),
-            new ChartFilter("OLDPRODUCT", "Overall Fixed")
-        ];
-
-        this.criteria.FieldOfInterest = "CHURN1";
-        this.criteria.XAxisId = "ANALYSED_Week_#";
-        this.criteria.XAxislable = "ANALYSED_Week";
+        this.criteria = new ChartSearchCriteria(
+            null, ["Customer Service", "Plans / pricing / inclusions"], 2);
     }
 }

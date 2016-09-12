@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Dashboard.API.Models;
 using Dashboard.Models;
 
 namespace Dashboard.Rest.Models.Charts

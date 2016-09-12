@@ -19,7 +19,8 @@ namespace Dashboard.API.Domain
     [Flags]
     public enum ResponseType
     {
-        text = 1,
-        yesno = 2,
+        Text = 0,
+        YesNo = 1,
+        NumericRange = 2
     }
 }

@@ -1,4 +1,5 @@
-///// <reference path="node_modules/babel-polyfill/dist/polyfill.js" />
+/// <reference path="node_modules/ng2-select/components/select/select.js" />
+
 /**
  * System configuration for Angular 2 samples
  * Adjust as necessary for your application needs.
@@ -13,7 +14,10 @@
     'rxjs': 'node_modules/rxjs',
     'ng2-nvd3': 'node_modules/ng2-nvd3/build/lib/ng2-nvd3.js',
     'linq-es2015': 'node_modules/linq-es5/dist/linq.js',    
-    'babel-polyfill': 'node_modules/babel-polyfill/dist/polyfill.js'
+    'babel-polyfill': 'node_modules/babel-polyfill/dist/polyfill.js',
+    'ng2-select/ng2-select': 'node_modules/ng2-select/bundles/ng2-select.js'
+   // 'node_modules/bundles/components/select/select': 'node_modules/ng2-select/components/select/select.js'
+
 
   };
 

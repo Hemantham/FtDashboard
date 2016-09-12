@@ -10,35 +10,37 @@ import '../../rxjs-operators'
 export class DashboardService {
     constructor(private http: Http) { }
     
-    getViews(id: number): Observable<ProductView[]> {
+    public getViews(id: number): Observable<ProductView[]> {
 
         //let headers = new Headers({ 'Content-Type': 'application/json' });
         //let options = new RequestOptions({ headers: headers });
-        let url = 'http://localhost/Dashboard.Rest/api/products/2/views';  // URL to web API
-      //  debugger;
+        let url = `/Dashboard.Rest/api/products/${id}/views`; 
         return this.http.get(url)
-                    .map(this.extractData)
+                    .map(this.extractViewData)
                     .catch(this.handleError);
     }
-
-
-    //getCharts(chartCriteria: ChartSearchCriteria): Observable<ChartEntry[]> {
-
-    //    let headers = new Headers({ 'Content-Type': 'application/json' });
-    //    let options = new RequestOptions({ headers: headers });
-
-    //    return this.http
-    //        .post(this.heroesUrl, JSON.stringify({ chartCriteria }), options)
-    //        .map(this.extractData)
-    //        .catch(this.handleError);
-    //}
-
-
-    private extractData(res: Response): ProductView[] {
+    
+    private extractViewData(res: Response): ProductView[] {
        // debugger;
         let body: ProductView[] = res.json();
         return body;
     }
+
+    public getView(id: number): Observable<ProductView> {
+
+        //let headers = new Headers({ 'Content-Type': 'application/json' });
+        //let options = new RequestOptions({ headers: headers });
+        let url = `/Dashboard.Rest/api/products/views/${id}`;  
+        return this.http.get(url)
+            .map(this.extractSingleViewData)
+            .catch(this.handleError);
+    }
+
+    private extractSingleViewData(res: Response): ProductView {
+        let body: ProductView = res.json();
+        return body;
+    }
+
 
     private handleError(error: any) {
         // In a real world app, we might use a remote logging infrastructure

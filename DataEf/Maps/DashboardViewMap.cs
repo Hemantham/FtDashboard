@@ -17,7 +17,11 @@ namespace DataEf.Maps
             ToTable("DashboardView");
 
             HasKey(x => x.Id);
-            Property(x => x.FieldOfInterest).HasMaxLength(200).IsRequired();
+            HasMany(x => x.FieldOfInterest).WithMany().Map(x => 
+                            x.ToTable("DashboardViewFieldsOfInterest")
+                            .MapLeftKey("DashboardId")
+                            .MapRightKey("QuestionId")
+                            );
             Property(x => x.Name).HasMaxLength(300).IsRequired();
             Property(x => x.Code).HasMaxLength(200).IsRequired()
                 .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("IX_Code") { IsUnique = true }));

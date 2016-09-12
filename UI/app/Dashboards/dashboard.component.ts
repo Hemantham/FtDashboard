@@ -4,6 +4,7 @@ import { ChartContainerComponent } from "../charts/chartcontainer.component"
 import { Component, OnInit, Input, AfterContentInit, ViewChild, ElementRef  } from '@angular/core';
 import { DashboardView,ProductView } from './domain/dashboard.domain';
 import { DashboardService }  from "../dashboards/services/dashboard.services";
+import { ChartsWithFilters } from "./chartswithfilters.component";
 //import "babel-polyfill"
 
 
@@ -15,7 +16,7 @@ declare var jQuery: any;
     selector: 'dashboard',
     templateUrl: 'app/dashboards/templates/DashboardComponent.html',
     providers: [DashboardService],
-    directives: [ChartContainerComponent]
+    directives: [ChartsWithFilters]
 })
    
 
@@ -25,9 +26,6 @@ export class DashboardComponent implements OnInit {
 
     public dashboards: ProductView[];
     public errorMessage: any;
-
-
-
     private productId: number;
     private paramsSubscription: any;
     private listRendered : boolean = false;
@@ -45,7 +43,6 @@ export class DashboardComponent implements OnInit {
 
     onListRendered() {
         if (!this.listRendered) {
-
             jQuery('#side-menu').metisMenu();
             this.listRendered = true;
         }
@@ -58,11 +55,6 @@ export class DashboardComponent implements OnInit {
                  },
             error => this.errorMessage = <any>error
         );
-
-       
-         
-
-
     }
 
     ngOnDestroy() {

@@ -64,6 +64,10 @@
     <Compile Include="Maps\QuestionMap.cs" />
     <Compile Include="Maps\QuestionGroupMap.cs" />
     <Compile Include="Maps\ResponseMap.cs" />
+    <Compile Include="Migrations\201609120343431_mig27.cs" />
+    <Compile Include="Migrations\201609120343431_mig27.Designer.cs">
+      <DependentUpon>201609120343431_mig27.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -76,6 +80,11 @@
       <Project>{0ce238e4-6643-4df2-b694-bd308ef84de7}</Project>
       <Name>Dashboard.API</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201609120343431_mig27.resx">
+      <DependentUpon>201609120343431_mig27.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Dashboard.API.API;
+using Dashboard.API.Domain;
+using Dashboard.API.Models;
 using Dashboard.Models;
 using Dashboard.Rest.Models.Charts;
 
@@ -20,26 +22,25 @@ namespace Dashboard.Rest.Controllers
             _chartDataService = chartDataService;
         }
 
-        // GET api/values
-        [HttpGet]
-        [Route("api/chartvalues")]
-        public IEnumerable<ChartEntry> Get()
-        {
-            return GetChartEntries(2);
-        }
+        //// GET api/values
+        //[HttpGet]
+        //[Route("api/chartvalues")]
+        //public IEnumerable<DataChart> Get()
+        //{
+        //    return GetChartEntries(null);
+        //}
 
         [HttpGet]
         [Route("api/questions/{code}/answers")]
-        public IEnumerable<ChartEntry> GetFieldValues(int productViewId)
+        public IEnumerable<Response> GetFieldValues(FieldSearchCriteria criteria)
         {
-            return _chartDataService.GetChartValues(productViewId);
+            return _chartDataService.GetFieldValues(criteria);
         }
 
-
-        private IEnumerable<ChartEntry> GetChartEntries(int productViewId)
+        [Route("api/chartvalues")]
+        private IEnumerable<DataChart> GetChartEntries(ChartSearchCriteria criteria)
         {
-
-            return _chartDataService.GetChartValues(productViewId);
+            return _chartDataService.GetChartValues(criteria);
 
             //chartCriteria ??
             //new ChartSearchCriteria

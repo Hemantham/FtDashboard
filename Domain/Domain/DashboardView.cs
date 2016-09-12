@@ -10,17 +10,26 @@ namespace Dashboard.API.Domain
     {
         public string Name { get; set; }
         public string Code { get; set; }
-        public string FieldOfInterest { get; set; }
+        public ICollection<Question> FieldOfInterest { get; set; }
         public string XAxislable { get; set; }
         public string XAxisId { get; set; }
         public DashboardView Parent { get; set; }
         public  short ViewOrder { get; set; }
         public ICollection<DashboardView> ChildrenViews { get; set; }
+        public ChartRenderType ChartRenderType { get; set; }
+        public DataAnlysisType DataAnlysisType { get; set; }
+
     }
 
-    public enum ChartType : short
+    public enum ChartRenderType : short
     {
       line = 0,
       bar = 1,
+    }
+
+    public enum DataAnlysisType : short
+    {
+        percentage = 0,
+        avarage = 1,
     }
 }
