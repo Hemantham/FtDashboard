@@ -28,6 +28,7 @@
 .checkbox-button label input {
     position:absolute;
     top:-20px;
+    display: none;
 }
 
 .checkbox-button input:checked + span {

@@ -14,7 +14,7 @@ namespace Dashboard.API.API
     {
         IEnumerable<DataChart> GetChartValues(ChartSearchCriteria criteria);
 
-        IEnumerable<Response> GetFieldValues(FieldSearchCriteria criteria);
+        IEnumerable<Response> GetFieldValues(int productViewId);
 
     }
 }

@@ -1,7 +1,8 @@
 ﻿import {ViewSplit} from "../../Dashboards/domain/dashboard.domain";
 
 export class ChartModel {
-    public xAxislable: string;
+    name : string ;
+    xAxislable: string;
     yAxislable: string;
     xAxisFormat: string;
     yAxisFormat: string;

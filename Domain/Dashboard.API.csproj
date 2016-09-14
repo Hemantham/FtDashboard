@@ -46,7 +46,12 @@
   <ItemGroup>
     <Compile Include="API\IChartDataService.cs" />
     <Compile Include="API\IDashboardService.cs" />
+    <Compile Include="Enums\SplitType.cs" />
+    <Compile Include="Enums\DataAnlysisType.cs" />
+    <Compile Include="Enums\ChartRenderType.cs" />
     <Compile Include="Domain\ProductView.cs" />
+    <Compile Include="Enums\RecencyType.cs" />
+    <Compile Include="Enums\ResponseType.cs" />
     <Compile Include="Domain\ViewSplit.cs" />
     <Compile Include="Domain\DataEntity.cs" />
     <Compile Include="Domain\Filter.cs" />
@@ -58,6 +63,7 @@
     <Compile Include="Models\ChartSearchCriteria.cs" />
     <Compile Include="Models\DataChart.cs" />
     <Compile Include="Models\DataPoint.cs" />
+    <Compile Include="Models\Recency.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Domain\Question.cs" />
   </ItemGroup>

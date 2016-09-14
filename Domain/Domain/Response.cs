@@ -9,18 +9,12 @@ namespace Dashboard.API.Domain
         [JsonConverter(typeof(StringEnumConverter))]
         public ResponseType ResponseType { get; set; }
         public string ResponseId { get; set; }
-        public long? InputId { get; set; }
+        public long InputId { get; set; }
         public string Email { get; set; }
         public DateTime CompletionDate { get; set; }
         public string Answer { get; set; }
         public Question Question { get; set; }
-    }
-
-    [Flags]
-    public enum ResponseType
-    {
-        Text = 0,
-        YesNo = 1,
-        NumericRange = 2
+        public int RecencyTicks { get; set; }
+        
     }
 }

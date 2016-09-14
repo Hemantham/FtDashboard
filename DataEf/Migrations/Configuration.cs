@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Dashboard.API.Domain;
+using Dashboard.API.Enums;
 
 namespace DataEf.Migrations
 {
@@ -29,7 +30,7 @@ namespace DataEf.Migrations
 
         private string GetRand(Random rand,params string[] values)
         {
-            return values[rand.Next(0, values.Length - 1)];
+            return values[rand.Next(0, values.Length)];
         }
 
         protected override void Seed(DataEf.Context.DashboardContext context)
@@ -98,11 +99,15 @@ namespace DataEf.Migrations
             {
                 var chrun1 = GetRand(random,"Network", "Plans / pricing / inclusions", "Customer Service");
 
+                var chrun2a = GetRand(random, "flexibility", "range of options", "cost of plan");
+
                 var techtype = GetRand(random,"ADSL", "NBN", "Cable", "Satalite");
 
                 var competitor = GetRand(random,"Telstra", "Vodaphone", "Virgin", "TPG", "DoDo");
 
                 var week = random.Next(1, 4);
+
+                var completiondate = new DateTime(2016,8, random.Next(1, 30));
 
                 responses.Add(
                     new Response
@@ -111,7 +116,7 @@ namespace DataEf.Migrations
                         Answer = "CONSUMER",
                         ResponseId = i.ToString(),
                         InputId = i,
-                        CompletionDate = new DateTime(2016, 8, 8),
+                        CompletionDate = completiondate,
                         ResponseType = ResponseType.Text,
 
                     });
@@ -124,7 +129,7 @@ namespace DataEf.Migrations
                         ResponseId = i.ToString(),
                         InputId = i,
                         ResponseType = ResponseType.Text,
-                        CompletionDate = new DateTime(2016, 8, 8)
+                        CompletionDate = completiondate
                     });
 
 
@@ -136,7 +141,7 @@ namespace DataEf.Migrations
                         ResponseId = i.ToString(),
                         InputId = i,
                         ResponseType = ResponseType.Text,
-                        CompletionDate = new DateTime(2016, 8, 8)
+                        CompletionDate = completiondate
                     });
 
                 responses.Add(
@@ -147,8 +152,19 @@ namespace DataEf.Migrations
                         ResponseId = i.ToString(),
                         InputId = i,
                         ResponseType = ResponseType.Text,
-                        CompletionDate = new DateTime(2016, 8, 8)
+                        CompletionDate = completiondate
                     });
+
+                responses.Add(
+                  new Response
+                  {
+                      Question = questionCHRUN2a,
+                      Answer = chrun2a,
+                      ResponseId = i.ToString(),
+                      InputId = i,
+                      ResponseType = ResponseType.Text,
+                      CompletionDate = completiondate
+                  });
 
                 responses.Add(
                    new Response
@@ -158,7 +174,7 @@ namespace DataEf.Migrations
                        ResponseId = i.ToString(),
                        InputId = i,
                        ResponseType = ResponseType.Text,
-                       CompletionDate = new DateTime(2016, 8, 8)
+                       CompletionDate = completiondate
                    });
 
                 responses.Add(
@@ -169,7 +185,7 @@ namespace DataEf.Migrations
                        ResponseId = i.ToString(),
                        InputId = i,
                        ResponseType = ResponseType.Text,
-                       CompletionDate = new DateTime(2016, 8, 8)
+                       CompletionDate = completiondate
                    });
 
                 responses.Add(
@@ -180,7 +196,7 @@ namespace DataEf.Migrations
                         ResponseId = i.ToString(),
                         InputId = i,
                         ResponseType = ResponseType.Text,
-                        CompletionDate = new DateTime(2016, 8, 8)
+                        CompletionDate = completiondate
                     });
 
                 responses.Add(
@@ -191,7 +207,7 @@ namespace DataEf.Migrations
                         ResponseId = i.ToString(),
                         InputId = i,
                         ResponseType = ResponseType.Text,
-                        CompletionDate = new DateTime(2016, 8, 8)
+                        CompletionDate = completiondate
                     });
 
             }
@@ -208,8 +224,8 @@ namespace DataEf.Migrations
                         FieldOfInterest = new List<Question> { questionCHRUN1 },
                         Name = "Broad reason for Churn",
                         Code = "Broad reason for Churn",
-                        XAxisId = "ANALYSED_Week_#",
-                        XAxislable = "ANALYSED_Week"
+                       // XAxisId = "ANALYSED_Week_#",
+                       // XAxislable = "ANALYSED_Week"
                     };
 
             context.Set<DashboardView>().Add(churn1);
@@ -223,8 +239,8 @@ namespace DataEf.Migrations
                         Name = "Specific Reason for churn",
                         Code = "Specific Reason for churn",
                         Parent = churn1,
-                        XAxisId = "ANALYSED_Week_#",
-                        XAxislable = "ANALYSED_Week"
+                      //  XAxisId = "ANALYSED_Week_#",
+                      //  XAxislable = "ANALYSED_Week"
                     };
 
 
@@ -237,8 +253,8 @@ namespace DataEf.Migrations
                     FieldOfInterest = new List<Question> { questionNP1 },
                     Name = "New Provider",
                     Code = "New Provider",
-                    XAxisId = "ANALYSED_Week_#",
-                    XAxislable = "ANALYSED_Week"
+                   // XAxisId = "ANALYSED_Week_#",
+                   // XAxislable = "ANALYSED_Week"
             };
 
             context.Set<DashboardView>().Add(np1);

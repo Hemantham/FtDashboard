@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dashboard.API.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -16,12 +17,5 @@ namespace Dashboard.API.Domain
 
         [JsonConverter(typeof(StringEnumConverter))]
         public SplitType SplitType { get; set; }
-    }
-
-    public enum SplitType : short
-    {
-        All = 0,
-        Single = 1,
-        Mutiple = 2,
     }
 }

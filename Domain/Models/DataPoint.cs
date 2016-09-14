@@ -14,6 +14,6 @@ namespace Dashboard.API.Models
         public string Id { get; set; }
         public long XAxisId { get; set; }
         public string XAxisLable { get; set; }
-
+        public DateTime CompletionDate { get; set; }
     }
 }

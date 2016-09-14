@@ -15,26 +15,24 @@ export class ChartValueService {
         
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-       // debugger;
+
         return this.http
             .post('/Dashboard.Rest/api/charts/data', JSON.stringify(chartCriteria) , options)
             .map(this.extractChartData)
             .catch(this.handleError);
     }
 
-    public getFields(code: string): Observable<Charts.Response[]> {
+    public getFields(id: number): Observable<Charts.Response[]> {
 
         // let headers = new Headers({ 'Content-Type': 'application/json' });
         // let options = new RequestOptions({ headers: headers });
-        // debugger;
         return this.http
-            .get(`/api/questions/${code}/answers`)
+            .get(`/Dashboard.Rest/api/products/views/${id}/splitfilters`)
             .map(this.extractFieldData)
             .catch(this.handleError);
     }
 
     private extractFieldData(res: Response): Charts.Response[] {
-        // debugger;
         let body: Charts.Response[] = res.json();
         return body;
     }
@@ -44,7 +42,6 @@ export class ChartValueService {
         try {
        
         let data: Array<Charts.DataChart> = res.json();
-
         let charts: Array<Charts.ChartModel> = new Array<Charts.ChartModel>();
 
         data.forEach(datachart => {
@@ -56,7 +53,7 @@ export class ChartValueService {
 
                 chart.xAxislable = "This is X";
                 chart.yAxislable = "This is Y";
-
+                chart.name = datachart.ChartName;
                 chart.series = chartsList.GroupBy(chartEntry => chartEntry.Series,
                         chartEntry => chartEntry,
                         (series, values) => {
@@ -77,7 +74,6 @@ export class ChartValueService {
                     .ToArray();
 
                 charts.push(chart);
-
             }
         );
 

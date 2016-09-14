@@ -15,10 +15,12 @@ namespace Dashboard.Rest.Controllers
     public class DashboardController : ApiController
     {
         private readonly IDashboardService _service;
+        private readonly IChartDataService _chartService;
 
-        public DashboardController(IDashboardService service)
+        public DashboardController(IDashboardService service, IChartDataService chartService)
         {
             _service = service;
+            _chartService = chartService;
         }
 
         // GET api/values
@@ -43,7 +45,12 @@ namespace Dashboard.Rest.Controllers
             return _service.GetProductViews(id);
         }
 
-
+        [HttpGet]
+        [Route("api/products/views/{id:int}/splitfilters")]
+        public IEnumerable<Response> GetFieldValues(int id)
+        {
+            return _chartService.GetFieldValues(id);
+        }
 
         [HttpGet]
         [Route("api/products/views/{id:int}")]

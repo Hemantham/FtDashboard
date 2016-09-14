@@ -18,9 +18,9 @@ export class ChartContainerComponent implements OnInit {
 
     constructor(private service: ChartValueService) {
         this.criteria = new ChartSearchCriteria(
-            new ViewSplit(3, null, null, null, null),
+            new ViewSplit(5, null, null, null, null),
             ["Customer Service", "Plans / pricing / inclusions"],
-            2);
+            3);
     }
 
     ngOnInit() {
@@ -28,7 +28,6 @@ export class ChartContainerComponent implements OnInit {
         this.service
             .getCharts(this.criteria)
             .subscribe((charts: any) => {
-                    debugger;
                     this.charts = charts;
                 },
                 error => {

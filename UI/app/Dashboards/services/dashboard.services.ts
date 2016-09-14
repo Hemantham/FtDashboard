@@ -19,12 +19,6 @@ export class DashboardService {
                     .map(this.extractViewData)
                     .catch(this.handleError);
     }
-    
-    private extractViewData(res: Response): ProductView[] {
-       // debugger;
-        let body: ProductView[] = res.json();
-        return body;
-    }
 
     public getView(id: number): Observable<ProductView> {
 
@@ -41,6 +35,11 @@ export class DashboardService {
         return body;
     }
 
+    private extractViewData(res: Response): ProductView[] {
+        // debugger;
+        let body: ProductView[] = res.json();
+        return body;
+    }
 
     private handleError(error: any) {
         // In a real world app, we might use a remote logging infrastructure

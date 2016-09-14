@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dashboard.API.Enums;
 
 namespace Dashboard.API.Domain
 {
@@ -25,17 +26,5 @@ namespace Dashboard.API.Domain
         [JsonConverter(typeof(StringEnumConverter))]
         public DataAnlysisType DataAnlysisType { get; set; }
 
-    }
-
-    public enum ChartRenderType : short
-    {
-      line = 0,
-      bar = 1,
-    }
-
-    public enum DataAnlysisType : short
-    {
-        percentage = 0,
-        avarage = 1,
     }
 }

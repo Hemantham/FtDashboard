@@ -43,6 +43,7 @@
     <Compile Include="DashboardService.cs" />
     <Compile Include="ChartDataService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\DateTimeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dashboard.Models\Dashboard.Models.csproj">

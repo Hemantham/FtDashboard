@@ -30,12 +30,7 @@ namespace Dashboard.Rest.Controllers
         //    return GetChartEntries(null);
         //}
 
-        [HttpGet]
-        [Route("api/questions/answers")]
-        public IEnumerable<Response> GetFieldValues(FieldSearchCriteria criteria)
-        {
-            return _chartDataService.GetFieldValues(criteria);
-        }
+        
 
         
         [HttpPost]

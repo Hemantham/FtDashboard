@@ -64,9 +64,9 @@
     <Compile Include="Maps\QuestionMap.cs" />
     <Compile Include="Maps\QuestionGroupMap.cs" />
     <Compile Include="Maps\ResponseMap.cs" />
-    <Compile Include="Migrations\201609140004169_mig27.cs" />
-    <Compile Include="Migrations\201609140004169_mig27.Designer.cs">
-      <DependentUpon>201609140004169_mig27.cs</DependentUpon>
+    <Compile Include="Migrations\201609140656190_mig26.cs" />
+    <Compile Include="Migrations\201609140656190_mig26.Designer.cs">
+      <DependentUpon>201609140656190_mig26.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -82,8 +82,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201609140004169_mig27.resx">
-      <DependentUpon>201609140004169_mig27.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201609140656190_mig26.resx">
+      <DependentUpon>201609140656190_mig26.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

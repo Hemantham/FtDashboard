@@ -32,7 +32,7 @@
                             <label>Select Cut</label>
                             
                             <ng-select [allowClear]="false"
-                                       [items]="items"
+                                       [items]="splits"
                                        placeholder="Select Cut">
                             </ng-select>
                            
@@ -82,27 +82,9 @@
 
                     <div class="panel-body">
 
-                        <div class="checkbox-button">
+                        <div class="checkbox-button" *ngFor="let splitFilter of splitFilters">
                             <label>
-                                <input type="checkbox" value="1"><span>red</span>
-                            </label>
-                        </div>
-
-                        <div class="checkbox-button">
-                            <label>
-                                <input type="checkbox" value="1"><span>red</span>
-                            </label>
-                        </div>
-
-                        <div class="checkbox-button">
-                            <label>
-                                <input type="checkbox" value="1"><span>red</span>
-                            </label>
-                        </div>
-
-                        <div class="checkbox-button">
-                            <label>
-                                <input type="checkbox" value="1"><span>red</span>
+                                <input type="checkbox" value="1"><span>{{splitFilter.Answer}}</span>
                             </label>
                         </div>
 
