@@ -10,7 +10,7 @@ namespace Dashboard.API.Domain
 {
     public class ViewSplit : DataEntity
     {
-        public string SplitField { get; set; }
+        public Question Question { get; set; }
         public string SplitName { get; set; }
         public Filter Filter { get; set; } //Optional
 

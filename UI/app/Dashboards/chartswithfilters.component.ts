@@ -1,4 +1,4 @@
-
+﻿
 
 import { ChartContainerComponent } from "../charts/chartcontainer.component"
 import { Component, OnInit, Input, AfterContentInit, ViewChild, ElementRef  } from '@angular/core';
@@ -15,7 +15,7 @@ declare var jQuery: any;
 
 @Component({
     selector: 'chart-with-filters',
-    template: `<div>stupid me</div>`, //'app/dashboards/templates/ChartsWithFilters.html',
+    templateUrl: 'app/dashboards/templates/ChartsWithFilters.html',
     providers: [DashboardService, ChartValueService],
     directives: [ChartContainerComponent, SELECT_DIRECTIVES, NgClass, CORE_DIRECTIVES, FORM_DIRECTIVES]
 })
@@ -24,10 +24,14 @@ declare var jQuery: any;
 export class ChartsWithFilters implements OnInit {
     
     public dashboard: ProductView;
-    public viewSplits: ViewSplit[] ;
+    public viewSplits: any;
     public errorMessage: any;
     private viewid: number;
     private paramsSubscription: any;
+
+
+    public items: Array<any> = [];
+
     
     constructor(private service: DashboardService,
         private elementRef: ElementRef,
@@ -46,7 +50,12 @@ export class ChartsWithFilters implements OnInit {
          this.service.getView(this.viewid)
              .subscribe((response: ProductView) => {
                  this.dashboard = response;
-                 this.viewSplits = this.dashboard.ViewSplits.filter(s => s.SplitType === 'All');
+                 this.items = this.dashboard
+                     .ViewSplits
+                     .filter(s => s.SplitType === 'All')
+                     .map((s) => {
+                          return { id: s.SplitField, text: s.SplitName };
+                     });
                  },
             error => this.errorMessage = <any>error
         );

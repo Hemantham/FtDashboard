@@ -27,6 +27,11 @@ namespace DataEf.Migrations
             }
         }
 
+        private string GetRand(Random rand,params string[] values)
+        {
+            return values[rand.Next(0, values.Length - 1)];
+        }
+
         protected override void Seed(DataEf.Context.DashboardContext context)
         {
             //  This method will be called after migrating to the latest version.
@@ -77,11 +82,25 @@ namespace DataEf.Migrations
                 Code = "ANALYSED_Week_#",
             };
 
+            var questionTechType = new Question
+            {
+                Code = "TECHTYPE1",
+            };
+
+            var questionComp1 = new Question
+            {
+                Code = "COMP1",
+            };
+
             var random = new Random();
+
             for (var i = 1; i <= 100; i++)
             {
+                var chrun1 = GetRand(random,"Network", "Plans / pricing / inclusions", "Customer Service");
 
-                var chrun1 = GetChurn1(random.Next(1, 4));
+                var techtype = GetRand(random,"ADSL", "NBN", "Cable", "Satalite");
+
+                var competitor = GetRand(random,"Telstra", "Vodaphone", "Virgin", "TPG", "DoDo");
 
                 var week = random.Next(1, 4);
 
@@ -130,6 +149,28 @@ namespace DataEf.Migrations
                         ResponseType = ResponseType.Text,
                         CompletionDate = new DateTime(2016, 8, 8)
                     });
+
+                responses.Add(
+                   new Response
+                   {
+                       Question = questionTechType,
+                       Answer = techtype,
+                       ResponseId = i.ToString(),
+                       InputId = i,
+                       ResponseType = ResponseType.Text,
+                       CompletionDate = new DateTime(2016, 8, 8)
+                   });
+
+                responses.Add(
+                   new Response
+                   {
+                       Question = questionComp1,
+                       Answer = competitor,
+                       ResponseId = i.ToString(),
+                       InputId = i,
+                       ResponseType = ResponseType.Text,
+                       CompletionDate = new DateTime(2016, 8, 8)
+                   });
 
                 responses.Add(
                     new Response
@@ -240,19 +281,18 @@ namespace DataEf.Migrations
                             new ViewSplit
                             {
                                 SplitName = "Tech Type (vic)",
-                                SplitField = "TechType",
+                                Question = questionTechType,
                                 SplitType = SplitType.All,
                                 Filter = new Filter
                                 {
                                     FilterString = "STATE='VIC'",
                                     Name = "State Filter"
                                 }
-                            }
-                            ,
+                            },
                             new ViewSplit
                             {
                                 SplitName = "Tech Type",
-                                SplitField = "TechType",
+                                Question = questionTechType,
                                 SplitType = SplitType.All,
                             }
                         }
@@ -267,7 +307,7 @@ namespace DataEf.Migrations
                               new ViewSplit
                             {
                                 SplitName = "Tech Type (vic)",
-                                SplitField = "TechType",
+                                Question = questionTechType,
                                 SplitType = SplitType.All,
                                 Filter = new Filter
                                 {
@@ -278,17 +318,18 @@ namespace DataEf.Migrations
                             new ViewSplit
                             {
                                 SplitName = "Tech Type",
-                                SplitField = "TechType",
+                                Question = questionTechType,
                                 SplitType = SplitType.All,
                             },
                             new ViewSplit
                             {
                                 SplitType = SplitType.Mutiple,
                                 SplitName = "Select Broad Reasons",
-                                SplitField = "CHURN1",
+                                Question = questionCHRUN1,
                             }
                         }
                 });
+
                 p.ProductViews.Add(new ProductView
                 {
                     Product = p,
@@ -299,25 +340,13 @@ namespace DataEf.Migrations
                         {
                             SplitType = SplitType.Mutiple,
                             SplitName = "Select Competitor",
-                            SplitField = "NP1",
+                            Question = questionComp1,
                         }
                     }
                 });
 
-             
+                context.SaveChanges();
             }
-
-          
-
-
-            
-
-          
-
-
-
-          
-
         }
     }
 }

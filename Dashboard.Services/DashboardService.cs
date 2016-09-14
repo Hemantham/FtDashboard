@@ -33,6 +33,7 @@ namespace Dashboard.Services
             return _unitOfWork.GetRepository<Product>()
                .Include(p => p.ProductViews)
                .Include(p => p.ProductViews.Select(pv => pv.DashboardView))
+               .Include(p => p.ProductViews.Select(pv => pv.DashboardView.FieldOfInterest))
                .Include(p => p.ProductViews.Select(pv => pv.DashboardView.ChildrenViews))
                .Include(p => p.ProductViews.Select(pv => pv.ViewSplits))
                .Include(p => p.Filter)
@@ -55,11 +56,20 @@ namespace Dashboard.Services
         {
             return _unitOfWork.GetRepository<ProductView>()
                .Include(p => p.DashboardView)
+               .Include(p => p.DashboardView.FieldOfInterest)
                .Include(p => p.Product)
                .Include(p => p.ViewSplits)
                .Include(p => p.ViewSplits.Select(vs => vs.Filter))
+               .Include(p => p.ViewSplits.Select(vs => vs.Question))
                .Include(p => p.DashboardView.Parent)
                .GetSingle(pv => pv.Id == productViewId);
+        }
+
+        public ViewSplit GetViewSplit(long id)
+        {
+            return _unitOfWork.GetRepository<ViewSplit>()
+               .Include(p => p.Filter)
+               .GetSingle(pv => pv.Id == id);
         }
     }
 }

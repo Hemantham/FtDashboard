@@ -19,7 +19,7 @@ export class Chart implements OnInit {
     private service: ChartValueService;
 
     //this component takes in parameters from outside
-    @Input() chartCriteria: Chartdomain.ChartSearchCriteria;
+    @Input() chart: Chartdomain.ChartModel;
 
     constructor(service: ChartValueService) {
         this.service = service;
@@ -49,8 +49,7 @@ export class Chart implements OnInit {
             };
         });
     }
-
-
+    
     getLineChartOptions() {
 
         return {
@@ -121,16 +120,10 @@ export class Chart implements OnInit {
     ngOnInit() {
 
         this.options = this.getLineChartOptions();
+        
+        this.data = this.getLineChartValues(this.chart);
 
-        this.service
-            .getCharts(this.chartCriteria)
-            .subscribe((heroes: any) => {
-                this.data = this.getLineChartValues(heroes);
-                },
-                error => this.errorMessage = <any>error
-            );
-
-        //     return this.getBarChartValues(this.service.getCharts());
+        // return this.getBarChartValues(this.service.getCharts());
 
         //};
 

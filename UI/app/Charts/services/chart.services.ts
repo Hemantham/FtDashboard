@@ -8,16 +8,16 @@ import '../../rxjs-operators'
 @Injectable()
 export class ChartValueService {
     constructor(private http: Http) { }
-
+    
     private heroesUrl = 'http://localhost/Dashboard.Rest/api/ChartValues';  // URL to web API
 
-    public getCharts(chartCriteria: Charts.ChartSearchCriteria): Observable<Charts.ChartEntry[]> {
+    public getCharts(chartCriteria: Charts.ChartSearchCriteria): Observable<Charts.DataChart[]> {
         
-       // let headers = new Headers({ 'Content-Type': 'application/json' });
-       // let options = new RequestOptions({ headers: headers });
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
        // debugger;
         return this.http
-            .get('/Dashboard.Rest/api/ChartValues')
+            .post('/Dashboard.Rest/api/charts/data', JSON.stringify(chartCriteria) , options)
             .map(this.extractChartData)
             .catch(this.handleError);
     }
@@ -39,34 +39,53 @@ export class ChartValueService {
         return body;
     }
 
-    private extractChartData(res: Response): Charts.ChartModel {
-        let body: Charts.ChartEntry[] = res.json();
+    private extractChartData(res: Response): Charts.ChartModel[] {
 
-        let chart: Charts.ChartModel = new Charts.ChartModel();
+        try {
+       
+        let data: Array<Charts.DataChart> = res.json();
 
-        chart.xAxislable = "This is X";
-        chart.yAxislable = "This is Y";
+        let charts: Array<Charts.ChartModel> = new Array<Charts.ChartModel>();
 
-        var chartsList = Enumerable.asEnumerable(body);
+        data.forEach(datachart => {
 
-        chart.series = chartsList.GroupBy(chartEntry => chartEntry.Series, chartEntry => chartEntry,
-            (series, values) => {
-                let serieModel: Charts.ChartSeriesModel = new Charts.ChartSeriesModel();
-                serieModel.key = series;
-                serieModel.data = Enumerable
-                                    .asEnumerable(values)
-                                    .Select((datavalue) => {
-                                        let seriesData: Charts.DataPointModel = new Charts.DataPointModel();
-                                                seriesData.y = datavalue.Value;
-                                                seriesData.x = datavalue.XAxisId;
-                                                seriesData.label = datavalue.XAxisLable;
-                                                return seriesData;
-                                            })
+            let chartEntries: Charts.ChartEntry[] = datachart.ChartValues;
+            let chartsList = Enumerable.asEnumerable(chartEntries);
+
+                let chart = new Charts.ChartModel();
+
+                chart.xAxislable = "This is X";
+                chart.yAxislable = "This is Y";
+
+                chart.series = chartsList.GroupBy(chartEntry => chartEntry.Series,
+                        chartEntry => chartEntry,
+                        (series, values) => {
+                            let serieModel: Charts.ChartSeriesModel = new Charts.ChartSeriesModel();
+                            serieModel.key = series;
+                            serieModel.data = Enumerable
+                                .asEnumerable(values)
+                                .Select((datavalue) => {
+                                    let seriesData: Charts.DataPointModel = new Charts.DataPointModel();
+                                    seriesData.y = datavalue.Value;
+                                    seriesData.x = datavalue.XAxisId;
+                                    seriesData.label = datavalue.XAxisLable;
+                                    return seriesData;
+                                })
+                                .ToArray();
+                            return serieModel;
+                        })
                     .ToArray();
-                return serieModel;
-            }).ToArray();
 
-        return chart;
+                charts.push(chart);
+
+            }
+        );
+
+        return charts;
+        }
+        catch (e) {
+            console.log('error in extractChartData');
+        }
     }
 
     private handleError(error: any) {

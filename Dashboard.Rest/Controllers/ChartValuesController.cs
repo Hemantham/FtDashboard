@@ -31,14 +31,16 @@ namespace Dashboard.Rest.Controllers
         //}
 
         [HttpGet]
-        [Route("api/questions/{code}/answers")]
+        [Route("api/questions/answers")]
         public IEnumerable<Response> GetFieldValues(FieldSearchCriteria criteria)
         {
             return _chartDataService.GetFieldValues(criteria);
         }
 
-        [Route("api/chartvalues")]
-        private IEnumerable<DataChart> GetChartEntries(ChartSearchCriteria criteria)
+        
+        [HttpPost]
+        [Route("api/charts/data")]
+        public IEnumerable<DataChart> GetChartEntries(ChartSearchCriteria criteria)
         {
             return _chartDataService.GetChartValues(criteria);
 

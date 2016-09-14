@@ -13,5 +13,6 @@ namespace Dashboard.API.API
         Product GetProduct(long productId);
         IEnumerable<ProductView> GetProductViews(long productId);
         ProductView GetProductView(long productViewId);
+        ViewSplit GetViewSplit(long id);
     }
 }

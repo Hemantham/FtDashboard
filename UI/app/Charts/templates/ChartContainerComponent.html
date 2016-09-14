@@ -28,9 +28,12 @@
     </div>
     <!-- /.panel-heading -->
     <div class="panel-body">
-        <chart [chartCriteria]="criteria">
+        <div *ngFor="let chartModel of charts">
+            <chart [chart]="chartModel">
 
-        </chart>
+            </chart>
+        </div>
+     
     </div>
     <!-- /.panel-body -->
 </div>

@@ -20,6 +20,14 @@ export class DataPointModel {
     label: string;
 }
 
+// Find all classes with a name ending with Model
+export class DataChart {
+    constructor(public ChartName: string, public ChartValues: ChartEntry[]) {
+
+    }
+}
+
+
 export class ChartEntry {
     Value: number;
     XAxisLable: string;
@@ -41,12 +49,12 @@ export class ChartEntry {
 //}
 
 export class ChartSearchCriteria {
-    constructor(public selectedSplit: ViewSplit, public splitFilters: string[], public productViewId: number) {
+    constructor(public SelectedSplit: ViewSplit, public SplitFilters: string[], public ProductViewId: number) {
     }
 }
 // Find all classes with a name ending with Model
 export class FieldSearchCriteria {
-    constructor(public productViewId: number, public questionCode: string) {
+    constructor(public ProductViewId: number, public CuestionCode: string) {
     }
 }
 

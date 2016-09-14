@@ -15,9 +15,9 @@ namespace DataEf.Maps
             ToTable("ViewSplit");
 
             HasKey(x => x.Id);
-            Property(x => x.SplitField).HasMaxLength(100).IsRequired();
+            HasRequired(x => x.Question).WithMany().Map(x=> x.MapKey("QuestionId")) ;
             Property(x => x.SplitName).HasMaxLength(100).IsRequired();
-            HasOptional(x => x.Filter).WithOptionalDependent().Map(x=> x.MapKey("FilterId"));
+            HasOptional(x => x.Filter).WithMany().Map(x=> x.MapKey("FilterId"));
         }
     }
 }

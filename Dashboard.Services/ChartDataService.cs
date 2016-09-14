@@ -25,47 +25,64 @@ namespace Dashboard.Services
         //todo : performance
         public IEnumerable<DataChart> GetChartValues(ChartSearchCriteria criteria)
         {
+
             var productView = _dashboardService.GetProductView(criteria.ProductViewId);
 
             var filteredResponsesGroupes = FilterByProduct(productView);
 
-            filteredResponsesGroupes = FilterByQuestions(filteredResponsesGroupes, criteria.SplitFilters);
+            IEnumerable<Response> splitsAllType = new List<Response> { null };
 
-            var splits_AllType = GetDistinctResponses(filteredResponsesGroupes);
+            IEnumerable<string> splitsSelectiveTypeAnswers = new List<string> {null};
 
-            var splits_SelectiveTypeAnswers = criteria.SplitFilters;
+            string splitsSelectiveTypeCode = null;
 
-            var splits_SelectiveTypeCode = productView.ViewSplits.FirstOrDefault(vs => vs.SplitType == SplitType.Mutiple).SplitField;
+            if (criteria.SelectedSplit != null)
+            {
+                var selectedSplit = _dashboardService.GetViewSplit(criteria.SelectedSplit.Id);
 
-            var split_carteasians = from split1 in splits_AllType
-                                    from split2 in splits_SelectiveTypeAnswers
-                                    select new
-                                    {
-                                       split1 = new { split1.Answer, split1.Question.Code },
-                                       split2 = new { Answer = split2, Code = splits_SelectiveTypeCode },
-                                       Name = $"{split1.Answer} - {split2}"
-                                    };
+                var distinctResponses = GetDistinctResponses(filteredResponsesGroupes, selectedSplit.Question.Code);
+
+                if (distinctResponses.Any())
+                {
+                    splitsAllType = distinctResponses;
+                }
+            }
+
+            if (criteria.SplitFilters != null && criteria.SplitFilters.Any())
+            {
+                splitsSelectiveTypeAnswers = criteria.SplitFilters;
+                splitsSelectiveTypeCode = productView.ViewSplits.FirstOrDefault(vs => vs.SplitType == SplitType.Mutiple)?.Question.Code;
+                filteredResponsesGroupes = FilterByQuestionAnswers(filteredResponsesGroupes, criteria.SplitFilters, splitsSelectiveTypeCode);
+            }
+           
+            var  split_carteasians =  from split1 in splitsAllType
+                                        from split2 in splitsSelectiveTypeAnswers
+                                        select new
+                                        {
+                                        split1 = split1 != null ? new { split1.Answer, split1.Question.Code } : null,
+                                        split2 = ( split2 != null && splitsSelectiveTypeCode != null ) ? new { Answer = split2, Code = splitsSelectiveTypeCode } : null,
+                                        Name =  $"{(split1  != null ? split1.Answer : string.Empty)} - {split2}".Trim('-',' ')
+                                        };
+            
 
             var charts = new List<DataChart>();
 
-            if (split_carteasians.Any())
+            if ( split_carteasians.Any(c=> c.split1 != null || c.split2 != null))
             {
                 foreach (var split_carteasian in split_carteasians)
                 {
                     var chart = new DataChart();
 
-                    filteredResponsesGroupes = filteredResponsesGroupes
+                   var  filteredResponsesGroupesForSplit = filteredResponsesGroupes
                         .Where(frg =>
                             frg.Any(
-                                res =>
-                                    res.Answer == split_carteasian.split1.Answer &&
-                                    res.Question.Code == split_carteasian.split1.Code) &&
+                                res => split_carteasian.split1 == null ||
+                                    (res.Answer == split_carteasian.split1.Answer && res.Question.Code == split_carteasian.split1.Code)) &&
                             frg.Any(
-                                res =>
-                                    res.Answer == split_carteasian.split2.Answer &&
-                                    res.Question.Code == split_carteasian.split2.Code));
+                                res => split_carteasian.split2 == null ||
+                                    (res.Answer == split_carteasian.split2.Answer && res.Question.Code == split_carteasian.split2.Code)));
 
-                    var chartValues = GetDataFieldsByPercentage(filteredResponsesGroupes, productView);
+                    var chartValues = GetDataFieldsByPercentage(filteredResponsesGroupesForSplit, productView);
 
                     chart.ChartValues = chartValues;
                     chart.ChartName = split_carteasian.Name;
@@ -106,6 +123,7 @@ namespace Dashboard.Services
                             ? long.Parse(rg.First(r => r.Question.Code == productView.DashboardView.XAxisId).Answer)
                             : 0
                     })
+                .Where(d=> d.Data != null)
                 .GroupBy(d => d.XAxisId)
                 .ToList();
 
@@ -181,16 +199,27 @@ namespace Dashboard.Services
 
             var filteredResponsesGroupes = FilterByProduct(productView);
 
-            filteredResponsesGroupes = FilterByQuestions(filteredResponsesGroupes
-                                                            , new[] { criteria.QuestionCode });
+            //filteredResponsesGroupes = FilterByQuestions(filteredResponsesGroupes
+            //                                                , new[] { criteria.QuestionCode });
 
-            return GetDistinctResponses(filteredResponsesGroupes);
+            return GetDistinctResponses(filteredResponsesGroupes , criteria.QuestionCode);
+        }
+
+        private static IEnumerable<Response> GetDistinctResponses(IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes, string code)
+        {
+            //filteredResponsesGroupes = FilterByQuestions(filteredResponsesGroupes , new[] { code });
+
+            return filteredResponsesGroupes
+                .SelectMany(rg => rg.Where( r=>  r.Question.Code == code) )
+                .GroupBy(r => r.Answer)
+                .Select(rg => rg.FirstOrDefault())
+                .Where(r => r != null);
         }
 
         private static IEnumerable<Response> GetDistinctResponses(IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes)
         {
             return filteredResponsesGroupes
-                .Select(rg => rg.First())
+                .SelectMany(rg => rg)
                 .GroupBy(r => r.Answer)
                 .Select(rg => rg.FirstOrDefault())
                 .Where(r => r != null);
@@ -203,6 +232,14 @@ namespace Dashboard.Services
                                                                               rg.Any(r => r.Question.Code == qc))
             );
         }
+
+        private static IEnumerable<IGrouping<string, Response>> FilterByQuestionAnswers(IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes, IEnumerable<string> responses, string code)
+        {
+            return filteredResponsesGroupes.Where(rg => !responses.Any() ||
+                                                        string.IsNullOrWhiteSpace(code) ||
+                                                        responses.Any(rs => rg.Any(r => r.Question.Code == code && r.Answer == rs)));
+        }
+
 
         private IEnumerable<IGrouping<string, Response>> FilterByProduct(ProductView productView)
         {
