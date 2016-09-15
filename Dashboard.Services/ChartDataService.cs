@@ -53,7 +53,7 @@ namespace Dashboard.Services
             if (criteria.SplitFilters != null && criteria.SplitFilters.Any())
             {
                 splitsSelectiveTypeAnswers = criteria.SplitFilters;
-                splitsSelectiveTypeCode = productView.ViewSplits.FirstOrDefault(vs => vs.SplitType == SplitType.Mutiple)?.Question.Code;
+                splitsSelectiveTypeCode = productView.ViewSplits.FirstOrDefault(vs => vs.SplitType == SplitType.Multiple)?.Question.Code;
                 filteredResponsesGroupes = FilterByQuestionAnswers(filteredResponsesGroupes, criteria.SplitFilters, splitsSelectiveTypeCode);
             }
            
@@ -117,7 +117,7 @@ namespace Dashboard.Services
             var filteredResponsesGroupes = FilterByProduct(productView);
 
             return GetDistinctResponses(filteredResponsesGroupes, productView.ViewSplits
-                .FirstOrDefault(vs => vs.SplitType == SplitType.Mutiple)
+                .FirstOrDefault(vs => vs.SplitType == SplitType.Multiple)
                 ?.Question
                 ?.Code);
         }

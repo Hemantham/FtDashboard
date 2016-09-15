@@ -44,18 +44,18 @@
                     </div>
                     <!-- /input-group -->
                 </li>
-
-                <li *ngFor="let productView of dashboards ; let last=last">
-                    <template [ngIf]="productView.DashboardView.ChildrenViews.length > 0">
-                        <a href="#"><i class="fa fa-dashboard fa-fw"></i>{{productView.DashboardView.Name}} <span class="fa arrow"></span></a>
+               
+                <li *ngFor="let productView of productViews ; let last=last">
+                    <template [ngIf]="productView.Children.length > 0">
+                        <a [routerLink]="['/views', productView.Id]"><i class="fa fa-dashboard fa-fw"></i>{{productView.DashboardView.Name}} <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li *ngFor="let childView of productView.DashboardView.ChildrenViews ">
-                                <a href="#">{{childView.Name}}</a>
+                            <li *ngFor="let childView of productView.Children ">
+                                <a [routerLink]="['/views',childView.Id]">{{childView.DashboardView.Name}}</a>
                             </li>
                         </ul>
                     </template>
-                    <template [ngIf]="productView.DashboardView.ChildrenViews.length == 0">
-                        <a href="#"><i class="fa fa-dashboard fa-fw"></i>{{productView.DashboardView.Name}}</a>
+                    <template [ngIf]="productView.Children.length == 0">
+                        <a [routerLink]="['/views',productView.Id]"><i class="fa fa-dashboard fa-fw"></i>{{productView.DashboardView.Name}}</a>
                     </template>
                     <span *ngIf='last'>{{onListRendered()}}</span>
                 </li>
@@ -67,11 +67,11 @@
 </nav>
 
 <div id="page-wrapper">
+    
+    <!--<chart-with-filtersx>
 
-
-
-    <chart-with-filters>
-        
-    </chart-with-filters>
+    </chart-with-filtersx>-->
+    
+    <router-outlet></router-outlet>
 
 </div>

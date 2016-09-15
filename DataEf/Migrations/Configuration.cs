@@ -339,7 +339,7 @@ namespace DataEf.Migrations
                             },
                             new ViewSplit
                             {
-                                SplitType = SplitType.Mutiple,
+                                SplitType = SplitType.Multiple,
                                 SplitName = "Select Broad Reasons",
                                 Question = questionCHRUN1,
                             }
@@ -354,7 +354,7 @@ namespace DataEf.Migrations
                     {
                         new ViewSplit
                         {
-                            SplitType = SplitType.Mutiple,
+                            SplitType = SplitType.Multiple,
                             SplitName = "Select Competitor",
                             Question = questionComp1,
                         }

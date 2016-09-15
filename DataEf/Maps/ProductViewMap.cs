@@ -11,7 +11,7 @@ namespace DataEf.Maps
             ToTable("ProductView");
 
             HasKey(x => x.Id);
-            HasRequired(x => x.DashboardView).WithMany().Map(x => x.MapKey("DashboardId"));
+            HasRequired(x => x.DashboardView).WithMany(x=>x.ProductViews).Map(x => x.MapKey("DashboardId"));
             HasRequired(x => x.Product).WithMany().Map(x => x.MapKey("ProductId"));
             HasMany(x => x.ViewSplits)
                 .WithOptional()

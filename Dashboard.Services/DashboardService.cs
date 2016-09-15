@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Dashboard.API.API;
 using Dashboard.API.Domain;
+using Dashboard.API.Models;
 using Dashboard.Models;
 using DataEf.Context;
 
@@ -40,12 +41,38 @@ namespace Dashboard.Services
                .GetSingle();
         }
 
+        public IEnumerable<ProductViewModel> GetProductViewModels(long productId)
+        {
+            var models =  GetProductViews(productId)
+                        .Select(MapProductViewModel).ToList();
+            var children = models.SelectMany(m=> m.Children).ToList();
+            return models.Where(m => !children.Any(c => c.Id == m.Id));
+        }
+
+        private static ProductViewModel MapProductViewModel(ProductView pv)
+        {
+            return new ProductViewModel
+            {
+                Id = pv.Id,
+                DashboardView = pv.DashboardView,
+                ProductId = pv.Product.Id,
+                Children = pv.DashboardView.ChildrenViews.Select( cv=>  
+                    new ProductViewModel
+                    {
+                        DashboardView = cv,
+                        Id = cv.ProductViews.First(cpv=> cpv.Product.Id == pv.Product.Id).Id,
+                        ProductId = pv.Product.Id,
+                    })
+            };
+        }
+
         public IEnumerable<ProductView> GetProductViews(long productId)
         {
             return _unitOfWork.GetRepository<ProductView>()
                 .Include(p => p.Product)
                 .Include(p => p.DashboardView)
                 .Include(p => p.DashboardView.ChildrenViews)
+                .Include(p => p.DashboardView.ChildrenViews.Select(x=> x.ProductViews))
                 //.Include(p => p.ViewSplits)
                 //.Include(p => p.ViewSplits.Select(vs=> vs.Filter))
                 //.Include(p => p.DashboardView.Parent)

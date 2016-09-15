@@ -4,6 +4,6 @@
     {
         All = 0,
         Single = 1,
-        Mutiple = 2,
+        Multiple = 2,
     }
 }

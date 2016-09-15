@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Chart } from '../charts/chart.component';
 import { ChartSearchCriteria, DataChart, ChartModel } from '../charts/domain/chart.domain';
 import { ViewSplit } from "../Dashboards/domain/dashboard.domain";
@@ -13,14 +13,16 @@ import { ChartValueService } from  "./services/chart.services";
     providers: [ChartValueService]
 })
 export class ChartContainerComponent implements OnInit {
-    private criteria: ChartSearchCriteria;
+    
     public charts: Array<ChartModel>;
 
+    @Input() criteria: ChartSearchCriteria;
+
     constructor(private service: ChartValueService) {
-        this.criteria = new ChartSearchCriteria(
-            new ViewSplit(5, null, null, null, null),
-            ["Customer Service", "Plans / pricing / inclusions"],
-            3);
+        //this.criteria = new ChartSearchCriteria(
+        //    new ViewSplit(5, null, null, null, null),
+        //    ["Customer Service", "Plans / pricing / inclusions"],
+        //    3);
     }
 
     ngOnInit() {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dashboard.API.Domain;
+using Dashboard.API.Models;
 
 namespace Dashboard.API.API
 {
@@ -13,6 +14,7 @@ namespace Dashboard.API.API
         Product GetProduct(long productId);
         IEnumerable<ProductView> GetProductViews(long productId);
         ProductView GetProductView(long productViewId);
+        IEnumerable<ProductViewModel> GetProductViewModels(long productId);
         ViewSplit GetViewSplit(long id);
     }
 }

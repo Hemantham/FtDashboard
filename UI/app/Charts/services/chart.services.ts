@@ -9,8 +9,7 @@ import '../../rxjs-operators'
 export class ChartValueService {
     constructor(private http: Http) { }
     
-    private heroesUrl = 'http://localhost/Dashboard.Rest/api/ChartValues';  // URL to web API
-
+   
     public getCharts(chartCriteria: Charts.ChartSearchCriteria): Observable<Charts.DataChart[]> {
         
         let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -22,7 +21,7 @@ export class ChartValueService {
             .catch(this.handleError);
     }
 
-    public getFields(id: number): Observable<Charts.Response[]> {
+    public getSplitFields(id: number): Observable<Charts.Response[]> {
 
         // let headers = new Headers({ 'Content-Type': 'application/json' });
         // let options = new RequestOptions({ headers: headers });

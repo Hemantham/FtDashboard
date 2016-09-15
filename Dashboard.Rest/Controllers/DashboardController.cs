@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Dashboard.API.API;
 using Dashboard.API.Domain;
+using Dashboard.API.Models;
 using Dashboard.Models;
 using Dashboard.Rest.Models.Charts;
 
@@ -40,9 +41,9 @@ namespace Dashboard.Rest.Controllers
 
         [HttpGet]
         [Route("api/products/{id:int}/views")]
-        public IEnumerable<ProductView> GetViews(int id)
+        public IEnumerable<ProductViewModel> GetViews(int id)
         {
-            return _service.GetProductViews(id);
+            return _service.GetProductViewModels(id);
         }
 
         [HttpGet]

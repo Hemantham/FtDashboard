@@ -125,6 +125,7 @@
     <Content Include="app\Dashboards\templates\DashboardComponent.html" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Images\intro-bg.jpg" />
     <Content Include="index.html" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
@@ -170,6 +171,7 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="app\app.routes.ts" />
     <TypeScriptCompile Include="app\Charts\chartcontainer.component.spec.ts" />
     <TypeScriptCompile Include="app\Charts\chartcontainer.component.ts" />
     <TypeScriptCompile Include="app\app.module.ts" />
@@ -178,6 +180,7 @@
     <TypeScriptCompile Include="app\Charts\services\chart.services.ts" />
     <TypeScriptCompile Include="app\Common\domain\common.domain.ts" />
     <TypeScriptCompile Include="app\Dashboards\chartswithfilters.component.ts" />
+    <TypeScriptCompile Include="app\Dashboards\homescreen.component.ts" />
     <TypeScriptCompile Include="app\Dashboards\dashboard.component.ts" />
     <TypeScriptCompile Include="app\Dashboards\domain\dashboard.domain.ts" />
     <TypeScriptCompile Include="app\Dashboards\services\dashboard.services.ts" />

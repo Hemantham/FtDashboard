@@ -1,4 +1,4 @@
-﻿import {DashboardView, Filter, Product, ViewSplit, ProductView} from "../domain/dashboard.domain.ts" 
+﻿import {DashboardView, ProductViewModel, Filter, Product, ViewSplit, ProductView} from "../domain/dashboard.domain.ts" 
 import * as Enumerable from "linq-es2015";
 
 import { Injectable }     from '@angular/core';
@@ -10,7 +10,7 @@ import '../../rxjs-operators'
 export class DashboardService {
     constructor(private http: Http) { }
     
-    public getViews(id: number): Observable<ProductView[]> {
+    public getViews(id: number): Observable<ProductViewModel[]> {
 
         //let headers = new Headers({ 'Content-Type': 'application/json' });
         //let options = new RequestOptions({ headers: headers });
@@ -35,9 +35,9 @@ export class DashboardService {
         return body;
     }
 
-    private extractViewData(res: Response): ProductView[] {
+    private extractViewData(res: Response): ProductViewModel[] {
         // debugger;
-        let body: ProductView[] = res.json();
+        let body: ProductViewModel[] = res.json();
         return body;
     }
 

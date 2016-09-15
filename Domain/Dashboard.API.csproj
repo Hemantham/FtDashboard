@@ -63,6 +63,7 @@
     <Compile Include="Models\ChartSearchCriteria.cs" />
     <Compile Include="Models\DataChart.cs" />
     <Compile Include="Models\DataPoint.cs" />
+    <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\Recency.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Domain\Question.cs" />
@@ -75,9 +76,38 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Domain\TsTemplate.tst" />
+    <None Include="Modelts.tst" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="ChartEntry.ts">
+      <DependentUpon>Modelts.tst</DependentUpon>
+      <CustomToolNamespace>Models\ChartEntry.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ChartSearchCriteria.ts">
+      <DependentUpon>Modelts.tst</DependentUpon>
+      <CustomToolNamespace>Models\ChartSearchCriteria.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Common.ts">
+      <DependentUpon>Modelts.tst</DependentUpon>
+      <CustomToolNamespace>..\Dashboard.Models\Constants\Common.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="DashboardView.ts">
+      <DependentUpon>Modelts.tst</DependentUpon>
+      <CustomToolNamespace>Domain\DashboardView.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="DataChart.ts">
+      <DependentUpon>Modelts.tst</DependentUpon>
+      <CustomToolNamespace>Models\DataChart.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="DataEntity.ts">
+      <DependentUpon>Modelts.tst</DependentUpon>
+      <CustomToolNamespace>Domain\DataEntity.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="DataPoint.ts">
+      <DependentUpon>Modelts.tst</DependentUpon>
+      <CustomToolNamespace>Models\DataPoint.cs</CustomToolNamespace>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Domain\ChartEntry.ts">
       <DependentUpon>TsTemplate.tst</DependentUpon>
       <CustomToolNamespace>Models\ChartEntry.cs</CustomToolNamespace>
@@ -132,6 +162,42 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="Domain\ViewSplit.ts">
       <DependentUpon>TsTemplate.tst</DependentUpon>
+      <CustomToolNamespace>Domain\ViewSplit.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Filter.ts">
+      <DependentUpon>Modelts.tst</DependentUpon>
+      <CustomToolNamespace>Domain\Filter.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Product.ts">
+      <DependentUpon>Modelts.tst</DependentUpon>
+      <CustomToolNamespace>Domain\Product.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ProductView.ts">
+      <DependentUpon>Modelts.tst</DependentUpon>
+      <CustomToolNamespace>Domain\ProductView.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ProductViewModel.ts">
+      <DependentUpon>Modelts.tst</DependentUpon>
+      <CustomToolNamespace>Models\ProductViewModel.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Question.ts">
+      <DependentUpon>Modelts.tst</DependentUpon>
+      <CustomToolNamespace>Domain\Question.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="QuestionGroup.ts">
+      <DependentUpon>Modelts.tst</DependentUpon>
+      <CustomToolNamespace>Domain\QuestionGroup.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Recency.ts">
+      <DependentUpon>Modelts.tst</DependentUpon>
+      <CustomToolNamespace>Models\Recency.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Response.ts">
+      <DependentUpon>Modelts.tst</DependentUpon>
+      <CustomToolNamespace>Domain\Response.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ViewSplit.ts">
+      <DependentUpon>Modelts.tst</DependentUpon>
       <CustomToolNamespace>Domain\ViewSplit.cs</CustomToolNamespace>
     </TypeScriptCompile>
   </ItemGroup>

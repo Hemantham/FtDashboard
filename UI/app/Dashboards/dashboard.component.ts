@@ -2,7 +2,7 @@
 
 import { ChartContainerComponent } from "../charts/chartcontainer.component"
 import { Component, OnInit, Input, AfterContentInit, ViewChild, ElementRef  } from '@angular/core';
-import { DashboardView,ProductView } from './domain/dashboard.domain';
+import { DashboardView, ProductViewModel } from './domain/dashboard.domain';
 import { DashboardService }  from "../dashboards/services/dashboard.services";
 import { ChartsWithFilters } from "./chartswithfilters.component";
 //import { BUTTON_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit {
 
     //@ViewChild('sideMenu') sideMenu: ElementRef;
 
-    public dashboards: ProductView[];
+    public productViews: ProductViewModel[];
     public errorMessage: any;
     private productId: number;
     private paramsSubscription: any;
@@ -55,8 +55,8 @@ export class DashboardComponent implements OnInit {
 
     ngOnInit(): void {
          this.service.getViews(this.productId)
-             .subscribe((response: ProductView[]) => {
-                     this.dashboards = response;
+             .subscribe((response: ProductViewModel[]) => {
+                     this.productViews = response;
                  },
             error => this.errorMessage = <any>error
         );

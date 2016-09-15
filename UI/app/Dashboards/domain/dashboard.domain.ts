@@ -4,7 +4,7 @@
 import {Question} from '../../charts/domain/chart.domain'
 
 export class DashboardView {
-    constructor(public Id:number, public Name: string, public Code: string, public FieldOfInterest: Question[], public XAxislable: string, public XAxisId: string, public Parent: DashboardView, public ViewOrder: number, public ChildrenViews: DashboardView[], public ChartRenderType: string, public DataAnlysisType: string) {
+    constructor(public Id: number, public Name: string, public Code: string, public FieldOfInterest: Question[], public XAxislable: string, public XAxisId: string, public Parent: DashboardView, public ViewOrder: number, public ChildrenViews: DashboardView[], public ChartRenderType: string, public DataAnlysisType: string, public ProductViews : ProductView[]) {
 
     }
 }
@@ -33,5 +33,10 @@ export class ProductView {
 export class ViewSplit {
     constructor(public Id:number, public SplitField: string, public SplitName: string, public Filter: Filter, public SplitType: string) {
 
+    }
+}
+
+export class ProductViewModel {
+    constructor(public id: number, public dashboardView: DashboardView, public productId: number, public children: ProductViewModel[]) {
     }
 }

@@ -7,7 +7,12 @@
 <div class="row">
 
     <div class="col-lg-8">
-        <chart-container>Loading...</chart-container>
+        
+        <chart-container [criteria]="searchCriteria" >Loading...</chart-container>
+        <!--<router-outlet>
+
+        </router-outlet>-->
+
     </div>
 
     <div class="col-lg-4">
@@ -27,15 +32,12 @@
                     </div>
 
                     <div class="panel-body">
-
                         <div class="form-group">
                             <label>Select Cut</label>
-                            
                             <ng-select [allowClear]="false"
                                        [items]="splits"
                                        placeholder="Select Cut">
                             </ng-select>
-                           
                         </div>
                         <div class="form-group">
                             <label>Time Period</label>
@@ -58,10 +60,7 @@
                             </select>
                         </div>
                     </div>
-
                 </div>
-
-
             </div>
         </div>
 
@@ -69,7 +68,7 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <i class="fa fa-bar-chart-o fa-fw"></i> Select Broad Reasons
+                        <i class="fa fa-bar-chart-o fa-fw"></i> {{multipleSplitField}}
                         <div class="pull-right">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-default btn-xs">
@@ -81,21 +80,14 @@
                     </div>
 
                     <div class="panel-body">
-
                         <div class="checkbox-button" *ngFor="let splitFilter of splitFilters">
                             <label>
                                 <input type="checkbox" value="1"><span>{{splitFilter.Answer}}</span>
                             </label>
                         </div>
-
                     </div>
-
-
                 </div>
             </div>
-
         </div>
-
     </div>
-
 </div>
