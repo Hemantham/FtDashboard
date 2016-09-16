@@ -46,11 +46,12 @@
   <ItemGroup>
     <Compile Include="API\IChartDataService.cs" />
     <Compile Include="API\IDashboardService.cs" />
+    <Compile Include="Domain\RecencyType.cs" />
     <Compile Include="Enums\SplitType.cs" />
     <Compile Include="Enums\DataAnlysisType.cs" />
     <Compile Include="Enums\ChartRenderType.cs" />
     <Compile Include="Domain\ProductView.cs" />
-    <Compile Include="Enums\RecencyType.cs" />
+    <Compile Include="Enums\RecencyTypes.cs" />
     <Compile Include="Enums\ResponseType.cs" />
     <Compile Include="Domain\ViewSplit.cs" />
     <Compile Include="Domain\DataEntity.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Models\ChartSearchCriteria.cs" />
     <Compile Include="Models\DataChart.cs" />
     <Compile Include="Models\DataPoint.cs" />
+    <Compile Include="Models\FieldValueModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\Recency.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -164,6 +166,10 @@
       <DependentUpon>TsTemplate.tst</DependentUpon>
       <CustomToolNamespace>Domain\ViewSplit.cs</CustomToolNamespace>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="FieldValueModel.ts">
+      <DependentUpon>Modelts.tst</DependentUpon>
+      <CustomToolNamespace>Models\FieldValueModel.cs</CustomToolNamespace>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Filter.ts">
       <DependentUpon>Modelts.tst</DependentUpon>
       <CustomToolNamespace>Domain\Filter.cs</CustomToolNamespace>
@@ -191,6 +197,10 @@
     <TypeScriptCompile Include="Recency.ts">
       <DependentUpon>Modelts.tst</DependentUpon>
       <CustomToolNamespace>Models\Recency.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="RecencyType.ts">
+      <DependentUpon>Modelts.tst</DependentUpon>
+      <CustomToolNamespace>Domain\RecencyType.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Response.ts">
       <DependentUpon>Modelts.tst</DependentUpon>

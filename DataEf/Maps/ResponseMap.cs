@@ -19,7 +19,6 @@ namespace DataEf.Maps
             HasKey(x => x.Id);
             HasRequired(x => x.Question).WithMany().Map(x => x.MapKey("QuestionId"));
 
-            Ignore(x => x.RecencyTicks);
             Property(x => x.Answer).HasMaxLength(400)
                  .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("IX_Answer"))); 
             Property(x => x.Email).HasMaxLength(100);

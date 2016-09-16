@@ -50,7 +50,7 @@ export class ChartEntry {
 //}
 
 export class ChartSearchCriteria {
-    constructor(public SelectedSplit: ViewSplit, public SplitFilters: string[], public ProductViewId: number) {
+    constructor(public SelectedSplit: ViewSplit, public SplitFilters: string[], public ProductViewId: number, public  RecencyType : number) {
     }
 }
 // Find all classes with a name ending with Model
@@ -58,9 +58,6 @@ export class FieldSearchCriteria {
     constructor(public ProductViewId: number, public CuestionCode: string) {
     }
 }
-
-
-
 
 export class Response {
     constructor(public responseType: string, public responseId: string, public inputId: number, public email: string, public completionDate: Date, public answer: string, public question: Question) {
@@ -73,5 +70,15 @@ export class Question {
 
 export class QuestionGroup {
     constructor(public code: string, public text: string) {
+    }
+}
+
+export class FieldValueModel {
+    constructor(public IsSelected: boolean, public Id: number, public Code: string, public Answer: string, public QuestionId: number) {
+    }
+}
+
+export class RecencyType {
+    constructor(public RecencyTypes: number, public Name: string) {
     }
 }

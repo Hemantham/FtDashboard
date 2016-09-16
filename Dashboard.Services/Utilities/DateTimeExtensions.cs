@@ -11,12 +11,12 @@ namespace Dashboard.Services.Utilities
 {
     public static class DateTimeExtensions
     {
-        public static Recency GetRecency(this DateTime value, RecencyType recencyType)
+        public static Recency GetRecency(this DateTime value, RecencyTypes recencyType)
         {
             int number;
             switch (recencyType)
             {
-               case RecencyType.Weekly:
+               case RecencyTypes.Weekly:
                     number = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(value, CalendarWeekRule.FirstFullWeek,
                         DayOfWeek.Monday);
 
@@ -28,7 +28,7 @@ namespace Dashboard.Services.Utilities
                         Lable = dateOfWeek.AddDays(DayOfWeek.Monday - dateOfWeek.DayOfWeek).ToShortDateString(),
                     };
 
-                case RecencyType.Monthly:
+                case RecencyTypes.Monthly:
 
                     number = CultureInfo.InvariantCulture.Calendar.GetMonth(value);
                     return new Recency
@@ -38,7 +38,7 @@ namespace Dashboard.Services.Utilities
                     };
                   
 
-                case RecencyType.Quarterly:
+                case RecencyTypes.Quarterly:
 
                     number = (int) Math.Ceiling(CultureInfo.InvariantCulture.Calendar.GetMonth(value)/3d);
                     return new Recency
@@ -47,7 +47,7 @@ namespace Dashboard.Services.Utilities
                         Lable = $"FY{value.Year}Q{number}",
                     };
 
-                case RecencyType.Fortnightly:
+                case RecencyTypes.Fortnightly:
 
                     number =(int)Math.Ceiling(CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(value, CalendarWeekRule.FirstFullWeek,
                                 DayOfWeek.Monday)/2d);

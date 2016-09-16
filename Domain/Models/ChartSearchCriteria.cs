@@ -12,8 +12,7 @@ namespace Dashboard.API.Models
         public ViewSplit SelectedSplit { get; set; }
         public IEnumerable<string> SplitFilters { get; set; }
         public int  ProductViewId { get; set; }
-        [JsonConverter(typeof(StringEnumConverter))]
-        public RecencyType RecencyType { get; set; }
+        public RecencyTypes RecencyType { get; set; }
     }
 
 

@@ -21,7 +21,7 @@ export class ChartValueService {
             .catch(this.handleError);
     }
 
-    public getSplitFields(id: number): Observable<Charts.Response[]> {
+    public getSplitFields(id: number): Observable<Charts.FieldValueModel[]> {
 
         // let headers = new Headers({ 'Content-Type': 'application/json' });
         // let options = new RequestOptions({ headers: headers });
@@ -31,8 +31,22 @@ export class ChartValueService {
             .catch(this.handleError);
     }
 
-    private extractFieldData(res: Response): Charts.Response[] {
-        let body: Charts.Response[] = res.json();
+     public getRecencies(): Observable<Charts.RecencyType[]> {
+
+        // let headers = new Headers({ 'Content-Type': 'application/json' });
+        // let options = new RequestOptions({ headers: headers });
+        return this.http
+            .get(`/Dashboard.Rest/api/charts/recencytypes`)
+            .map((res) => {
+                let body: Charts.RecencyType[] = res.json();
+                return body;
+            })
+            .catch(this.handleError);
+    }
+
+
+    private extractFieldData(res: Response): Charts.FieldValueModel[] {
+        let body: Charts.FieldValueModel[] = res.json();
         return body;
     }
 

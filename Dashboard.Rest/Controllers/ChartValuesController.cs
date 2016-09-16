@@ -22,49 +22,20 @@ namespace Dashboard.Rest.Controllers
             _chartDataService = chartDataService;
         }
 
-        //// GET api/values
-        //[HttpGet]
-        //[Route("api/chartvalues")]
-        //public IEnumerable<DataChart> Get()
-        //{
-        //    return GetChartEntries(null);
-        //}
+        [HttpGet]
+        [Route("api/charts/recencytypes")]
+        public IEnumerable<RecencyType> GetRecencyTypes()
+        {
+            return _chartDataService.GetRecencyTypes();
 
-        
+        }
 
-        
         [HttpPost]
         [Route("api/charts/data")]
         public IEnumerable<DataChart> GetChartEntries(ChartSearchCriteria criteria)
         {
             return _chartDataService.GetChartValues(criteria);
 
-            //chartCriteria ??
-            //new ChartSearchCriteria
-            //    {
-            //        Filters = new List<ValueFilter>
-            //    {
-            //        new ValueFilter
-            //        {
-            //            Code = "GROUPS",
-            //            Answer = "CONSUMER"
-            //        },
-            //        new ValueFilter
-            //        {
-            //            Code = "CHURNER_FLAG",
-            //            Answer = "CHURNER"
-            //        },
-            //        new ValueFilter
-            //        {
-            //            Code = "OLDPRODUCT",
-            //            Answer = "Overall Fixed"
-            //        },
-            //    },
-            //        FieldOfInterest = "CHURN1",
-            //        XAxisId = "ANALYSED_Week_#",
-            //        XAxislable = "ANALYSED_Week",
-            //    }
-            //);
         }
 
         // GET api/values/5

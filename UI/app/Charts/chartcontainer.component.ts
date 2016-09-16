@@ -16,9 +16,21 @@ export class ChartContainerComponent implements OnInit {
     
     public charts: Array<ChartModel>;
 
-    @Input() criteria: ChartSearchCriteria;
-
+    public load(criteria: ChartSearchCriteria) {
+        this.service
+            .getCharts(criteria)
+            .subscribe((charts: any) => {
+                this.charts = charts;
+            },
+            error => {
+                <any>error;
+                alert(<any>error);
+            }
+            );
+    }
+    
     constructor(private service: ChartValueService) {
+
         //this.criteria = new ChartSearchCriteria(
         //    new ViewSplit(5, null, null, null, null),
         //    ["Customer Service", "Plans / pricing / inclusions"],
@@ -26,17 +38,6 @@ export class ChartContainerComponent implements OnInit {
     }
 
     ngOnInit() {
-
-        this.service
-            .getCharts(this.criteria)
-            .subscribe((charts: any) => {
-                    this.charts = charts;
-                },
-                error => {
-                        <any>error;
-                        alert(<any>error);
-                }
-            );
 
     }
 }

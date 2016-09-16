@@ -3,7 +3,7 @@
 namespace Dashboard.API.Enums
 {
     [Flags]
-    public enum RecencyType
+    public enum RecencyTypes
     {
         Weekly = 0,
         Fortnightly = 1,

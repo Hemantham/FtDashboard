@@ -363,6 +363,18 @@ namespace DataEf.Migrations
 
                 context.SaveChanges();
             }
+
+            foreach (RecencyTypes recencyType in Enum.GetValues(typeof(RecencyTypes)))
+            {
+                context.Set<RecencyType>().Add(new RecencyType
+                {
+                    RecencyTypes = recencyType,
+                    Name = recencyType.ToString(),
+
+                });
+                context.SaveChanges();
+
+            }
         }
     }
 }

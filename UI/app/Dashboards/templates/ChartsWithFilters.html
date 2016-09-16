@@ -8,7 +8,7 @@
 
     <div class="col-lg-8">
         
-        <chart-container [criteria]="searchCriteria" >Loading...</chart-container>
+        <chart-container  >Loading...</chart-container>
         <!--<router-outlet>
 
         </router-outlet>-->
@@ -35,19 +35,22 @@
                         <div class="form-group">
                             <label>Select Cut</label>
                             <ng-select [allowClear]="false"
+                                       (selected)="splitSelected($event)"
+                                       
                                        [items]="splits"
                                        placeholder="Select Cut">
                             </ng-select>
                         </div>
+                        
+                        recenciesTypes
+
                         <div class="form-group">
                             <label>Time Period</label>
-                            <select class="form-control">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
+                            <ng-select [allowClear]="false"
+                                       [items]="recenciesTypes"
+                                       (selected) ="recencySelected($event)"
+                                       placeholder="">
+                            </ng-select>
                         </div>
                         <div class="form-group">
                             <label>Select Data Points</label>
@@ -82,7 +85,7 @@
                     <div class="panel-body">
                         <div class="checkbox-button" *ngFor="let splitFilter of splitFilters">
                             <label>
-                                <input type="checkbox" value="1"><span>{{splitFilter.Answer}}</span>
+                                <input (change)="limitSelected(splitFilter, $event.target.checked)"  type="checkbox"  [(ngModel)]="splitFilter.IsSelected"><span>{{splitFilter.Answer}}</span>
                             </label>
                         </div>
                     </div>

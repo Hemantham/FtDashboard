@@ -14,7 +14,7 @@ namespace Dashboard.API.Domain
         public DateTime CompletionDate { get; set; }
         public string Answer { get; set; }
         public Question Question { get; set; }
-        public int RecencyTicks { get; set; }
+       
         
     }
 }

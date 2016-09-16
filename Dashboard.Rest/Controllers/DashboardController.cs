@@ -48,7 +48,7 @@ namespace Dashboard.Rest.Controllers
 
         [HttpGet]
         [Route("api/products/views/{id:int}/splitfilters")]
-        public IEnumerable<Response> GetFieldValues(int id)
+        public IEnumerable<FieldValueModel> GetFieldValues(int id)
         {
             return _chartService.GetFieldValues(id);
         }

@@ -40,3 +40,4 @@ export class ProductViewModel {
     constructor(public id: number, public dashboardView: DashboardView, public productId: number, public children: ProductViewModel[]) {
     }
 }
+

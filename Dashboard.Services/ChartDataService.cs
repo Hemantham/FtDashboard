@@ -38,7 +38,7 @@ namespace Dashboard.Services
 
             string splitsSelectiveTypeCode = null;
 
-            if (criteria.SelectedSplit != null)
+            if (criteria.SelectedSplit != null && criteria.SelectedSplit.Id > 0)
             {
                 var selectedSplit = _dashboardService.GetViewSplit(criteria.SelectedSplit.Id);
 
@@ -110,19 +110,31 @@ namespace Dashboard.Services
             return charts;
         }
 
-        public IEnumerable<Response> GetFieldValues(int productViewId)
+        public IEnumerable<RecencyType> GetRecencyTypes()
+        {
+           return  _unitOfWork.GetRepository<RecencyType>().Get();
+        }
+
+        public IEnumerable<FieldValueModel> GetFieldValues(int productViewId)
         {
             var productView = _dashboardService.GetProductView(productViewId);
 
             var filteredResponsesGroupes = FilterByProduct(productView);
 
-            return GetDistinctResponses(filteredResponsesGroupes, productView.ViewSplits
-                .FirstOrDefault(vs => vs.SplitType == SplitType.Multiple)
-                ?.Question
-                ?.Code);
+            return GetDistinctResponses(filteredResponsesGroupes, 
+                                productView.ViewSplits.FirstOrDefault(vs => vs.SplitType == SplitType.Multiple)?.Question?.Code)
+                                .Select((r,i)=> new FieldValueModel
+                    {
+                        Id = r.Id,
+                        Code = r.Question.Code,
+                        Answer = r.Answer,
+                        QuestionId = r.Question.Id,
+                        IsSelected = i < 2
+                    })
+                                ;
         }
 
-        private static IEnumerable<ChartEntry> GetDataFieldsByPercentage(IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes, ProductView productView, RecencyType recencyType)
+        private static IEnumerable<ChartEntry> GetDataFieldsByPercentage(IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes, ProductView productView, RecencyTypes recencyType)
         {
             var fingleFieldOfInterest = productView.DashboardView.FieldOfInterest.FirstOrDefault()?.Code;
              
@@ -179,7 +191,7 @@ namespace Dashboard.Services
             return chartValues;
         }
 
-        private static IEnumerable<ChartEntry> GetDataFieldsByAvarage(IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes, ProductView productView, RecencyType recencyType)
+        private static IEnumerable<ChartEntry> GetDataFieldsByAvarage(IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes, ProductView productView, RecencyTypes recencyType)
         {
 
             var chartEntries = new List<ChartEntry>();
@@ -269,8 +281,7 @@ namespace Dashboard.Services
                                                         string.IsNullOrWhiteSpace(code) ||
                                                         responses.Any(rs => rg.Any(r => r.Question.Code == code && r.Answer == rs)));
         }
-
-
+        
         private IEnumerable<IGrouping<string, Response>> FilterByProduct(ProductView productView)
         {
             var productFilters = productView.Product?
