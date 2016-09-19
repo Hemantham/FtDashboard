@@ -12,7 +12,7 @@ namespace Dashboard.API.Models
         public string KeyCode { get; set; }
         public string KeyName { get; set; }
         public string Id { get; set; }
-        public long XAxisId { get; set; }
+        public int XAxisId { get; set; }
         public string XAxisLable { get; set; }
         public DateTime CompletionDate { get; set; }
     }

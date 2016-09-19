@@ -7,6 +7,8 @@ export class ChartModel {
     xAxisFormat: string;
     yAxisFormat: string;
     series: ChartSeriesModel[];
+    recencies: Array<Recency>;
+
 }
 
 export class ChartSeriesModel {
@@ -28,6 +30,11 @@ export class DataChart {
     }
 }
 
+export class ChartsContainerModel {
+    constructor(public Charts: DataChart[], public AvailableRecencies: Recency[]) {
+    }
+}
+
 
 export class ChartEntry {
     Value: number;
@@ -37,17 +44,6 @@ export class ChartEntry {
     Series: string;
 }
 
-//export class ChartFilter {
-
-//    constructor(code: string, answer : string) {
-        
-//            this.Code = code;
-//            this.Answer = answer;
-//    }
-
-//    public Code: string;
-//    public Answer: string;
-//}
 
 export class ChartSearchCriteria {
     constructor(public SelectedSplit: ViewSplit, public SplitFilters: string[], public ProductViewId: number, public  RecencyType : number) {
@@ -80,5 +76,11 @@ export class FieldValueModel {
 
 export class RecencyType {
     constructor(public RecencyTypes: number, public Name: string) {
+    }
+}
+
+export class Recency {
+    constructor(public RecencyNumber: number, public Lable: string) {
+
     }
 }

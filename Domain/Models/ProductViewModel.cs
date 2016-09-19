@@ -13,6 +13,5 @@ namespace Dashboard.API.Models
         public DashboardView DashboardView { get; set; }
         public long ProductId { get; set; }
         public IEnumerable<ProductViewModel> Children { get; set; }
-       
     }
 }

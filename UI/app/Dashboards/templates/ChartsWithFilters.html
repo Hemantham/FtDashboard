@@ -36,7 +36,8 @@
                             <label>Select Cut</label>
                             <ng-select [allowClear]="false"
                                        (selected)="splitSelected($event)"
-                                       
+                                       [initData]="[selectedSplit]"
+                                       #dropdownCut
                                        [items]="splits"
                                        placeholder="Select Cut">
                             </ng-select>
@@ -46,21 +47,30 @@
 
                         <div class="form-group">
                             <label>Time Period</label>
-                            <ng-select [allowClear]="false"
+                            <ng-select 
+                                        #dropdownRecencyType
+                                       [allowClear]="false"
                                        [items]="recenciesTypes"
-                                       (selected) ="recencySelected($event)"
+                                       [initData]="[selectedRecencyType]"
+                                       (selected) ="recencyTypeSelected($event)"
                                        placeholder="">
                             </ng-select>
                         </div>
                         <div class="form-group">
                             <label>Select Data Points</label>
-                            <select multiple class="form-control">
+                            <!--<select multiple class="form-control">
                                 <option>1</option>
                                 <option>2</option>
                                 <option>3</option>
                                 <option>4</option>
                                 <option>5</option>
-                            </select>
+                            </select>-->
+                            <ng-select [allowClear]="false" #dropdownRecency
+                                       [items]="recencies"
+                                       [multiple]="true"
+                                       (selected)="recencySelected($event)"
+                                       placeholder="">
+                            </ng-select>
                         </div>
                     </div>
                 </div>

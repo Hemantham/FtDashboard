@@ -10,7 +10,7 @@ export class ChartValueService {
     constructor(private http: Http) { }
     
    
-    public getCharts(chartCriteria: Charts.ChartSearchCriteria): Observable<Charts.DataChart[]> {
+    public getCharts(chartCriteria: Charts.ChartSearchCriteria): Observable<Charts.ChartsContainerModel> {
         
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
@@ -53,9 +53,11 @@ export class ChartValueService {
     private extractChartData(res: Response): Charts.ChartModel[] {
 
         try {
-       
-        let data: Array<Charts.DataChart> = res.json();
+
+        let chartContainerModel = res.json();
+        let data: Array<Charts.DataChart> = chartContainerModel.Charts;
         let charts: Array<Charts.ChartModel> = new Array<Charts.ChartModel>();
+        
 
         data.forEach(datachart => {
 
@@ -66,6 +68,7 @@ export class ChartValueService {
 
                 chart.xAxislable = "This is X";
                 chart.yAxislable = "This is Y";
+                chart.recencies = chartContainerModel.AvailableRecencies;
                 chart.name = datachart.ChartName;
                 chart.series = chartsList.GroupBy(chartEntry => chartEntry.Series,
                         chartEntry => chartEntry,

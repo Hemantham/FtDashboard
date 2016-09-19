@@ -6,10 +6,12 @@ import { DashboardView, ProductView, ViewSplit } from './domain/dashboard.domain
 import { DashboardService }  from "../dashboards/services/dashboard.services";
 import { ChartValueService } from "../Charts/services/chart.services";
 import { CORE_DIRECTIVES, FORM_DIRECTIVES, NgClass } from '@angular/common';
-import { SELECT_DIRECTIVES } from 'ng2-select';
+import { SELECT_DIRECTIVES, SelectComponent } from 'ng2-select';
+import { SELECT_DIRECTIVES, SelectComponent } from 'ng2-select';
 import * as Charts from "../Charts/domain/chart.domain";
 import { ActivatedRoute, Router } from '@angular/router';
 import {Observable} from 'rxjs/Rx'
+import { SelectItem } from './select-item';
 
 declare var jQuery: any;
 
@@ -21,21 +23,38 @@ declare var jQuery: any;
 })
 
 export class ChartsWithFilters implements OnInit {
-    
+
+    public errorMessage: any;
+
     public productView: ProductView;
     public splitFilters: Array<Charts.FieldValueModel>;
-    public splits: Array<any> = [];
+    
     public multipleSplitField: string;
+
+    public splits: Array<any> = [];
     public selectedSplit: any = { id: 0, text: 'Overall' };
-    public selectedRecency: any = { id: 1};
-    public errorMessage: any;
+
     public recenciesTypes: Array<any> = [];
+    public selectedRecencyType: any = { id: 1, text: 'Weekly' };
+
+    public selectedRecencies: Array<any> = [];
+    public recencies: Array<any> = [];
+    
     public searchCriteria: Charts.ChartSearchCriteria ;
     private viewid: number;
     private paramsSubscription: any;
 
     @ViewChild(ChartContainerComponent)
     private chartContainerComponent: ChartContainerComponent;
+
+    @ViewChild('dropdownRecency')
+    private dropdownRecency: SelectComponent;
+
+    @ViewChild('dropdownRecencyType')
+    private dropdownRecencyType: SelectComponent;
+
+    @ViewChild('dropdownCut')
+    private dropdownCut: SelectComponent;
     
     constructor(private service: DashboardService,
         private elementRef: ElementRef,
@@ -65,8 +84,18 @@ export class ChartsWithFilters implements OnInit {
 
                 //re-initialise when route changes
                 this.viewid = parseInt(params['id']);
-                this.selectedSplit = { id: 0, text: 'Overall' };
-                this.splits = [];
+                //this.selectedSplit = { id: 0, text: 'Overall' };
+                //this.splits = [];
+                debugger;
+                if (this.dropdownRecency.itemObjects.length > 0) 
+                    this.dropdownRecency.active = [this.dropdownRecency.itemObjects[0]];
+                
+                if (this.dropdownRecencyType.itemObjects.length > 0)
+                    this.dropdownRecencyType.active = [this.dropdownRecencyType.itemObjects[0]];
+
+                if (this.dropdownCut.itemObjects.length > 0)
+                    this.dropdownCut.active = [this.dropdownCut.itemObjects[0]];
+               
                 //alert(0)
                 //wait for both responses to finish
                 Observable.forkJoin(
@@ -96,12 +125,20 @@ export class ChartsWithFilters implements OnInit {
         this.loadChart();
     }
 
+    
+
     recencySelected(value: any) {
         debugger;
-        this.selectedRecency = value;
+        this.selectedRecencies = value;
         this.loadChart();
     }
-    
+
+    recencyTypeSelected(value: any) {
+        //debugger;
+        this.selectedRecencyType = value;
+        this.loadChart();
+    }
+
     limitSelected(field: Charts.FieldValueModel, checked: boolean): void {
 
         field.IsSelected = checked;
@@ -116,17 +153,25 @@ export class ChartsWithFilters implements OnInit {
     }
 
     loadChart(): void {
-       
         this.searchCriteria = new Charts.ChartSearchCriteria(new ViewSplit(this.selectedSplit.id, null, null, null,null ),
             this.splitFilters
                 .filter((s) => s.IsSelected)
                 .map((s) => s.Answer),
             this.viewid,
-            this.selectedRecency.id
-
+            this.selectedRecencyType.id
         );
 
-        this.chartContainerComponent.load(this.searchCriteria);
+        this.chartContainerComponent.load(this.searchCriteria, (cm: Array<Charts.Recency>) => {
+           
+                this.recencies = cm.map((m) => {
+                    return {
+                        id: m.RecencyNumber,
+                        text: m.Lable
+                    }
+                });
+        
+        });
+       
         //  this.router.navigate(['/views/charts', this.viewid ]);
     }
 

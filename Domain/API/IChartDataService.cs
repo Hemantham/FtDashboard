@@ -12,7 +12,7 @@ namespace Dashboard.API.API
 {
     public interface IChartDataService
     {
-        IEnumerable<DataChart> GetChartValues(ChartSearchCriteria criteria);
+        ChartsContainerModel GetChartsContainerModel(ChartSearchCriteria criteria);
 
         IEnumerable<FieldValueModel> GetFieldValues(int productViewId);
 

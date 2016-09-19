@@ -1,7 +1,7 @@
 
 import { Component, OnInit, Input } from '@angular/core';
 import { Chart } from '../charts/chart.component';
-import { ChartSearchCriteria, DataChart, ChartModel } from '../charts/domain/chart.domain';
+import { ChartSearchCriteria, ChartModel, ChartsContainerModel, Recency} from '../charts/domain/chart.domain';
 import { ViewSplit } from "../Dashboards/domain/dashboard.domain";
 import { ChartValueService } from  "./services/chart.services";
 
@@ -16,17 +16,19 @@ export class ChartContainerComponent implements OnInit {
     
     public charts: Array<ChartModel>;
 
-    public load(criteria: ChartSearchCriteria) {
+    public load(criteria: ChartSearchCriteria, callback: (chartmodels: Array<Recency>) => any) {
         this.service
             .getCharts(criteria)
             .subscribe((charts: any) => {
+                   
+                callback(charts != null && charts.length > 0 ? charts[0].recencies: null);
                 this.charts = charts;
             },
             error => {
                 <any>error;
                 alert(<any>error);
             }
-            );
+        );
     }
     
     constructor(private service: ChartValueService) {

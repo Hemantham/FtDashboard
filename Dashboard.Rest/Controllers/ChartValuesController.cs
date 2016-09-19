@@ -32,9 +32,9 @@ namespace Dashboard.Rest.Controllers
 
         [HttpPost]
         [Route("api/charts/data")]
-        public IEnumerable<DataChart> GetChartEntries(ChartSearchCriteria criteria)
+        public ChartsContainerModel GetChartEntries(ChartSearchCriteria criteria)
         {
-            return _chartDataService.GetChartValues(criteria);
+            return _chartDataService.GetChartsContainerModel(criteria);
 
         }
 
