@@ -11,7 +11,7 @@ namespace Dashboard.Services.Utilities
 {
     public static class DateTimeExtensions
     {
-        public static Recency GetRecency(this DateTime value, RecencyTypes recencyType)
+        public static XAxis GetRecency(this DateTime value, RecencyTypes recencyType)
         {
             int number;
             switch (recencyType)
@@ -22,7 +22,7 @@ namespace Dashboard.Services.Utilities
 
                     DateTime dateOfWeek = new DateTime(value.Year, 1, 1).AddDays(number*7);
 
-                    return new Recency
+                    return new XAxis
                     {
                         RecencyNumber = number,
                         Lable = dateOfWeek.AddDays(DayOfWeek.Monday - dateOfWeek.DayOfWeek).ToShortDateString(),
@@ -31,7 +31,7 @@ namespace Dashboard.Services.Utilities
                 case RecencyTypes.Monthly:
 
                     number = CultureInfo.InvariantCulture.Calendar.GetMonth(value);
-                    return new Recency
+                    return new XAxis
                     {
                         RecencyNumber = number,
                         Lable = new DateTime(value.Year, number, 1).ToString("MMM", CultureInfo.InvariantCulture),
@@ -41,7 +41,7 @@ namespace Dashboard.Services.Utilities
                 case RecencyTypes.Quarterly:
 
                     number = (int) Math.Ceiling(CultureInfo.InvariantCulture.Calendar.GetMonth(value)/3d);
-                    return new Recency
+                    return new XAxis
                     {
                         RecencyNumber = number,
                         Lable = $"FY{value.Year}Q{number}",
@@ -54,7 +54,7 @@ namespace Dashboard.Services.Utilities
 
                     dateOfWeek = new DateTime(value.Year, 1, 1).AddDays(number * 14);
 
-                    return new Recency
+                    return new XAxis
                     {
                         RecencyNumber = number,
                         Lable = dateOfWeek.AddDays(DayOfWeek.Monday - dateOfWeek.DayOfWeek).ToShortDateString(),

@@ -39,14 +39,13 @@ export class ChartsContainerModel {
 export class ChartEntry {
     Value: number;
     XAxisLable: string;
-    XAxisValue: any;
     XAxisId: number;
     Series: string;
 }
 
 
 export class ChartSearchCriteria {
-    constructor(public SelectedSplit: ViewSplit, public SplitFilters: string[], public ProductViewId: number, public  RecencyType : number) {
+    constructor(public SelectedSplit: ViewSplit, public SplitFilters: string[], public ProductViewId: number, public RecencyType: number, public SelectedRecencies: Recency[]) {
     }
 }
 // Find all classes with a name ending with Model

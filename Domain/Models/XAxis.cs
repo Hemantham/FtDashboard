@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dashboard.API.Models
 {
-    public class Recency
+    public class XAxis
     {
         public int RecencyNumber { get; set; }
         public string  Lable { get; set;}

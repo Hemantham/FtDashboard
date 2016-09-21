@@ -45,52 +45,98 @@ namespace DataEf.Migrations
 
             var questionGroup = new Question
             {
-                Code = "GROUPS",
+                Code = "GROUPS",  Text = "GROUPS"
             };
 
             var questionCHURNER_FLAG = new Question
             {
                 Code = "CHURNER_FLAG",
+                Text = "Is Churner"
             };
 
             var questionOLDPRODUCT = new Question
             {
                 Code = "OLDPRODUCT",
+                Text = "Competitor"
             };
 
             var questionCHRUN1 = new Question
             {
                 Code = "CHURN1",
+                Text = "Reason for leaving"
             };
 
             var questionCHRUN2a = new Question
             {
                 Code = "CHURN2A",
+                Text = "specific reason for leaving"
             };
 
             var questionNP1 = new Question
             {
                 Code = "NP1",
+                Text = "new provider"
             };
 
             var questionANALYSED_Week = new Question
             {
                 Code = "ANALYSED_Week",
+                Text = "Date Text"
             };
 
             var questionANALYSED_WeekNo = new Question
             {
                 Code = "ANALYSED_Week_#",
+                Text = "Date Number "
             };
 
             var questionTechType = new Question
             {
                 Code = "TECHTYPE1",
+                Text = "Technology Type"
             };
 
             var questionComp1 = new Question
             {
                 Code = "COMP1",
+                Text = "Reason for competitor"
+            };
+
+            var questionReturnIntent = new Question
+            {
+                Code = "RETURN1",
+                Text = "will come back"
+            };
+
+            var questionsat1 = new Question
+            {
+                Code = "SAT1",Text = "satisfaction 1"
+            };
+
+            var questionsat2 = new Question
+            {
+                Code = "SAT2",
+                Text = "satisfaction 2"
+            };
+            var questionsat3 = new Question
+            {
+                Code = "SAT3",
+                Text = "satisfaction 3"
+            };
+            var questionsat4 = new Question
+            {
+                Code = "SAT4",
+                Text = "satisfaction 4"
+            };
+            var questionsat5 = new Question
+            {
+                Code = "SAT5",
+                Text = "satisfaction 5"
+            };
+            var questionOsat = new Question
+            {
+                Code = "OSAT",
+                Text = "Overall satisfaction"
             };
 
             var random = new Random();
@@ -106,6 +152,8 @@ namespace DataEf.Migrations
                 var competitor = GetRand(random,"Telstra", "Vodaphone", "Virgin", "TPG", "DoDo");
 
                 var week = random.Next(1, 4);
+
+                var return1 = random.Next(1, 9) + random.NextDouble();
 
                 var completiondate = new DateTime(2016,8, random.Next(1, 30));
 
@@ -210,6 +258,84 @@ namespace DataEf.Migrations
                         CompletionDate = completiondate
                     });
 
+                responses.Add(
+                  new Response
+                  {
+                      Question = questionReturnIntent,
+                      Answer = $"{return1}",
+                      ResponseId = i.ToString(),
+                      InputId = i,
+                      ResponseType = ResponseType.NumericRange,
+                      CompletionDate = completiondate
+                  });
+
+                /////
+                responses.Add(
+                 new Response
+                 {
+                     Question = questionsat1,
+                     Answer = $"{random.Next(1, 9)}.{random.Next(1,100)}",
+                     ResponseId = i.ToString(),
+                     InputId = i,
+                     ResponseType = ResponseType.NumericRange,
+                     CompletionDate = completiondate
+                 });
+
+                responses.Add(
+                 new Response
+                 {
+                     Question = questionsat2,
+                     Answer = $"{random.Next(1, 9)}.{random.Next(1,100)}",
+                     ResponseId = i.ToString(),
+                     InputId = i,
+                     ResponseType = ResponseType.NumericRange,
+                     CompletionDate = completiondate
+                 });
+
+                responses.Add(
+                 new Response
+                 {
+                     Question = questionsat3,
+                     Answer = $"{random.Next(1, 9)}.{random.Next(1,100)}",
+                     ResponseId = i.ToString(),
+                     InputId = i,
+                     ResponseType = ResponseType.NumericRange,
+                     CompletionDate = completiondate
+                 });
+
+                responses.Add(
+                 new Response
+                 {
+                     Question = questionsat4,
+                     Answer = $"{random.Next(1, 9)}.{random.Next(1,100)}",
+                     ResponseId = i.ToString(),
+                     InputId = i,
+                     ResponseType = ResponseType.NumericRange,
+                     CompletionDate = completiondate
+                 });
+
+                responses.Add(
+                 new Response
+                 {
+                     Question = questionsat5,
+                     Answer = $"{random.Next(1, 9)}.{random.Next(1,100)}",
+                     ResponseId = i.ToString(),
+                     InputId = i,
+                     ResponseType = ResponseType.NumericRange,
+                     CompletionDate = completiondate
+                 });
+
+                responses.Add(
+                 new Response
+                 {
+                     Question = questionOsat,
+                     Answer = $"{random.Next(1, 9)}.{random.Next(1,100)}",
+                     ResponseId = i.ToString(),
+                     InputId = i,
+                     ResponseType = ResponseType.NumericRange,
+                     CompletionDate = completiondate
+                 });
+
             }
 
             foreach (var response in responses)
@@ -224,12 +350,8 @@ namespace DataEf.Migrations
                         FieldOfInterest = new List<Question> { questionCHRUN1 },
                         Name = "Broad reason for Churn",
                         Code = "Broad reason for Churn",
-                       // XAxisId = "ANALYSED_Week_#",
-                       // XAxislable = "ANALYSED_Week"
+          
                     };
-
-            context.Set<DashboardView>().Add(churn1);
-            context.SaveChanges();
 
 
             var CHURN2A =
@@ -239,36 +361,43 @@ namespace DataEf.Migrations
                         Name = "Specific Reason for churn",
                         Code = "Specific Reason for churn",
                         Parent = churn1,
-                      //  XAxisId = "ANALYSED_Week_#",
-                      //  XAxislable = "ANALYSED_Week"
                     };
-
-
-            context.Set<DashboardView>().Add(CHURN2A);
-            context.SaveChanges();
-
 
             var np1 = new DashboardView
                 {
                     FieldOfInterest = new List<Question> { questionNP1 },
                     Name = "New Provider",
                     Code = "New Provider",
-                   // XAxisId = "ANALYSED_Week_#",
-                   // XAxislable = "ANALYSED_Week"
+                  
             };
 
-            context.Set<DashboardView>().Add(np1);
-            context.SaveChanges();
+            var ExpAreaSat = new DashboardView
+            {
+                FieldOfInterest = new List<Question> { questionsat1, questionsat2 , questionsat3, questionsat4, questionsat5, questionOsat},
+                Name = "Experience Area Satisfaction",
+                Code = "Experience Area Satisfaction",
+                DataAnlysisType = DataAnlysisType.avarage,
+               
+            };
 
-            foreach (var product in new[]
-                                        {
+            var IntentToReturn = new DashboardView
+            {
+                FieldOfInterest = new List<Question> { questionReturnIntent },
+                Name = "Intent To Return",
+                Code = "Intent To Return",
+                DataAnlysisType = DataAnlysisType.percentageAndAverage,
+                ChartRanges = "Unlikely:0-5|Neutral:6-7|Likely:8-10"
+            };
+
+            
+            foreach (var product in new[]{
                                                 new {P = "SMB", F = @"[GROUPS] = 'SMALL BUSINESS' AND CHURNER_FLAG = 'CHURNER'"},
                                                 new
                                                 {
                                                     P = "Fixed",
                                                     F = @"[GROUPS] = 'CONSUMER' AND OLDPRODUCT = 'Overall Fixed' AND CHURNER_FLAG = 'CHURNER'"
                                                 }
-                                            })
+                                         })
             {
 
                 var p = new Product
@@ -357,6 +486,36 @@ namespace DataEf.Migrations
                             SplitType = SplitType.Multiple,
                             SplitName = "Select Competitor",
                             Question = questionComp1,
+                        }
+                    }
+                });
+
+                p.ProductViews.Add(new ProductView
+                {
+                    Product = p,
+                    DashboardView = ExpAreaSat,
+                    ViewSplits = new List<ViewSplit>
+                    {
+                        new ViewSplit
+                        {
+                            SplitType = SplitType.All,
+                            SplitName = "Tech Type",
+                            Question = questionTechType,
+                        }
+                    }
+                });
+
+                p.ProductViews.Add(new ProductView
+                {
+                    Product = p,
+                    DashboardView = IntentToReturn,
+                    ViewSplits = new List<ViewSplit>
+                    {
+                        new ViewSplit
+                        {
+                            SplitType = SplitType.All,
+                            SplitName = "Tech Type",
+                            Question = questionTechType,
                         }
                     }
                 });

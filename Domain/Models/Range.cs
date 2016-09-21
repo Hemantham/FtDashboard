@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Dashboard.API.Models
 {
-    public class ChartsContainerModel
+    public class Range
     {
-        public IEnumerable<DataChart> Charts { get; set; }
-        public IEnumerable<XAxis> AvailableRecencies { get; set; }
+        public string Text { get; set; }
+        public float Start { get; set; }
+        public float End { get; set; }
 
     }
 }

@@ -9,9 +9,6 @@
     <div class="col-lg-8">
         
         <chart-container  >Loading...</chart-container>
-        <!--<router-outlet>
-
-        </router-outlet>-->
 
     </div>
 
@@ -42,8 +39,6 @@
                                        placeholder="Select Cut">
                             </ng-select>
                         </div>
-                        
-                        recenciesTypes
 
                         <div class="form-group">
                             <label>Time Period</label>
@@ -58,17 +53,11 @@
                         </div>
                         <div class="form-group">
                             <label>Select Data Points</label>
-                            <!--<select multiple class="form-control">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>-->
                             <ng-select [allowClear]="false" #dropdownRecency
                                        [items]="recencies"
                                        [multiple]="true"
                                        (selected)="recencySelected($event)"
+                                       (removed)="recencyRemoved($event)"
                                        placeholder="">
                             </ng-select>
                         </div>

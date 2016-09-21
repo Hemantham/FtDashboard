@@ -23,6 +23,7 @@ namespace DataEf.Maps
                             .MapRightKey("QuestionId")
                             );
             Property(x => x.Name).HasMaxLength(300).IsRequired();
+            Property(x => x.ChartRanges).HasMaxLength(200);
             Property(x => x.Code).HasMaxLength(200).IsRequired()
                 .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("IX_Code") { IsUnique = true }));
             HasOptional(x => x.Parent).WithMany(x=> x.ChildrenViews)

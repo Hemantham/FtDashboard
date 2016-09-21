@@ -2,7 +2,7 @@
 import {ChartValueService} from './services/chart.services'
 import {nvD3} from 'ng2-nvd3';
 import * as Chartdomain from "./domain/chart.domain";
-import * as Enumerable from "linq-es2015";
+
 declare let d3: any;
 
 @Component({
@@ -58,28 +58,38 @@ export class Chart implements OnInit {
                 height: 500,
                 margin: {
                     top: 20,
-                    right: 20,
+                    right: 50,
                     bottom: 70,
-                    left: 55
+                    left: 70
                 },
                 x: function (d: any) { return d.x; },
                 y: function (d: any) { return d.y; },
                 showValues: true,
-                staggerLabels: true,
+               // staggerLabels: true,
                 valueFormat: function (d: any) {
                     return d3.format(",.4f")(d);
                 },
                 duration: 500,
                 xAxis: {
-                    axisLabel: 'X Axis'
+                    axisLabel: 'X Axis',
+                   
+                    tickFormat: (d: any) => {
+                        let xAx = this.chart.recencies.filter(r => r.RecencyNumber === d)[0];
+                        if (xAx == null) {
+                            return '';
+                        } else {
+                            return xAx.Lable;
+                        }
+                    }
                 },
                 yAxis: {
                     axisLabel: 'Y Axis'
                     //  axisLabelDistance: -10
                 },
+               
                 rotateLabels: 0, //Angle to rotate x-axis labels.
-                showControls: true, //Allow user to switch between 'Grouped' and 'Stacked' mode.
-                groupSpacing: 0.1 //Distance between each group of bars.
+               // showControls: true, //Allow user to switch between 'Grouped' and 'Stacked' mode.
+               // groupSpacing: 0.1 //Distance between each group of bars.
             }
         };
     }

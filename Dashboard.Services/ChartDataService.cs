@@ -15,14 +15,12 @@ namespace Dashboard.Services
     {
         private readonly EfUnitOfWork _unitOfWork;
         private readonly IDashboardService _dashboardService;
-
-
+        
         public ChartDataService(EfUnitOfWork unitOfWork, IDashboardService dashboardService)
         {
             _unitOfWork = unitOfWork;
             _dashboardService = dashboardService;
         }
-
         
         //todo : performance
         public ChartsContainerModel GetChartsContainerModel(ChartSearchCriteria criteria)
@@ -86,9 +84,8 @@ namespace Dashboard.Services
                                 res => split_carteasian.split2 == null ||
                                     (res.Answer == split_carteasian.split2.Answer && res.Question.Code == split_carteasian.split2.Code)));
 
-                    var chartValues = GetDataFieldsByPercentage(filteredResponsesGroupesForSplit, productView, criteria);
-
-                    chart.ChartValues = chartValues;
+                   
+                    chart.ChartValues = GetByAnalysisType(criteria, productView, filteredResponsesGroupesForSplit);
                     chart.ChartName = split_carteasian.Name;
                     charts.Add(chart);
                 }
@@ -97,24 +94,16 @@ namespace Dashboard.Services
             {
                 var chart = new DataChart();
 
-                if (productView.DashboardView.DataAnlysisType == DataAnlysisType.percentage)
-                {
-                    chart.ChartValues = GetDataFieldsByPercentage(filteredResponsesGroupes, productView, criteria);
-                }
-                else if (productView.DashboardView.DataAnlysisType == DataAnlysisType.avarage)
-                {
-                    chart.ChartValues = GetDataFieldsByAvarage(filteredResponsesGroupes, productView, criteria);
-                }
+                chart.ChartValues = GetByAnalysisType(criteria, productView,  filteredResponsesGroupes);
 
                 chart.ChartName = "Overall";
                 charts.Add(chart);
             }
-
             
             return new ChartsContainerModel
             {
                 Charts = charts,
-                AvailableRecencies = charts.SelectMany(c=> c.ChartValues.Select(cv=> new Recency
+                AvailableRecencies = charts.SelectMany(c=> c.ChartValues.Select(cv=> new XAxis
                 {
                     RecencyNumber = cv.XAxisId,
                     Lable = cv.XAxisLable,
@@ -125,17 +114,33 @@ namespace Dashboard.Services
             }; ;
         }
 
+        private  IEnumerable<ChartEntry> GetByAnalysisType(ChartSearchCriteria criteria
+            , ProductView productView
+            , IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes)
+        {
+            if (productView.DashboardView.DataAnlysisType == DataAnlysisType.percentage)
+            {
+                return  GetDataFieldsByPercentage(filteredResponsesGroupes, productView, criteria);
+            }
+            else if (productView.DashboardView.DataAnlysisType == DataAnlysisType.avarage)
+            {
+                return  GetDataFieldsByAvarage(filteredResponsesGroupes, productView, criteria);
+               
+            }
+            else if (productView.DashboardView.DataAnlysisType == DataAnlysisType.percentageAndAverage)
+            {
+                 return GetDataFieldsByAvarage (filteredResponsesGroupes, productView, criteria)
+                    .Union(GetDataFieldsByPercentage(filteredResponsesGroupes, productView, criteria));
+            }
+
+            return null;
+        }
+
         public IEnumerable<RecencyType> GetRecencyTypes()
         {
            return  _unitOfWork.GetRepository<RecencyType>().Get();
         }
-
-        //public IEnumerable<Recency> GetRecencyPoints()
-        //{
-        //    return _unitOfWork.GetRepository<RecencyType>().Get();
-        //}
-
-
+        
         public IEnumerable<FieldValueModel> GetFieldValues(int productViewId)
         {
             var productView = _dashboardService.GetProductView(productViewId);
@@ -155,37 +160,52 @@ namespace Dashboard.Services
                                 ;
         }
 
-        private static IEnumerable<ChartEntry> GetDataFieldsByPercentage(IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes, ProductView productView, ChartSearchCriteria criteria)
+        private string GetRange(string value, IEnumerable<Range> ranges)
+        {
+            var valueParsed = float.Parse(value);
+            return ranges.Where(r => r.Start <= valueParsed && r.End >= valueParsed)
+                            .Select(r => $"{r.Text}({r.Start} - {r.End})")
+                            .FirstOrDefault();
+        }
+
+        private IList<Range> GetRanges(string rangeText)
+        {
+            if (string.IsNullOrWhiteSpace(rangeText))
+            {
+                return null;
+            }
+
+            //"Unlikely:0-5|Neutral:6-7|Likely:8-10
+            return rangeText.Split('|')
+                .Select(r => new Range
+                {
+                    Text = r.Split(':')[0],
+                    Start =  float.Parse(r.Split(':')[1].Split('-')[0].Trim()),
+                    End = float.Parse(r.Split(':')[1].Split('-')[1].Trim())
+                }).ToList();
+        }
+
+        private  IEnumerable<ChartEntry> GetDataFieldsByPercentage(IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes, ProductView productView, ChartSearchCriteria criteria)
         {
             var fingleFieldOfInterest = productView.DashboardView.FieldOfInterest.FirstOrDefault()?.Code;
-             
+
+            var dataRanges = GetRanges(productView.DashboardView.ChartRanges);
+
             var datafields = filteredResponsesGroupes.Select(rg =>
                 {
                     var responseFoi = rg.FirstOrDefault(r => r.Question.Code == fingleFieldOfInterest);
+                    
+                    var responseXAxis= GetResponseXAxis(productView, criteria, rg, responseFoi);
 
-                    var responseXAxisId = 0;
-                    var responseXAxislabel = string.Empty;
-
-                    if (productView.DashboardView.XAxisId != null) // is dashboardview provides the XAxis, pick ffrom that
-                    {
-                         responseXAxisId = int.Parse(rg.FirstOrDefault(r => r.Question.Code == productView.DashboardView.XAxisId)?.Answer ?? "0");
-                         responseXAxislabel = rg.FirstOrDefault(r => r.Question.Code == productView.DashboardView.XAxislable)?.Answer;
-                    }
-                    if (responseXAxisId == 0) // else pick from completion date
-                    {
-                        var recency = responseFoi?.CompletionDate.GetRecency(criteria.RecencyType) ?? new Recency();
-                        responseXAxisId = recency.RecencyNumber;
-                        responseXAxislabel = recency.Lable;
-                    }
                     return new DataPoint
                     {
-                        Data = responseFoi?.Answer,
+                        Data = dataRanges != null && dataRanges.Any()? GetRange(responseFoi?.Answer , dataRanges) :responseFoi?.Answer,
                         CompletionDate = responseFoi?.CompletionDate?? DateTime.MinValue,
                         //select the field we are interested in for charting,
 
                         Id = rg.Key,
-                        XAxisLable = responseXAxislabel,
-                        XAxisId = responseXAxisId
+                        XAxisLable = responseXAxis.Lable,
+                        XAxisId = responseXAxis.RecencyNumber
 
                     };
                 })
@@ -214,6 +234,30 @@ namespace Dashboard.Services
             return chartValues;
         }
 
+        private static XAxis GetResponseXAxis(ProductView productView, ChartSearchCriteria criteria, IGrouping<string, Response> rg,
+            Response responseFoi)
+        {
+            var responseXAxisId = 0;
+            var responseXAxislabel = string.Empty;
+
+            if (productView.DashboardView.XAxisId != null) // is dashboardview provides the XAxis, pick ffrom that
+            {
+                responseXAxisId = int.Parse(rg.FirstOrDefault(r => r.Question.Code == productView.DashboardView.XAxisId)?.Answer ?? "0");
+                responseXAxislabel = rg.FirstOrDefault(r => r.Question.Code == productView.DashboardView.XAxislable)?.Answer;
+            }
+            if (responseXAxisId == 0) // else pick from completion date
+            {
+                var recency = responseFoi?.CompletionDate.GetRecency(criteria.RecencyType) ?? new XAxis();
+                responseXAxisId = recency.RecencyNumber;
+                responseXAxislabel = recency.Lable;
+            }
+            return new XAxis
+            {
+                RecencyNumber = responseXAxisId,
+                Lable = responseXAxislabel,
+            };
+        }
+
         private static IEnumerable<ChartEntry> GetDataFieldsByAvarage(IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes, ProductView productView, ChartSearchCriteria criteria)
         {
 
@@ -228,6 +272,9 @@ namespace Dashboard.Services
                         .Select(rg =>
                         {
                             var responseFoi = rg.FirstOrDefault(r => r.Question.Code == fieldOfInterest.Code);
+
+                            var responseXAxis = GetResponseXAxis(productView, criteria, rg, responseFoi);
+
                             return new DataPoint
                             {
                                 Data = responseFoi?.Answer,
@@ -236,19 +283,16 @@ namespace Dashboard.Services
                                 KeyCode = fieldOfInterest.Code,
                                 KeyName = fieldOfInterest.Text,
                                 Id = rg.Key,
-                                XAxisLable =
-                                    rg.FirstOrDefault(r => r.Question.Code == productView.DashboardView.XAxislable)?
-                                        .Answer,
-                                XAxisId =
-                                    rg.Any(r => r.Question.Code == productView.DashboardView.XAxisId)
-                                        ? int.Parse(
-                                            rg.First(r => r.Question.Code == productView.DashboardView.XAxisId).Answer)
-                                        : 0
+                                XAxisLable = responseXAxis.Lable,
+                                XAxisId = responseXAxis.RecencyNumber,
                             };
                         })
-                        .Where(d=> !string.IsNullOrWhiteSpace(d.Data))
-                        .GroupBy(d => d.XAxisId)
-                        .ToList();
+                      .Where(d => !string.IsNullOrWhiteSpace(d.Data) && 
+                                             (criteria.SelectedRecencies == null ||
+                                             !criteria.SelectedRecencies.Any() ||
+                                              criteria.SelectedRecencies.Any(r => d.XAxisId == r.RecencyNumber)))
+                      .GroupBy(d => d.XAxisId)
+                      .ToList();
 
                 chartEntries.AddRange(xAxisGroups.SelectMany(xAxisGroup =>
                     xAxisGroup
@@ -256,15 +300,16 @@ namespace Dashboard.Services
                         .Select(vg =>
                         {
                             var responseRow = vg.FirstOrDefault();
-                            var recency = responseRow?.CompletionDate.GetRecency(criteria.RecencyType) ?? new Recency();
+                            var recency = responseRow?.CompletionDate.GetRecency(criteria.RecencyType) ?? new XAxis();
                             return new ChartEntry
                             {
-                                Value = vg.Sum(dp => int.Parse(dp.Data))/vg.Count(),
+                                Value = vg.Sum(dp => double.Parse(dp.Data))/vg.Count(),
                                 XAxisLable = responseRow?.XAxisLable ?? recency.Lable,
                                 XAxisId = responseRow?.XAxisId ?? recency.RecencyNumber,
                                 Series = vg.Any() ? vg.First().KeyName : string.Empty,
                             };
-                        })));
+                        })).OrderBy(df => df.XAxisId)
+                        );
 
             }
 
@@ -280,24 +325,7 @@ namespace Dashboard.Services
                 .Select(rg => rg.FirstOrDefault())
                 .Where(r => r != null);
         }
-
-        //private static IEnumerable<Response> GetDistinctResponses(IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes)
-        //{
-        //    return filteredResponsesGroupes
-        //        .SelectMany(rg => rg)
-        //        .GroupBy(r => r.Answer)
-        //        .Select(rg => rg.FirstOrDefault())
-        //        .Where(r => r != null);
-        //}
-
-        //private static IEnumerable<IGrouping<string, Response>> FilterByQuestions(IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes, IEnumerable<string> questionCodes)
-        //{
-        //    return filteredResponsesGroupes.Where(rg =>
-        //                                               questionCodes.All(qc =>
-        //                                                                      rg.Any(r => r.Question.Code == qc))
-        //    );
-        //}
-
+        
         private static IEnumerable<IGrouping<string, Response>> FilterByQuestionAnswers(IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes, IEnumerable<string> responses, string code)
         {
             return filteredResponsesGroupes.Where(rg => !responses.Any() ||

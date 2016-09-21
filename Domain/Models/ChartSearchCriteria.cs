@@ -13,7 +13,7 @@ namespace Dashboard.API.Models
         public IEnumerable<string> SplitFilters { get; set; }
         public int  ProductViewId { get; set; }
         public RecencyTypes RecencyType { get; set; }
-        public IEnumerable<Recency> SelectedRecencies { get; set; }
+        public IEnumerable<XAxis> SelectedRecencies { get; set; }
     }
 
 

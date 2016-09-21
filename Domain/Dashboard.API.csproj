@@ -67,7 +67,8 @@
     <Compile Include="Models\DataPoint.cs" />
     <Compile Include="Models\FieldValueModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
-    <Compile Include="Models\Recency.cs" />
+    <Compile Include="Models\Range.cs" />
+    <Compile Include="Models\XAxis.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Domain\Question.cs" />
   </ItemGroup>
@@ -142,9 +143,13 @@
       <DependentUpon>Modelts.tst</DependentUpon>
       <CustomToolNamespace>Domain\QuestionGroup.cs</CustomToolNamespace>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Recency.ts">
+    <TypeScriptCompile Include="Range.ts">
       <DependentUpon>Modelts.tst</DependentUpon>
-      <CustomToolNamespace>Models\Recency.cs</CustomToolNamespace>
+      <CustomToolNamespace>Models\Range.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="XAxis.ts">
+      <DependentUpon>Modelts.tst</DependentUpon>
+      <CustomToolNamespace>Models\XAxis.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="RecencyType.ts">
       <DependentUpon>Modelts.tst</DependentUpon>

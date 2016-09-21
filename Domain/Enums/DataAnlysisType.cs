@@ -4,5 +4,6 @@
     {
         percentage = 0,
         avarage = 1,
+        percentageAndAverage = 2,
     }
 }

@@ -23,17 +23,12 @@ declare var jQuery: any;
 
 export class DashboardComponent implements OnInit {
 
-    //@ViewChild('sideMenu') sideMenu: ElementRef;
 
     public productViews: ProductViewModel[];
     public errorMessage: any;
     private productId: number;
     private paramsSubscription: any;
     private listRendered: boolean = false;
-
-
-   
-
     
     constructor(private service: DashboardService, private elementRef: ElementRef) {
         
