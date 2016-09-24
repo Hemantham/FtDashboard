@@ -1,6 +1,7 @@
 
 import { Component, OnInit, Input } from '@angular/core';
-import { Chart } from '../charts/chart.component';
+import { D3Chart  } from "./d3chart.component";
+import { HighChartComponent  } from "./highchart.component";
 import { ChartSearchCriteria, ChartModel, ChartsContainerModel, Recency} from '../charts/domain/chart.domain';
 import { ViewSplit } from "../Dashboards/domain/dashboard.domain";
 import { ChartValueService } from  "./services/chart.services";
@@ -9,7 +10,7 @@ import { ChartValueService } from  "./services/chart.services";
 @Component({
     selector: 'chart-container',
     templateUrl: 'app/charts/templates/ChartContainerComponent.html',
-    directives: [Chart],
+    directives: [D3Chart, HighChartComponent],
     providers: [ChartValueService]
 })
 export class ChartContainerComponent implements OnInit {
@@ -20,9 +21,9 @@ export class ChartContainerComponent implements OnInit {
         this.service
             .getCharts(criteria)
             .subscribe((charts: any) => {
-                   
-                callback(charts != null && charts.length > 0 ? charts[0].recencies: null);
+                callback(charts != null && charts.length > 0 ? charts[0].recencies : null);
                 this.charts = charts;
+               
             },
             error => {
                 <any>error;

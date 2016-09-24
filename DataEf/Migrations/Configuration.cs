@@ -386,6 +386,7 @@ namespace DataEf.Migrations
                 Name = "Intent To Return",
                 Code = "Intent To Return",
                 DataAnlysisType = DataAnlysisType.percentageAndAverage,
+                ChartRenderType = ChartRenderType.lineAndBar,
                 ChartRanges = "Unlikely:0-5|Neutral:6-7|Likely:8-10"
             };
 

@@ -31,9 +31,16 @@
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <chart [chart]="chartModel">
+                    <template [ngIf]="chartModel.chartRenderType !='lineAndBar'">
+                        <d3chart [chart]="chartModel">
 
-                    </chart>                 
+                        </d3chart>
+                    </template>
+                    <template [ngIf]="chartModel.chartRenderType =='lineAndBar'">
+                        <highchart_chart  [chart]="chartModel">
+
+                        </highchart_chart>
+                    </template>
                 </div>
             </div>
             <!-- /.panel-body -->

@@ -69,6 +69,7 @@ export class ChartValueService {
                 chart.xAxislable = "This is X";
                 chart.yAxislable = "This is Y";
                 chart.recencies = chartContainerModel.AvailableRecencies;
+                chart.chartRenderType = chartContainerModel.ChartRenderType;
                 chart.name = datachart.ChartName;
                 chart.series = chartsList.GroupBy(chartEntry => chartEntry.Series,
                         chartEntry => chartEntry,

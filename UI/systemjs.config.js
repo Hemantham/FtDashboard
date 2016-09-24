@@ -14,7 +14,9 @@
     'ng2-nvd3': 'node_modules/ng2-nvd3/build/lib/ng2-nvd3.js',
     'linq-es2015': 'node_modules/linq-es5/dist/linq.js',    
     'babel-polyfill': 'node_modules/babel-polyfill/dist/polyfill.js',
-    'ng2-select': 'node_modules/ng2-select'
+    'ng2-select': 'node_modules/ng2-select',
+    'angular2-highcharts': 'node_modules/angular2-highcharts/dist',
+    'highcharts/highstock.src': 'node_modules/highcharts/highstock.src.js'
 
   };
 
@@ -22,8 +24,9 @@
   var packages = {
         'app': { main: 'main.js', defaultExtension: 'js' },
         'ng2-select': { main: 'ng2-select.js', defaultExtension: 'js' },
+       'angular2-highcharts': {  defaultExtension: 'js' },
         'rxjs': { defaultExtension: 'js' },
-        'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
+        'angular2-highcharts': { main: 'index', format: 'cjs', defaultExtension: 'js' }
   };
 
 

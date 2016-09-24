@@ -6,23 +6,23 @@ import * as Chartdomain from "./domain/chart.domain";
 declare let d3: any;
 
 @Component({
-    selector: 'chart',
+    selector: 'd3chart',
     directives: [nvD3],
     providers: [ChartValueService],
     templateUrl: 'app/charts/templates/ChartComponent.html'
 })
 
-export class Chart implements OnInit {
+export class D3Chart implements OnInit {
 
     options: any;
     data: any;
-    private service: ChartValueService;
+   // private service: ChartValueService;
 
     //this component takes in parameters from outside
     @Input() chart: Chartdomain.ChartModel;
 
     constructor(service: ChartValueService) {
-        this.service = service;
+    //    this.service = service;
     }
 
     getBarChartValues(chart: Chartdomain.ChartModel): any {
@@ -50,7 +50,19 @@ export class Chart implements OnInit {
         });
     }
     
-    getLineChartOptions() {
+    getChartValuesForLineAndBar(chart: Chartdomain.ChartModel): any {
+        return chart.series.map((s,i) => {
+            return {
+                key: s.key,
+                bar: (i !== 0),
+                values: s.data.map((dp) => {
+                    return { x: dp.x, y: dp.y };
+                })
+            };
+        });
+    }
+
+    private getLineChartOptions() {
 
         return {
             chart: {
@@ -94,7 +106,7 @@ export class Chart implements OnInit {
         };
     }
 
-    getBarChartOptions() {
+    private getBarChartOptions() {
         return {
             chart: {
                 type: 'multiBarChart',
@@ -127,11 +139,85 @@ export class Chart implements OnInit {
         }
     }
 
+    private getBarAndLineChartOptions() {
+      
+        return {
+            chart: {
+                type: 'linePlusBarChart',
+                height: 500,
+                margin: {
+                    top: 20,
+                    right: 50,
+                    bottom: 70,
+                    left: 70
+                },
+                //x: function (d: any, i: any) {
+                //        let xAx = this.chart.recencies.filter( (r:any)=> r.RecencyNumber === d)[0];
+                //        if (xAx == null) {
+                //            return '';
+                //        } else {
+                //            return xAx.Lable;
+                //        }
+                //     },
+                // y: function (d: any) { return d[1]; },
+                // showValues: true,
+                // staggerLabels: true,
+                // valueFormat: function (d: any) {
+                //    return d3.format(",.4f")(d);
+                //},
+                duration: 500,
+                xAxis: {
+                    axisLabel: 'X Axis',
+                    tickFormat: (d: any) => {
+                        let xAx = this.chart.recencies.filter((r:any) => r.RecencyNumber === d)[0];
+                        if (xAx == null) {
+                            return '';
+                        } else {
+                            return xAx.Lable;
+                        }
+                    }
+
+                    //tickFormat: (d: any) => {
+                    //    let xAx = this.chart.recencies.filter(r => r.RecencyNumber === d)[0];
+                    //    if (xAx == null) {
+                    //        return '';
+                    //    } else {
+                    //        return xAx.Lable;
+                    //    }
+                    //}
+                },
+                yAxis: {
+                    axisLabel: 'Y Axis'
+                    //  axisLabelDistance: -10
+                },
+                focusEnable: false,
+                rotateLabels: 0, //Angle to rotate x-axis labels.
+              
+            }
+        };
+    }
+    
     ngOnInit() {
 
-        this.options = this.getLineChartOptions();
+        //todo
+        switch (this.chart.chartRenderType) {
+            case "line":
+                this.options = this.getLineChartOptions();
+                this.data = this.getLineChartValues(this.chart);
+                break;
+            case "lineAndBar":
+                this.options = this.getBarAndLineChartOptions();
+                this.data = this.getChartValuesForLineAndBar(this.chart);
+                debugger;
+                break;
+
+            
+        default:
+        }
+
+        //this.options = this.getLineChartOptions();
         
-        this.data = this.getLineChartValues(this.chart);
+       
 
         // return this.getBarChartValues(this.service.getCharts());
 

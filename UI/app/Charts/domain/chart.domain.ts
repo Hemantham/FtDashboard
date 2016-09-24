@@ -8,7 +8,7 @@ export class ChartModel {
     yAxisFormat: string;
     series: ChartSeriesModel[];
     recencies: Array<Recency>;
-
+    chartRenderType: string;
 }
 
 export class ChartSeriesModel {
@@ -31,16 +31,16 @@ export class DataChart {
 }
 
 export class ChartsContainerModel {
-    constructor(public Charts: DataChart[], public AvailableRecencies: Recency[]) {
+    constructor(public Charts: DataChart[], public AvailableRecencies: Recency[], public ChartRenderType: string) {
     }
 }
 
 
 export class ChartEntry {
-    Value: number;
-    XAxisLable: string;
-    XAxisId: number;
-    Series: string;
+   public  Value: number;
+   public  XAxisLable: string;
+   public  XAxisId: number;
+   public  Series: string;
 }
 
 

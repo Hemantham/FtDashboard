@@ -134,6 +134,7 @@
     <Content Include="Styles\styles.css" />
     <Content Include="Styles\sb-admin-2.css" />
     <Content Include="systemjs.config.js" />
+    <Content Include="tester.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -169,13 +170,15 @@
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\" />
     <Folder Include="Models\" />
+    <Folder Include="tester\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app\app.routes.ts" />
     <TypeScriptCompile Include="app\Charts\chartcontainer.component.spec.ts" />
     <TypeScriptCompile Include="app\Charts\chartcontainer.component.ts" />
     <TypeScriptCompile Include="app\app.module.ts" />
-    <TypeScriptCompile Include="app\Charts\chart.component.ts" />
+    <TypeScriptCompile Include="app\Charts\highchart.component.ts" />
+    <TypeScriptCompile Include="app\Charts\d3chart.component.ts" />
     <TypeScriptCompile Include="app\Charts\domain\chart.domain.ts" />
     <TypeScriptCompile Include="app\Charts\services\chart.services.ts" />
     <TypeScriptCompile Include="app\Common\domain\common.domain.ts" />

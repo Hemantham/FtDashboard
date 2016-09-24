@@ -4,5 +4,6 @@
     {
         line = 0,
         bar = 1,
+        lineAndBar = 2,
     }
 }

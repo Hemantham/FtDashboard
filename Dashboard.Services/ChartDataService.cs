@@ -32,8 +32,6 @@ namespace Dashboard.Services
 
             IEnumerable<Response> splitsAllType = new List<Response> { null };
 
-           // IEnumerable<Recency> availableRecencies = filteredResponsesGroupes.
-
             IEnumerable<string> splitsSelectiveTypeAnswers = new List<string> {null};
 
             string splitsSelectiveTypeCode = null;
@@ -109,7 +107,9 @@ namespace Dashboard.Services
                     Lable = cv.XAxisLable,
 
                 }))
-                .GroupBy(r=>r.RecencyNumber).Select(r=> r.First())
+                .GroupBy(r=>r.RecencyNumber).Select(r=> r.First()),
+                ChartRenderType = productView.DashboardView.ChartRenderType
+
 
             }; ;
         }
