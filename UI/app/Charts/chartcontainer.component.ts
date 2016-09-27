@@ -33,11 +33,7 @@ export class ChartContainerComponent implements OnInit {
     }
     
     constructor(private service: ChartValueService) {
-
-        //this.criteria = new ChartSearchCriteria(
-        //    new ViewSplit(5, null, null, null, null),
-        //    ["Customer Service", "Plans / pricing / inclusions"],
-        //    3);
+        
     }
 
     ngOnInit() {

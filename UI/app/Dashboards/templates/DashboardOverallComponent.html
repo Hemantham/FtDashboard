@@ -34,35 +34,6 @@
     </ul>
     <!-- /.navbar-top-links -->
 
-    <div class="navbar-default sidebar" role="navigation">
-        <div class="sidebar-nav navbar-collapse">
-            <ul class="nav" #sideMenu id="side-menu">
-
-                <li class="sidebar-search">
-                    <div>
-                        Select View
-                    </div>
-                    <!-- /input-group -->
-                </li>
-               
-                <li *ngFor="let productView of productViews ; let last=last">
-                    <template [ngIf]="productView.Children.length > 0">
-                        <a [routerLink]="[productLink, productView.Id]"><i class="fa fa-dashboard fa-fw"></i>{{productView.DashboardView.Name}} <span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li *ngFor="let childView of productView.Children ">
-                                <a [routerLink]="[productLink,childView.Id]">{{childView.DashboardView.Name}}</a>
-                            </li>
-                        </ul>
-                    </template>
-                    <template [ngIf]="productView.Children.length == 0">
-                        <a [routerLink]="[productLink,productView.Id]"><i class="fa fa-dashboard fa-fw"></i>{{productView.DashboardView.Name}}</a>
-                    </template>
-                    <span *ngIf='last'>{{onListRendered()}}</span>
-                </li>
-            </ul>
-        </div>
-        <!-- /.sidebar-collapse -->
-    </div>
 
 </nav>
 

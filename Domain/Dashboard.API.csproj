@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="API\IChartDataService.cs" />
     <Compile Include="API\IDashboardService.cs" />
+    <Compile Include="Models\ComparisonChartSearchCriteria.cs" />
     <Compile Include="Domain\RecencyType.cs" />
     <Compile Include="Enums\SplitType.cs" />
     <Compile Include="Enums\DataAnlysisType.cs" />
@@ -90,6 +91,10 @@
     <TypeScriptCompile Include="ChartsContainerModel.ts">
       <DependentUpon>Modelts.tst</DependentUpon>
       <CustomToolNamespace>Models\ChartsContainerModel.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ComparisonChartSearchCriteria.ts">
+      <DependentUpon>Modelts.tst</DependentUpon>
+      <CustomToolNamespace>Models\ComparisonChartSearchCriteria.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="ChartSearchCriteria.ts">
       <DependentUpon>Modelts.tst</DependentUpon>

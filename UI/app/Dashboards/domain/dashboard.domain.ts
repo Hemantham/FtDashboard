@@ -37,7 +37,7 @@ export class ViewSplit {
 }
 
 export class ProductViewModel {
-    constructor(public id: number, public dashboardView: DashboardView, public productId: number, public children: ProductViewModel[]) {
+    constructor(public Id: number, public DashboardView: DashboardView, public ProductId: number, public Children: ProductViewModel[]) {
     }
 }
 

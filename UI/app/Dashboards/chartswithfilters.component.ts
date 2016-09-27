@@ -62,12 +62,7 @@ export class ChartsWithFilters implements OnInit{
     ) {
         
     }
-
-    //ngAfterContentInit(): void {
-     
-    //    if (this.dropdownRecency.itemObjects.length > 0 )
-    //        this.dropdownRecency.active = this.dropdownRecency.itemObjects;
-    //}
+   
 
     ngOnInit(): void {
 
@@ -87,7 +82,7 @@ export class ChartsWithFilters implements OnInit{
             .subscribe((params: any) => {
 
                 //re-initialise when route changes
-                this.viewid = parseInt(params['id']);
+                this.viewid = parseInt(params['viewid']);
                
                 if (this.dropdownRecencyType.itemObjects.length > 0)
                     this.dropdownRecencyType.active = [this.dropdownRecencyType.itemObjects[0]];
@@ -210,13 +205,7 @@ export class ChartsWithFilters implements OnInit{
 
         this.chartContainerComponent.load(this.searchCriteria,(cm)=>
             this.loadRecencies(cm, isInitial));
-       
-        //  this.router.navigate(['/views/charts', this.viewid ]);
     }
-
-    //loadRecency(value: any): void {
-    //    this.recenciesTypes = value;
-    //}
 
     loadSplitsAndFilters(response: ProductView): void {
 

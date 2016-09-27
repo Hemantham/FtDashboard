@@ -16,18 +16,7 @@ namespace DataEf.Migrations
         {
             AutomaticMigrationsEnabled = false;
         }
-
-        private string GetChurn1(int random)
-        {
-            switch (random)
-            {
-                case 1: return "Network";
-                case 2: return "Plans / pricing / inclusions";
-                default:
-                    return "Customer Service";
-            }
-        }
-
+        
         private string GetRand(Random rand,params string[] values)
         {
             return values[rand.Next(0, values.Length)];
@@ -141,7 +130,7 @@ namespace DataEf.Migrations
 
             var random = new Random();
 
-            for (var i = 1; i <= 100; i++)
+            for (var i = 1; i <= 10000; i++)
             {
                 var chrun1 = GetRand(random,"Network", "Plans / pricing / inclusions", "Customer Service");
 
@@ -150,6 +139,9 @@ namespace DataEf.Migrations
                 var techtype = GetRand(random,"ADSL", "NBN", "Cable", "Satalite");
 
                 var competitor = GetRand(random,"Telstra", "Vodaphone", "Virgin", "TPG", "DoDo");
+
+                var groups = GetRand(random, "Small Business", "Consumer" );
+
 
                 var week = random.Next(1, 4);
 
@@ -161,7 +153,7 @@ namespace DataEf.Migrations
                     new Response
                     {
                         Question = questionGroup,
-                        Answer = "CONSUMER",
+                        Answer = groups,
                         ResponseId = i.ToString(),
                         InputId = i,
                         CompletionDate = completiondate,
@@ -392,11 +384,11 @@ namespace DataEf.Migrations
 
             
             foreach (var product in new[]{
-                                                new {P = "SMB", F = @"[GROUPS] = 'SMALL BUSINESS' AND CHURNER_FLAG = 'CHURNER'"},
+                                                new {P = "SMB", F = @"GROUPS = 'SMALL BUSINESS' AND CHURNER_FLAG = 'CHURNER'"},
                                                 new
                                                 {
                                                     P = "Fixed",
-                                                    F = @"[GROUPS] = 'CONSUMER' AND OLDPRODUCT = 'Overall Fixed' AND CHURNER_FLAG = 'CHURNER'"
+                                                    F = @"GROUPS = 'CONSUMER' AND OLDPRODUCT = 'Overall Fixed' AND CHURNER_FLAG = 'CHURNER'"
                                                 }
                                          })
             {

@@ -34,8 +34,16 @@ namespace Dashboard.Rest.Controllers
         [Route("api/charts/data")]
         public ChartsContainerModel GetChartEntries(ChartSearchCriteria criteria)
         {
+           
             return _chartDataService.GetChartsContainerModel(criteria);
 
+        }
+
+        [HttpPost]
+        [Route("api/charts/data/overall")]
+        public ChartsContainerModel GetChartEntrieOveralls(ComparisonChartSearchCriteria criteria)
+        {
+            return _chartDataService.GetChartsContainerModelForMultipleProducts(criteria);
         }
 
         // GET api/values/5

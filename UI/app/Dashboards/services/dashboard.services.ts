@@ -20,6 +20,17 @@ export class DashboardService {
                     .catch(this.handleError);
     }
 
+    public getProducts(): Observable<Product[]> {
+
+        //let headers = new Headers({ 'Content-Type': 'application/json' });
+        //let options = new RequestOptions({ headers: headers });
+        let url = `/Dashboard.Rest/api/products`;
+        return this.http.get(url)
+            .map(this.extractProducts)
+            .catch(this.handleError);
+    }
+
+
     public getView(id: number): Observable<ProductView> {
 
         //let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -36,8 +47,12 @@ export class DashboardService {
     }
 
     private extractViewData(res: Response): ProductViewModel[] {
-        // debugger;
         let body: ProductViewModel[] = res.json();
+        return body;
+    }
+
+    private extractProducts(res: Response): Product[] {
+        let body: Product[] = res.json();
         return body;
     }
 

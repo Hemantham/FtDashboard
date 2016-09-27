@@ -19,13 +19,13 @@ namespace Dashboard.Services
             _unitOfWork = unitOfWork;
         }
         
-        //todo : performance
+      
         public IEnumerable<Product> GetProducts()
         {
             return _unitOfWork.GetRepository<Product>()
                 .Include(p => p.ProductViews)
-               //.Include(p => p.ProductViews.Select(pv=> pv.DashboardView))
-                .Include(p => p.Filter)
+               // .Include(p => p.ProductViews.Select(pv=> pv.DashboardView))
+               // .Include(p => p.Filter)
                 .Get();
         }
 
@@ -38,7 +38,7 @@ namespace Dashboard.Services
                .Include(p => p.ProductViews.Select(pv => pv.DashboardView.ChildrenViews))
                .Include(p => p.ProductViews.Select(pv => pv.ViewSplits))
                .Include(p => p.Filter)
-               .GetSingle();
+               .GetSingle(p=> p.Id == productId);
         }
 
         public IEnumerable<ProductViewModel> GetProductViewModels(long productId)
@@ -60,9 +60,9 @@ namespace Dashboard.Services
                     new ProductViewModel
                     {
                         DashboardView = cv,
-                        Id = cv.ProductViews.First(cpv=> cpv.Product.Id == pv.Product.Id).Id,
+                        Id = cv.ProductViews.First(cpv=> cpv.Product != null && cpv.Product.Id == pv.Product.Id).Id,
                         ProductId = pv.Product.Id,
-                    })
+                    }).ToList()
             };
         }
 
@@ -85,6 +85,7 @@ namespace Dashboard.Services
                .Include(p => p.DashboardView)
                .Include(p => p.DashboardView.FieldOfInterest)
                .Include(p => p.Product)
+               .Include(p => p.Product.Filter)
                .Include(p => p.ViewSplits)
                .Include(p => p.ViewSplits.Select(vs => vs.Filter))
                .Include(p => p.ViewSplits.Select(vs => vs.Question))

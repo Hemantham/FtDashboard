@@ -3,24 +3,29 @@ import { ModuleWithProviders } from '@angular/core';
 import { RouterConfig, RouterModule } from '@angular/router';
 import { ChartsWithFilters } from './dashboards/chartswithfilters.component';
 import { Homescreen } from './dashboards/Homescreen.component';
-import { ChartContainerComponent } from './charts/chartcontainer.component';
-
+import { DashboardComponent } from './dashboards/dashboard.component';
+import {ProductsComponent} from "./Dashboards/products.component";
+import {ChartContainerComponent}  from "./Charts/chartcontainer.component";
 export const routes: RouterConfig = [
     {
         path: '',
-        component: Homescreen
+        component: ProductsComponent
     },
     {
-        path: 'views/:id',
-        component: ChartsWithFilters
-        //children: [
-        //    {
-        //        path: '', component: Homescreen
-        //    }, // url: views/2/,
-        //    {
-        //        path: 'charts/:viewid', component: ChartContainerComponent 
-        //    } // url: views/2/charts
-        //]
+        path: 'products',
+        component: ProductsComponent
+    },
+    {
+        path: 'dashboards/:productid',
+        component: DashboardComponent,
+         children: [
+            {
+                path: '', component: Homescreen
+            }, 
+            {
+                path: 'views/:viewid', component: ChartsWithFilters
+            } 
+        ]
     }
 ];
 

@@ -7,15 +7,14 @@ using Newtonsoft.Json.Converters;
 
 namespace Dashboard.API.Models
 {
-    public class ChartSearchCriteria
+    public class ComparisonChartSearchCriteria
     {
-        public ViewSplit SelectedSplit { get; set; }
-        public IEnumerable<string> SplitFilters { get; set; }
-        public long  ProductViewId { get; set; }
+       // public ViewSplit SelectedSplit { get; set; }
+       // public IEnumerable<string> SplitFilters { get; set; }
+        public int DashboardViewId { get; set; }
         public RecencyTypes RecencyType { get; set; }
         public IEnumerable<XAxis> SelectedRecencies { get; set; }
-        public bool UseProductName { get; set; }
-       
+        //public IEnumerable<int> ProductsIds { get; set; }
     }
   
 }
