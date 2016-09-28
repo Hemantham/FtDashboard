@@ -29,13 +29,16 @@ namespace DataEf.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data. E.g.
 
-
-            var responses = new List<Response>();
+           // return;
+           // var responses = new List<Response>();
 
             var questionGroup = new Question
             {
                 Code = "GROUPS",  Text = "GROUPS"
             };
+
+            context.Set<Question>().Add(questionGroup);
+            context.SaveChanges();
 
             var questionCHURNER_FLAG = new Question
             {
@@ -43,11 +46,17 @@ namespace DataEf.Migrations
                 Text = "Is Churner"
             };
 
+            context.Set<Question>().Add(questionCHURNER_FLAG);
+            context.SaveChanges();
+
             var questionOLDPRODUCT = new Question
             {
                 Code = "OLDPRODUCT",
                 Text = "Competitor"
             };
+
+            context.Set<Question>().Add(questionOLDPRODUCT);
+            context.SaveChanges();
 
             var questionCHRUN1 = new Question
             {
@@ -55,11 +64,17 @@ namespace DataEf.Migrations
                 Text = "Reason for leaving"
             };
 
+            context.Set<Question>().Add(questionCHRUN1);
+            context.SaveChanges();
+
             var questionCHRUN2a = new Question
             {
                 Code = "CHURN2A",
                 Text = "specific reason for leaving"
             };
+
+            context.Set<Question>().Add(questionCHRUN2a);
+            context.SaveChanges();
 
             var questionNP1 = new Question
             {
@@ -67,11 +82,17 @@ namespace DataEf.Migrations
                 Text = "new provider"
             };
 
+            context.Set<Question>().Add(questionNP1);
+            context.SaveChanges();
+
             var questionANALYSED_Week = new Question
             {
                 Code = "ANALYSED_Week",
                 Text = "Date Text"
             };
+
+            context.Set<Question>().Add(questionANALYSED_Week);
+            context.SaveChanges();
 
             var questionANALYSED_WeekNo = new Question
             {
@@ -79,11 +100,17 @@ namespace DataEf.Migrations
                 Text = "Date Number "
             };
 
+            context.Set<Question>().Add(questionANALYSED_WeekNo);
+            context.SaveChanges();
+
             var questionTechType = new Question
             {
                 Code = "TECHTYPE1",
                 Text = "Technology Type"
             };
+
+            context.Set<Question>().Add(questionTechType);
+            context.SaveChanges();
 
             var questionComp1 = new Question
             {
@@ -91,46 +118,74 @@ namespace DataEf.Migrations
                 Text = "Reason for competitor"
             };
 
+            context.Set<Question>().Add(questionComp1);
+            context.SaveChanges();
+
             var questionReturnIntent = new Question
             {
                 Code = "RETURN1",
                 Text = "will come back"
             };
 
+            context.Set<Question>().Add(questionReturnIntent);
+            context.SaveChanges();
+
             var questionsat1 = new Question
             {
                 Code = "SAT1",Text = "satisfaction 1"
             };
+
+            context.Set<Question>().Add(questionsat1);
+            context.SaveChanges();
 
             var questionsat2 = new Question
             {
                 Code = "SAT2",
                 Text = "satisfaction 2"
             };
+
+            context.Set<Question>().Add(questionsat2);
+            context.SaveChanges();
+
             var questionsat3 = new Question
             {
                 Code = "SAT3",
                 Text = "satisfaction 3"
             };
+
+            context.Set<Question>().Add(questionsat3);
+            context.SaveChanges();
+
             var questionsat4 = new Question
             {
                 Code = "SAT4",
                 Text = "satisfaction 4"
             };
+
+            context.Set<Question>().Add(questionsat4);
+            context.SaveChanges();
+
             var questionsat5 = new Question
             {
                 Code = "SAT5",
                 Text = "satisfaction 5"
             };
+
+            context.Set<Question>().Add(questionsat5);
+            context.SaveChanges();
+
             var questionOsat = new Question
             {
                 Code = "OSAT",
                 Text = "Overall satisfaction"
             };
 
+            context.Set<Question>().Add(questionOsat);
+            context.SaveChanges();
+
             var random = new Random();
 
-            for (var i = 1; i <= 10000; i++)
+            for (var i = 1; i <= 1000; i++)
             {
                 var chrun1 = GetRand(random,"Network", "Plans / pricing / inclusions", "Customer Service");
 
@@ -149,7 +204,7 @@ namespace DataEf.Migrations
 
                 var completiondate = new DateTime(2016,8, random.Next(1, 30));
 
-                responses.Add(
+                context.Set<Response>().Add(
                     new Response
                     {
                         Question = questionGroup,
@@ -161,7 +216,9 @@ namespace DataEf.Migrations
 
                     });
 
-                responses.Add(
+                context.SaveChanges();
+
+                context.Set<Response>().Add(
                     new Response
                     {
                         Question = questionCHURNER_FLAG,
@@ -172,8 +229,10 @@ namespace DataEf.Migrations
                         CompletionDate = completiondate
                     });
 
+                context.SaveChanges();
 
-                responses.Add(
+
+                context.Set<Response>().Add(
                     new Response
                     {
                         Question = questionOLDPRODUCT,
@@ -184,7 +243,9 @@ namespace DataEf.Migrations
                         CompletionDate = completiondate
                     });
 
-                responses.Add(
+                context.SaveChanges();
+
+                context.Set<Response>().Add(
                     new Response
                     {
                         Question = questionCHRUN1,
@@ -195,7 +256,9 @@ namespace DataEf.Migrations
                         CompletionDate = completiondate
                     });
 
-                responses.Add(
+                context.SaveChanges();
+
+                context.Set<Response>().Add(
                   new Response
                   {
                       Question = questionCHRUN2a,
@@ -206,7 +269,9 @@ namespace DataEf.Migrations
                       CompletionDate = completiondate
                   });
 
-                responses.Add(
+                context.SaveChanges();
+
+                context.Set<Response>().Add(
                    new Response
                    {
                        Question = questionTechType,
@@ -217,7 +282,9 @@ namespace DataEf.Migrations
                        CompletionDate = completiondate
                    });
 
-                responses.Add(
+                context.SaveChanges();
+
+                context.Set<Response>().Add(
                    new Response
                    {
                        Question = questionComp1,
@@ -228,7 +295,9 @@ namespace DataEf.Migrations
                        CompletionDate = completiondate
                    });
 
-                responses.Add(
+                context.SaveChanges();
+
+                context.Set<Response>().Add(
                     new Response
                     {
                         Question = questionANALYSED_Week,
@@ -238,8 +307,9 @@ namespace DataEf.Migrations
                         ResponseType = ResponseType.Text,
                         CompletionDate = completiondate
                     });
+                context.SaveChanges();
 
-                responses.Add(
+                context.Set<Response>().Add(
                     new Response
                     {
                         Question = questionANALYSED_WeekNo,
@@ -250,7 +320,9 @@ namespace DataEf.Migrations
                         CompletionDate = completiondate
                     });
 
-                responses.Add(
+                context.SaveChanges();
+
+                context.Set<Response>().Add(
                   new Response
                   {
                       Question = questionReturnIntent,
@@ -260,9 +332,10 @@ namespace DataEf.Migrations
                       ResponseType = ResponseType.NumericRange,
                       CompletionDate = completiondate
                   });
+                context.SaveChanges();
 
                 /////
-                responses.Add(
+                context.Set<Response>().Add(
                  new Response
                  {
                      Question = questionsat1,
@@ -272,8 +345,9 @@ namespace DataEf.Migrations
                      ResponseType = ResponseType.NumericRange,
                      CompletionDate = completiondate
                  });
+                context.SaveChanges();
 
-                responses.Add(
+                context.Set<Response>().Add(
                  new Response
                  {
                      Question = questionsat2,
@@ -283,8 +357,9 @@ namespace DataEf.Migrations
                      ResponseType = ResponseType.NumericRange,
                      CompletionDate = completiondate
                  });
+                context.SaveChanges();
 
-                responses.Add(
+                context.Set<Response>().Add(
                  new Response
                  {
                      Question = questionsat3,
@@ -294,8 +369,9 @@ namespace DataEf.Migrations
                      ResponseType = ResponseType.NumericRange,
                      CompletionDate = completiondate
                  });
+                context.SaveChanges();
 
-                responses.Add(
+                context.Set<Response>().Add(
                  new Response
                  {
                      Question = questionsat4,
@@ -305,8 +381,9 @@ namespace DataEf.Migrations
                      ResponseType = ResponseType.NumericRange,
                      CompletionDate = completiondate
                  });
+                context.SaveChanges();
 
-                responses.Add(
+                context.Set<Response>().Add(
                  new Response
                  {
                      Question = questionsat5,
@@ -316,8 +393,9 @@ namespace DataEf.Migrations
                      ResponseType = ResponseType.NumericRange,
                      CompletionDate = completiondate
                  });
+                context.SaveChanges();
 
-                responses.Add(
+                context.Set<Response>().Add(
                  new Response
                  {
                      Question = questionOsat,
@@ -328,11 +406,6 @@ namespace DataEf.Migrations
                      CompletionDate = completiondate
                  });
 
-            }
-
-            foreach (var response in responses)
-            {
-                context.Set<Response>().Add(response);
                 context.SaveChanges();
             }
 

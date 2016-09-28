@@ -7,6 +7,7 @@ export class ChartModel {
     xAxisFormat: string;
     yAxisFormat: string;
     series: ChartSeriesModel[];
+    allSeries: Array<string>;
     recencies: Array<Recency>;
     chartRenderType: string;
 }
@@ -45,7 +46,7 @@ export class ChartEntry {
 
 
 export class ChartSearchCriteria {
-    constructor(public SelectedSplit: ViewSplit, public SplitFilters: string[], public ProductViewId: number, public RecencyType: number, public SelectedRecencies: Recency[]) {
+    constructor(public SelectedSplit: ViewSplit, public SplitFilters: string[], public ProductViewId: number, public RecencyType: number, public SelectedRecencies: Recency[],public  DashboardViewId : number) {
     }
 }
 // Find all classes with a name ending with Model

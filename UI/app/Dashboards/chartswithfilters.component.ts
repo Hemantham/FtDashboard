@@ -6,9 +6,12 @@ import { DashboardService }  from "../dashboards/services/dashboard.services";
 import { ChartValueService } from "../Charts/services/chart.services";
 import { CORE_DIRECTIVES, FORM_DIRECTIVES, NgClass } from '@angular/common';
 import { SELECT_DIRECTIVES, SelectComponent } from 'ng2-select';
+import { SelectItem } from 'ng2-select/components/select/select-item';
 import * as Charts from "../Charts/domain/chart.domain";
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx'
+import {DropDownTools} from  "../common/utilities/common.dropdowntools";
+
 
 
 declare var jQuery: any;
@@ -58,7 +61,8 @@ export class ChartsWithFilters implements OnInit{
         private elementRef: ElementRef,
         private chartService: ChartValueService,
         private activatedRoute: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private dropdowntools: DropDownTools
     ) {
         
     }
@@ -67,7 +71,7 @@ export class ChartsWithFilters implements OnInit{
     ngOnInit(): void {
 
         this.chartService
-            .getRecencies()
+            .getRecencyTypes()
             .subscribe((res: Charts.RecencyType[]) => {
              
                 this.recenciesTypes = res.map((r) => {
@@ -160,10 +164,10 @@ export class ChartsWithFilters implements OnInit{
         this.loadChart(false);
     }
 
-    loadRecencies(cm: Array<Charts.Recency>, isInitial: boolean): void {
+    loadRecencies(recency: Array<Charts.Recency>, isInitial: boolean): void {
 
         if (isInitial) {
-            this.recencies = cm.map((m) => {
+            this.recencies = recency.map((m) => {
                 return {
                     id: m.RecencyNumber,
                     text: m.Lable
@@ -171,25 +175,10 @@ export class ChartsWithFilters implements OnInit{
             });
         }
 
-        //todo find better way
-        setTimeout(() => {
-            if (this.dropdownRecency.itemObjects.length > 0) {
-                if (isInitial) {
-                    this.dropdownRecency.active.splice(0);
-                    this.selectedRecencies.splice(0);
-                    this.dropdownRecency.itemObjects.forEach((item) => {
-                        this.dropdownRecency.active.push(item);
-                        this.selectedRecencies.push(new Charts.Recency(
-                            parseInt(item.id),
-                            item.text
-                        ));
-                    });
-                }
-            } else {
-                   this.selectedRecencies = [];
-                   this.dropdownRecency.active = [];
-            }
-        }, 500);
+        this.dropdowntools.setMultipleDropDownAllActive(this.dropdownRecency,
+            this.selectedRecencies,
+            (item: SelectItem) => { return new Charts.Recency(parseInt(item.id), item.text); },
+            isInitial);
     }
 
     loadChart(isInitial: boolean): void {
@@ -200,11 +189,12 @@ export class ChartsWithFilters implements OnInit{
                 .map((s) => s.Answer),
             this.viewid,
             this.selectedRecencyType.id,
-            this.selectedRecencies
+            this.selectedRecencies,
+            null
         );
 
         this.chartContainerComponent.load(this.searchCriteria,(cm)=>
-            this.loadRecencies(cm, isInitial));
+            this.loadRecencies(cm != null && cm.length > 0 ? cm[0].recencies : null, isInitial));
     }
 
     loadSplitsAndFilters(response: ProductView): void {

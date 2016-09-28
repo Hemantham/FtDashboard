@@ -1,0 +1,121 @@
+﻿<div class="row">
+    <div class="col-lg-12">
+        <h4> <a [routerLink]="['/products']">Home</a> > Overall</h4>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-lg-8">
+        
+        <chart-container  >Loading...</chart-container>
+
+    </div>
+
+    <div class="col-lg-4">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-bar-chart-o fa-fw"></i> Filters
+                        <div class="pull-right">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-xs">
+                                    <span class="caret"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                 
+
+                    <div class="panel-body">
+                        
+                        <div class="form-group">
+                            <label>Select Products</label>
+                            <ng-select [allowClear]="false" #dropdownProduct
+                                       [items]="products"
+                                       [multiple]="true"
+                                       (selected)="productSelected($event)"
+                                       (removed)="productRemoved($event)"
+                                       placeholder="">
+                            </ng-select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Select View</label>
+                            <ng-select [allowClear]="false"
+                                       (selected)="viewSelected($event)"
+                                       [initData]="[selectedView]"
+                                       #dropdownView
+                                       [items]="views"
+                                       placeholder="Select View">
+                            </ng-select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Select Code-Frames</label>
+                            <ng-select [allowClear]="false" #dropdownCodeframes
+                                       [items]="codeframes"
+                                       [multiple]="true"
+                                       (selected)="codeframeSelected($event)"
+                                       (removed)="codeframeRemoved($event)"
+                                       placeholder="">
+                            </ng-select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Time Period</label>
+                            <ng-select
+                                #dropdownRecencyType
+                                [allowClear]="false"
+                                [items]="recenciesTypes"
+                                [initData]="[selectedRecencyType]"
+                                (selected)="recencyTypeSelected($event)"
+                                placeholder="">
+                            </ng-select>
+                        </div>
+                        <div class="form-group">
+                            <label>Select Data Points</label>
+                            <ng-select [allowClear]="false" #dropdownRecency
+                                       [items]="recencies"
+                                       [multiple]="true"
+                                       (selected)="recencySelected($event)"
+                                       (removed)="recencyRemoved($event)"
+                                       placeholder="">
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="splitFilters && splitFilters.length > 0" class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-bar-chart-o fa-fw"></i> {{multipleSplitField}}
+                        <div class="pull-right">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-xs">
+                                    <span class="caret"></span>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="checkbox-button" *ngFor="let splitFilter of splitFilters">
+                            <label>
+                                <input (change)="limitSelected(splitFilter, $event.target.checked)"  type="checkbox"  [(ngModel)]="splitFilter.IsSelected"><span>{{splitFilter.Answer}}</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

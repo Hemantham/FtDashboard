@@ -47,6 +47,14 @@ namespace Dashboard.Rest.Controllers
         }
 
         [HttpGet]
+        [Route("api/dashboardviews")]
+        public IEnumerable<DashboardView> GetDashboradViews()
+        {
+            return _service.GetDashboardViews();
+        }
+
+
+        [HttpGet]
         [Route("api/products/views/{id:int}/splitfilters")]
         public IEnumerable<FieldValueModel> GetFieldValues(int id)
         {

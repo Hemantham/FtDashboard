@@ -17,11 +17,11 @@ export class ChartContainerComponent implements OnInit {
     
     public charts: Array<ChartModel>;
 
-    public load(criteria: ChartSearchCriteria, callback: (chartmodels: Array<Recency>) => any) {
+    public load(criteria: ChartSearchCriteria, callback: (chartmodels: Array<ChartModel>) => any) {
         this.service
             .getCharts(criteria)
             .subscribe((charts: any) => {
-                callback(charts != null && charts.length > 0 ? charts[0].recencies : null);
+                callback(charts);
                 this.charts = charts;
                
             },

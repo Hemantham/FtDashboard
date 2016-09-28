@@ -20,6 +20,19 @@ export class DashboardService {
                     .catch(this.handleError);
     }
 
+    public getDashboardViews(): Observable<DashboardView[]> {
+
+        //let headers = new Headers({ 'Content-Type': 'application/json' });
+        //let options = new RequestOptions({ headers: headers });
+        let url = `/Dashboard.Rest/api/dashboardviews`;
+        return this.http.get(url)
+            .map((res: Response)=> {
+                    let body: DashboardView[] = res.json();
+                    return body;
+            })
+            .catch(this.handleError);
+    }
+
     public getProducts(): Observable<Product[]> {
 
         //let headers = new Headers({ 'Content-Type': 'application/json' });

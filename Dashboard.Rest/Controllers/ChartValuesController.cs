@@ -34,17 +34,22 @@ namespace Dashboard.Rest.Controllers
         [Route("api/charts/data")]
         public ChartsContainerModel GetChartEntries(ChartSearchCriteria criteria)
         {
-           
-            return _chartDataService.GetChartsContainerModel(criteria);
-
+            if (criteria.ProductViewId > 0)
+            {
+                return _chartDataService.GetChartsContainerModel(criteria);
+            }
+            else
+            {
+                return _chartDataService.GetChartsContainerModelForMultipleProducts(criteria);
+            }
         }
 
-        [HttpPost]
-        [Route("api/charts/data/overall")]
-        public ChartsContainerModel GetChartEntrieOveralls(ComparisonChartSearchCriteria criteria)
-        {
-            return _chartDataService.GetChartsContainerModelForMultipleProducts(criteria);
-        }
+        //[HttpPost]
+        //[Route("api/charts/data/overall")]
+        //public ChartsContainerModel GetChartEntrieOveralls(ComparisonChartSearchCriteria criteria)
+        //{
+        //    return _chartDataService.GetChartsContainerModelForMultipleProducts(criteria);
+        //}
 
         // GET api/values/5
         public string Get(int id)

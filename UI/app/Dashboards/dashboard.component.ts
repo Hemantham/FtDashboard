@@ -41,19 +41,21 @@ export class DashboardComponent implements OnInit {
     ngOnInit(): void {
 
         this.paramsSubscription = this.activatedRoute.params.subscribe((params: any) => {
-            this.productId = params['productid'];  //get your param
-            this.productLink = `/dashboards/${this.productId}/views/`;
+            if (params['productid']) {
+                this.productId = params['productid']; //get your param
+                this.productLink = `/dashboards/${this.productId}/views/`;
 
-            // call your function that needs the route param
-            this.service.getViews(this.productId)
-                .subscribe((response: ProductViewModel[]) => {
-                    this.productViews = response;
-                    //initially load first
-                    //alert(this.productLink);
-                    this.router.navigate([this.productLink, this.productViews[0].Id]); 
-                },
-                error => this.errorMessage = <any>error
-                );
+                this.service.getViews(this.productId)
+                    .subscribe((response: ProductViewModel[]) => {
+                        this.productViews = response;
+                        //initially load first
+                       this.router.navigate([this.productLink, this.productViews[0].Id]);
+                    },
+                    error => this.errorMessage = <any>error
+                    );
+            } else {
+                this.router.navigate(["dashboards/views"]);
+            }
         });
     }
 

@@ -15,6 +15,7 @@ namespace Dashboard.Services
     {
         private readonly EfUnitOfWork _unitOfWork;
         private readonly IDashboardService _dashboardService;
+        private IEnumerable<IGrouping<string,  Response>> responsesGroupes;
         
         public ChartDataService(EfUnitOfWork unitOfWork, IDashboardService dashboardService)
         {
@@ -23,7 +24,7 @@ namespace Dashboard.Services
         }
 
 
-        public ChartsContainerModel GetChartsContainerModelForMultipleProducts(ComparisonChartSearchCriteria criteria)
+        public ChartsContainerModel GetChartsContainerModelForMultipleProducts(ChartSearchCriteria criteria)
         {
           
             var allCharts = new List<DataChart>();
@@ -408,13 +409,17 @@ namespace Dashboard.Services
                         Code = comaprisons?[0]?.Trim(' ', '\''),
                         Answer = comaprisons?[1]?.Trim(' ', '\''),
                     };
-                });
+                }).ToList();
 
-            var responses = _unitOfWork.GetRepository<Response>()
-                .Include(response => response.Question)
-                .Get();
-
-            var responsesGroupes = responses.GroupBy(r => r.ResponseId ); // create a group for each response 
+            //todo cache
+            if (responsesGroupes == null)
+            {
+                responsesGroupes = _unitOfWork.GetRepository<Response>()
+                    .Include(response => response.Question)
+                    .Get()
+                    .GroupBy(r => r.ResponseId)
+                    .ToList();
+            }
 
             //within that response check if we have given filters. 
             //filter by the cuts/filters , etc

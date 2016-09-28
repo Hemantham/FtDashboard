@@ -2,6 +2,7 @@
 import { ModuleWithProviders } from '@angular/core';
 import { RouterConfig, RouterModule } from '@angular/router';
 import { ChartsWithFilters } from './dashboards/chartswithfilters.component';
+import { OverallChartsWithFilters } from './dashboards/overallchartswithfilters.component';
 import { Homescreen } from './dashboards/Homescreen.component';
 import { DashboardComponent } from './dashboards/dashboard.component';
 import {ProductsComponent} from "./Dashboards/products.component";
@@ -14,6 +15,18 @@ export const routes: RouterConfig = [
     {
         path: 'products',
         component: ProductsComponent
+    },
+    {
+        path: 'dashboards',
+        component: DashboardComponent,
+        children: [
+            {
+                path: '', component: Homescreen
+            }, 
+            {
+                path: 'views', component: OverallChartsWithFilters
+            }
+        ]
     },
     {
         path: 'dashboards/:productid',

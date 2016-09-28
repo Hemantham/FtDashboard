@@ -15,10 +15,10 @@ export class ChartValueService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http
+        return (this.http
             .post('/Dashboard.Rest/api/charts/data', JSON.stringify(chartCriteria) , options)
             .map(this.extractChartData)
-            .catch(this.handleError);
+            .catch(this.handleError));
     }
 
     public getSplitFields(id: number): Observable<Charts.FieldValueModel[]> {
@@ -31,7 +31,7 @@ export class ChartValueService {
             .catch(this.handleError);
     }
 
-     public getRecencies(): Observable<Charts.RecencyType[]> {
+     public getRecencyTypes(): Observable<Charts.RecencyType[]> {
 
         // let headers = new Headers({ 'Content-Type': 'application/json' });
         // let options = new RequestOptions({ headers: headers });
@@ -93,6 +93,8 @@ export class ChartValueService {
                 charts.push(chart);
             }
         );
+
+
 
         return charts;
         }

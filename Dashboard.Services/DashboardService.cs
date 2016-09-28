@@ -49,6 +49,11 @@ namespace Dashboard.Services
             return models.Where(m => !children.Any(c => c.Id == m.Id));
         }
 
+        public IEnumerable<DashboardView> GetDashboardViews()
+        {
+            return _unitOfWork.GetRepository<DashboardView>().Get();
+        }
+
         private static ProductViewModel MapProductViewModel(ProductView pv)
         {
             return new ProductViewModel

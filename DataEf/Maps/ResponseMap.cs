@@ -20,9 +20,10 @@ namespace DataEf.Maps
             HasRequired(x => x.Question).WithMany().Map(x => x.MapKey("QuestionId"));
 
             Property(x => x.Answer).HasMaxLength(400)
-                 .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("IX_Answer"))); 
+                 .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_Answer"))); 
             Property(x => x.Email).HasMaxLength(100);
-            Property(x => x.ResponseId).HasMaxLength(50);
+            Property(x => x.ResponseId).HasMaxLength(50)
+                .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_ResponseId")));
         }
     }
 }

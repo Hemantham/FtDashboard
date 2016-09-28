@@ -9,7 +9,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 declare var jQuery: any;
 
-
 @Component({
     selector: 'dashboard',
     templateUrl: 'app/dashboards/templates/DashboardComponent.html',
