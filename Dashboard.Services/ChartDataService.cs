@@ -46,7 +46,7 @@ namespace Dashboard.Services
                                                      RecencyType =  criteria.RecencyType,
                                                      ProductViewId =  productView?.Id ?? 0,
                                                      SelectedRecencies = criteria.SelectedRecencies,
-                                                     UseProductName = true,
+                                                     UseFilterName = true,
                                                 }, productView
                                                  , charts);
                 allCharts.AddRange(charts);
@@ -170,7 +170,7 @@ namespace Dashboard.Services
 
                 chart.ChartValues = GetByAnalysisType(criteria, productView, filteredResponsesGroupes);
 
-                chart.ChartName = criteria.UseProductName ? productView.Filter.Name : "Overall";
+                chart.ChartName = criteria.UseFilterName ? productView.Filter.Name : "Overall";
                 charts.Add(chart);
             }
         }

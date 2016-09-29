@@ -46,9 +46,15 @@ export class ChartEntry {
 
 
 export class ChartSearchCriteria {
-    constructor(public SelectedSplit: ViewSplit, public SplitFilters: string[], public ProductViewId: number, public RecencyType: number, public SelectedRecencies: Recency[],public  DashboardViewId : number) {
+    constructor(public SelectedSplit: ViewSplit, public SplitFilters: string[], public ProductViewId: number, public DashboardViewId: number, public RecencyType: number, public SelectedRecencies: Recency[], public UseFilterName: boolean, public SplitCriteria: SplitCriteria[]) {
     }
 }
+
+export class SplitCriteria {
+    constructor(public ViewSplitId: number, public SplitFilters: any[]) {
+    }
+}
+
 // Find all classes with a name ending with Model
 export class FieldSearchCriteria {
     constructor(public ProductViewId: number, public CuestionCode: string) {

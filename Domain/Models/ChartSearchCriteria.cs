@@ -15,8 +15,7 @@ namespace Dashboard.API.Models
         public long DashboardViewId { get; set; } // if ProductViewId is not given then it will pick the overall based on DashboardViewId
         public RecencyTypes RecencyType { get; set; }
         public IEnumerable<XAxis> SelectedRecencies { get; set; }
-        public bool UseProductName { get; set; }
-       
+        public bool UseFilterName { get; set; }
+        public IEnumerable<SplitCriteria> SplitCriteria { get; set; }
     }
-  
 }

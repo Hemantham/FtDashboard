@@ -327,9 +327,9 @@ export class OverallChartsWithFilters implements OnInit{
 
         this.searchCriteria = new Charts.ChartSearchCriteria(null,
             null,
-            null,
+            null, this.selectedView.id,
             this.selectedRecencyType.id,
-            this.selectedRecencies, this.selectedView.id
+            this.selectedRecencies, true,null
         );
 
         this.chartContainerComponent.load(this.searchCriteria,

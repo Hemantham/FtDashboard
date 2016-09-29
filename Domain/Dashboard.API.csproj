@@ -68,6 +68,7 @@
     <Compile Include="Models\FieldValueModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\Range.cs" />
+    <Compile Include="Models\SplitCriteria.cs" />
     <Compile Include="Models\XAxis.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Domain\Question.cs" />
@@ -146,6 +147,10 @@
     <TypeScriptCompile Include="Range.ts">
       <DependentUpon>Modelts.tst</DependentUpon>
       <CustomToolNamespace>Models\Range.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="SplitCriteria.ts">
+      <DependentUpon>Modelts.tst</DependentUpon>
+      <CustomToolNamespace>Models\SplitCriteria.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="XAxis.ts">
       <DependentUpon>Modelts.tst</DependentUpon>

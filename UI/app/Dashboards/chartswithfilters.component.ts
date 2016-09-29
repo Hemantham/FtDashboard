@@ -187,10 +187,9 @@ export class ChartsWithFilters implements OnInit{
             this.splitFilters
                 .filter((s) => s.IsSelected)
                 .map((s) => s.Answer),
-            this.viewid,
+            this.viewid,0,
             this.selectedRecencyType.id,
-            this.selectedRecencies,
-            null
+            this.selectedRecencies, false, [ new Charts.SplitCriteria(this.selectedSplit.id,null) ]
         );
 
         this.chartContainerComponent.load(this.searchCriteria,(cm)=>
