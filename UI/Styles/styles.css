@@ -39,3 +39,7 @@
 .marginedtop30 {
     margin-top: 30px;
 }
+
+#page-wrapper.nomargin {
+    margin: 0;
+}

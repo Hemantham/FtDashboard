@@ -1,7 +1,7 @@
 ﻿<div class="row">
     <div *ngFor="let chartModel of charts">
       
-        <div [ngClass]="{ 'col-lg-6' : charts.length > 3, 'col-lg-12' : charts.length <= 3  }" >
+        <div [ngClass]="{ 'col-lg-6' : charts.length > 3 || isComparisonView, 'col-lg-12' : charts.length <= 3  }" >
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <i class="fa fa-bar-chart-o fa-fw"></i> {{chartModel.name}}

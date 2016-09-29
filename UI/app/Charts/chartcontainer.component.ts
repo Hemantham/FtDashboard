@@ -16,8 +16,11 @@ import { ChartValueService } from  "./services/chart.services";
 export class ChartContainerComponent implements OnInit {
     
     public charts: Array<ChartModel>;
+    public isComparisonView : boolean;
 
     public load(criteria: ChartSearchCriteria, callback: (chartmodels: Array<ChartModel>) => any) {
+
+        this.isComparisonView = criteria.DashboardViewId > 0; 
         this.service
             .getCharts(criteria)
             .subscribe((charts: any) => {

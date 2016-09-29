@@ -19,7 +19,7 @@ declare var jQuery: any;
 @Component({
     selector: 'chart-with-filters',
     templateUrl: 'app/dashboards/templates/ChartsWithFilters.html',
-    providers: [DashboardService, ChartValueService],
+    providers: [DashboardService, ChartValueService, DropDownTools],
     directives: [ChartContainerComponent, SELECT_DIRECTIVES, NgClass, CORE_DIRECTIVES, FORM_DIRECTIVES]
 })
 

@@ -10,6 +10,11 @@ declare let jQuery: any;
     selector: 'highchart_chart',
     directives: [CHART_DIRECTIVES],
     providers: [ChartValueService],
+    styles: [`
+      chart {
+        display: block;
+      }
+    `],
     template: '<chart  [options]="options"></chart>'
 })
 
@@ -21,7 +26,7 @@ export class HighChartComponent implements OnInit {
     @Input() chart: Chartdomain.ChartModel;
 
     constructor() {
-       // this.service = service;
+        //this.options = this.getBarAndLineChartOptions(this.chart);
     }
     
     getChartValues(chart: Chartdomain.ChartModel): any {
@@ -118,11 +123,18 @@ export class HighChartComponent implements OnInit {
             series: this.getChartValues(chart)
         };
     }
-    
+
     ngOnInit() {
 
+       // setTimeout(() =>
         this.options = this.getBarAndLineChartOptions(this.chart);
-          
+        //    3000
+        // );
+
+        //setTimeout(() => {
+        //    angular2 - highcharts
+
+        //},2000)
 
         // console.log(JSON.stringify(this.getBarAndLineChartOptions(this.chart)));
         // this.options = {

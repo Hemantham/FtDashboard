@@ -7,7 +7,7 @@ export class ChartModel {
     xAxisFormat: string;
     yAxisFormat: string;
     series: ChartSeriesModel[];
-    allSeries: Array<string>;
+   // allSeries: Array<string>;
     recencies: Array<Recency>;
     chartRenderType: string;
 }

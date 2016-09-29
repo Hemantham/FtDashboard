@@ -49,7 +49,7 @@ export class OverallChartsWithFilters implements OnInit{
     
     public searchCriteria: Charts.ChartSearchCriteria ;
    // private viewid: number;
-    private paramsSubscription: any;
+    //private paramsSubscription: any;
 
     @ViewChild(ChartContainerComponent)
     private chartContainerComponent: ChartContainerComponent;
@@ -206,9 +206,9 @@ export class OverallChartsWithFilters implements OnInit{
         this.errorMessage = <any>error;
     }
 
-    ngOnDestroy() {
-        this.paramsSubscription.unsubscribe();
-    }
+    //ngOnDestroy() {
+    //    this.paramsSubscription.unsubscribe();
+    //}
 
     viewSelected(value: any) {
         this.selectedView = { id: value.id, text: value.text };
