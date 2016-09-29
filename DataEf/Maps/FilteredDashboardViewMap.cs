@@ -4,15 +4,15 @@ using Dashboard.API.Domain;
 
 namespace DataEf.Maps
 {
-    public class ProductViewMap : EntityTypeConfiguration<ProductView>
+    public class FilteredDashboardViewMap : EntityTypeConfiguration<FilteredDashboardView>
     {
-        public ProductViewMap()
+        public FilteredDashboardViewMap()
         {
-            ToTable("ProductView");
+            ToTable("FilteredDashboardView");
 
             HasKey(x => x.Id);
             HasRequired(x => x.DashboardView).WithMany(x=>x.ProductViews).Map(x => x.MapKey("DashboardId"));
-            HasRequired(x => x.Product).WithMany().Map(x => x.MapKey("ProductId"));
+            HasRequired(x => x.Filter).WithMany().Map(x => x.MapKey("ProductId"));
             HasMany(x => x.ViewSplits)
                 .WithOptional()
                 .Map(x=>x.MapKey("ProductViewId"));

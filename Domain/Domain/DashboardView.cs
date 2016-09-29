@@ -19,7 +19,7 @@ namespace Dashboard.API.Domain
         public DashboardView Parent { get; set; }
         public  short ViewOrder { get; set; }
         public ICollection<DashboardView> ChildrenViews { get; set; }
-        public ICollection<ProductView> ProductViews { get; set; }
+        public ICollection<FilteredDashboardView> ProductViews { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
         public ChartRenderType ChartRenderType { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]

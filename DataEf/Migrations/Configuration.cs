@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Diagnostics;
 using Dashboard.API.Domain;
 using Dashboard.API.Enums;
@@ -16,8 +17,8 @@ namespace DataEf.Migrations
         {
             AutomaticMigrationsEnabled = false;
         }
-        
-        private string GetRand(Random rand,params string[] values)
+
+        private string GetRand(Random rand, params string[] values)
         {
             return values[rand.Next(0, values.Length)];
         }
@@ -25,12 +26,15 @@ namespace DataEf.Migrations
         protected override void Seed(DataEf.Context.DashboardContext context)
         {
             //  This method will be called after migrating to the latest version.
-
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data. E.g.
+            //  return;
+            //  var responses = new List<Response>();
 
-           // return;
-           // var responses = new List<Response>();
+            try
+            {
+
+           
 
             var questionGroup = new Question
             {
@@ -185,7 +189,7 @@ namespace DataEf.Migrations
 
             var random = new Random();
 
-            for (var i = 1; i <= 1000; i++)
+            for (var i = 1; i <= 100; i++)
             {
                 var chrun1 = GetRand(random,"Network", "Plans / pricing / inclusions", "Customer Service");
 
@@ -466,26 +470,23 @@ namespace DataEf.Migrations
                                          })
             {
 
-                var p = new Product
+                var p = new Filter
                 {
                     Name = product.P,
                     Code = product.P,
-                    Filter = new Filter
-                    {
-                        Name = $"{product.P} Filter",
-                        FilterString = product.F
-                    },
+                    FilterString = product.F,
+                    Group = "Product",
                    
                 };
 
-                context.Set<Product>().Add(p);
+                context.Set<Filter>().Add(p);
                 context.SaveChanges();
 
-                p.ProductViews = new List<ProductView>();
+                p.ProductViews = new List<FilteredDashboardView>();
 
-                p.ProductViews.Add(new ProductView
+                p.ProductViews.Add(new FilteredDashboardView
                 {
-                    Product = p,
+                    Filter = p,
                     DashboardView = churn1,
                     ViewSplits = new List<ViewSplit>
                         {
@@ -497,7 +498,8 @@ namespace DataEf.Migrations
                                 Filter = new Filter
                                 {
                                     FilterString = "STATE='VIC'",
-                                    Name = "State Filter"
+                                    Name = "State Filter",
+                                    Code = "State",
                                 }
                             },
                             new ViewSplit
@@ -509,9 +511,9 @@ namespace DataEf.Migrations
                         }
                 });
 
-                p.ProductViews.Add(new ProductView
+                p.ProductViews.Add(new FilteredDashboardView
                 {
-                    Product = p,
+                    Filter = p,
                     DashboardView = CHURN2A,
                     ViewSplits = new List<ViewSplit>
                         {
@@ -523,7 +525,8 @@ namespace DataEf.Migrations
                                 Filter = new Filter
                                 {
                                     FilterString = "STATE='VIC'",
-                                    Name = "State Filter"
+                                    Name = "State Filter",
+                                    Code = "State"
                                 }
                             },
                             new ViewSplit
@@ -541,9 +544,9 @@ namespace DataEf.Migrations
                         }
                 });
 
-                p.ProductViews.Add(new ProductView
+                p.ProductViews.Add(new FilteredDashboardView
                 {
-                    Product = p,
+                    Filter = p,
                     DashboardView = np1,
                     ViewSplits = new List<ViewSplit>
                     {
@@ -556,9 +559,9 @@ namespace DataEf.Migrations
                     }
                 });
 
-                p.ProductViews.Add(new ProductView
+                p.ProductViews.Add(new FilteredDashboardView
                 {
-                    Product = p,
+                    Filter = p,
                     DashboardView = ExpAreaSat,
                     ViewSplits = new List<ViewSplit>
                     {
@@ -571,9 +574,9 @@ namespace DataEf.Migrations
                     }
                 });
 
-                p.ProductViews.Add(new ProductView
+                p.ProductViews.Add(new FilteredDashboardView
                 {
-                    Product = p,
+                    Filter = p,
                     DashboardView = IntentToReturn,
                     ViewSplits = new List<ViewSplit>
                     {
@@ -598,6 +601,21 @@ namespace DataEf.Migrations
 
                 });
                 context.SaveChanges();
+
+            }
+
+            }
+            catch (DbEntityValidationException ex)
+            {
+
+              // Console.WriteLine( string.Join("\r\n", ex.EntityValidationErrors.Select(e=> e.Entry.Entity.ToString())));
+
+                var x = string.Join("\r\n",
+                    ex.EntityValidationErrors.SelectMany(e => e.ValidationErrors)
+                        .Select(ve => $"{ve.ErrorMessage} - {ve.PropertyName}"));
+                Console.WriteLine();
+
+                throw new Exception(x);
 
             }
         }

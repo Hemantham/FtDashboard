@@ -10,10 +10,10 @@ namespace Dashboard.API.API
 {
     public interface IDashboardService
     {
-        IEnumerable<Product> GetProducts();
-        Product GetProduct(long productId);
-        IEnumerable<ProductView> GetProductViews(long productId);
-        ProductView GetProductView(long productViewId);
+        IEnumerable<Filter> GetProducts();
+        Filter GetProduct(long productId);
+        IEnumerable<FilteredDashboardView> GetProductViews(long productId);
+        FilteredDashboardView GetProductView(long productViewId);
         IEnumerable<ProductViewModel> GetProductViewModels(long productId);
         IEnumerable<DashboardView> GetDashboardViews();
         ViewSplit GetViewSplit(long id);

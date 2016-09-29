@@ -23,10 +23,9 @@ namespace DataEf.Context
             modelBuilder.Configurations.Add(new ResponseMap());
             modelBuilder.Configurations.Add(new QuestionGroupMap());
             modelBuilder.Configurations.Add(new FilterMap());
-            modelBuilder.Configurations.Add(new ProductMap());
             modelBuilder.Configurations.Add(new ViewSplitMap());
             modelBuilder.Configurations.Add(new DashboardViewMap());
-            modelBuilder.Configurations.Add(new ProductViewMap());
+            modelBuilder.Configurations.Add(new FilteredDashboardViewMap());
             modelBuilder.Configurations.Add(new RecencyTypeMap());
 
             Database.SetInitializer(new CreateDatabaseIfNotExists<DashboardContext>());

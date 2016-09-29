@@ -1,7 +1,7 @@
 ﻿
 import { ChartContainerComponent } from "../charts/chartcontainer.component"
 import { Component, OnInit, Input, AfterContentInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { DashboardView, ProductView, ViewSplit } from './domain/dashboard.domain';
+import { DashboardView, FilteredDashboardView as ProductView, ViewSplit } from './domain/dashboard.domain';
 import { DashboardService }  from "../dashboards/services/dashboard.services";
 import { ChartValueService } from "../Charts/services/chart.services";
 import { CORE_DIRECTIVES, FORM_DIRECTIVES, NgClass } from '@angular/common';

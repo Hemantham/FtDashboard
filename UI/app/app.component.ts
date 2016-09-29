@@ -1,6 +1,6 @@
 ﻿
 import { Component, OnInit, Input  } from '@angular/core';
-import { DashboardView, Product } from './dashboards/domain/dashboard.domain';
+import { DashboardView } from './dashboards/domain/dashboard.domain';
 import { DashboardService }  from "./dashboards/services/dashboard.services";
 import { ChartsWithFilters } from "./dashboards/chartswithfilters.component";
 

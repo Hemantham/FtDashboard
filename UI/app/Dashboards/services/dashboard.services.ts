@@ -1,4 +1,4 @@
-﻿import {DashboardView, ProductViewModel, Filter, Product, ViewSplit, ProductView} from "../domain/dashboard.domain.ts" 
+﻿import {DashboardView, ProductViewModel,  Filter , ViewSplit, FilteredDashboardView as ProductView} from "../domain/dashboard.domain.ts" 
 import * as Enumerable from "linq-es2015";
 
 import { Injectable }     from '@angular/core';
@@ -33,7 +33,7 @@ export class DashboardService {
             .catch(this.handleError);
     }
 
-    public getProducts(): Observable<Product[]> {
+    public getProducts(): Observable<Filter[]> {
 
         //let headers = new Headers({ 'Content-Type': 'application/json' });
         //let options = new RequestOptions({ headers: headers });
@@ -64,8 +64,8 @@ export class DashboardService {
         return body;
     }
 
-    private extractProducts(res: Response): Product[] {
-        let body: Product[] = res.json();
+    private extractProducts(res: Response): Filter[] {
+        let body: Filter[] = res.json();
         return body;
     }
 

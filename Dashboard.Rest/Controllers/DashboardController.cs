@@ -27,14 +27,14 @@ namespace Dashboard.Rest.Controllers
         // GET api/values
         [HttpGet]
         [Route("api/products")]
-        public IEnumerable<Product> GetProducts()
+        public IEnumerable<Filter> GetProducts()
         {
             return _service.GetProducts();
         }
 
         [HttpGet]
         [Route("api/products/{id:int}")]
-        public Product GetProduct(int id)
+        public Filter GetProduct(int id)
         {
             return _service.GetProduct(id);
         }
@@ -63,7 +63,7 @@ namespace Dashboard.Rest.Controllers
 
         [HttpGet]
         [Route("api/products/views/{id:int}")]
-        public ProductView GetView(int id)
+        public FilteredDashboardView GetView(int id)
         {
             return _service.GetProductView(id);
         }

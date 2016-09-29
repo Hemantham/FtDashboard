@@ -30,7 +30,7 @@ namespace Dashboard.Services
             var allCharts = new List<DataChart>();
             List<DataChart> charts;
 
-            ProductView productView = null;
+            FilteredDashboardView productView = null;
 
             foreach (var product in _dashboardService.GetProducts())
             {
@@ -39,7 +39,7 @@ namespace Dashboard.Services
                    productView = _dashboardService.GetProduct(product.Id)
                     .ProductViews
                     .FirstOrDefault(pv=> 
-                                pv.DashboardView.Id == criteria.DashboardViewId && pv.Product.Id == product.Id);
+                                pv.DashboardView.Id == criteria.DashboardViewId && pv.Filter.Id == product.Id);
 
                 GetCharts(new ChartSearchCriteria
                                                 {
@@ -95,7 +95,7 @@ namespace Dashboard.Services
             }; 
         }
 
-        private void GetCharts(ChartSearchCriteria criteria, ProductView productView, List<DataChart> charts)
+        private void GetCharts(ChartSearchCriteria criteria, FilteredDashboardView productView, List<DataChart> charts)
         {
             var filteredResponsesGroupes = FilterByProduct(productView);
 
@@ -170,7 +170,7 @@ namespace Dashboard.Services
 
                 chart.ChartValues = GetByAnalysisType(criteria, productView, filteredResponsesGroupes);
 
-                chart.ChartName = criteria.UseProductName ? productView.Product.Name : "Overall";
+                chart.ChartName = criteria.UseProductName ? productView.Filter.Name : "Overall";
                 charts.Add(chart);
             }
         }
@@ -200,7 +200,7 @@ namespace Dashboard.Services
         }
 
         private IEnumerable<ChartEntry> GetByAnalysisType(ChartSearchCriteria criteria
-    , ProductView productView
+    , FilteredDashboardView productView
     , IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes)
         {
             if (productView.DashboardView.DataAnlysisType == DataAnlysisType.percentage)
@@ -246,7 +246,7 @@ namespace Dashboard.Services
                 }).ToList();
         }
 
-        private  IEnumerable<ChartEntry> GetDataFieldsByPercentage(IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes, ProductView productView, ChartSearchCriteria criteria)
+        private  IEnumerable<ChartEntry> GetDataFieldsByPercentage(IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes, FilteredDashboardView productView, ChartSearchCriteria criteria)
         {
             var fingleFieldOfInterest = productView.DashboardView.FieldOfInterest.FirstOrDefault()?.Code;
 
@@ -295,7 +295,7 @@ namespace Dashboard.Services
             return chartValues;
         }
 
-        private static XAxis GetResponseXAxis(ProductView productView, ChartSearchCriteria criteria, IGrouping<string, Response> rg,
+        private static XAxis GetResponseXAxis(FilteredDashboardView productView, ChartSearchCriteria criteria, IGrouping<string, Response> rg,
             Response responseFoi)
         {
             var responseXAxisId = 0;
@@ -319,7 +319,7 @@ namespace Dashboard.Services
             };
         }
 
-        private static IEnumerable<ChartEntry> GetDataFieldsByAvarage(IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes, ProductView productView, ChartSearchCriteria criteria)
+        private static IEnumerable<ChartEntry> GetDataFieldsByAvarage(IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes, FilteredDashboardView productView, ChartSearchCriteria criteria)
         {
 
             var chartEntries = new List<ChartEntry>();
@@ -394,10 +394,9 @@ namespace Dashboard.Services
                                                         responses.Any(rs => rg.Any(r => r.Question.Code == code && r.Answer == rs)));
         }
         
-        private IEnumerable<IGrouping<string, Response>> FilterByProduct(ProductView productView)
+        private IEnumerable<IGrouping<string, Response>> FilterByProduct(FilteredDashboardView productView)
         {
-            var productFilters = productView.Product?
-                .Filter?
+            var productFilters = productView.Filter?
                 .FilterString?
                 .ToLower()
                 .Split(new[] { "and" }, StringSplitOptions.RemoveEmptyEntries)

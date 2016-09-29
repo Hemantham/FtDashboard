@@ -2,7 +2,7 @@
 
 import { ChartContainerComponent } from "../charts/chartcontainer.component"
 import { Component, OnInit, Input, AfterContentInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { DashboardView, ProductView, ViewSplit, Product } from './domain/dashboard.domain';
+import { DashboardView, FilteredDashboardView , ViewSplit, Filter } from './domain/dashboard.domain';
 import { DashboardService }  from "../dashboards/services/dashboard.services";
 import { ChartValueService } from "../Charts/services/chart.services";
 import { CORE_DIRECTIVES, FORM_DIRECTIVES, NgClass } from '@angular/common';
@@ -44,7 +44,7 @@ export class OverallChartsWithFilters implements OnInit{
     public selectedCodeframes: Array<Charts.Response> = [];
     public codeframes: Array<any> = [];
 
-    public selectedProducts: Array<Product> = [];
+    public selectedProducts: Array<Filter> = [];
     public products: Array<any> = [];
     
     public searchCriteria: Charts.ChartSearchCriteria ;
@@ -154,7 +154,7 @@ export class OverallChartsWithFilters implements OnInit{
         //    }, this.alertError);
 
         this.service.getProducts()
-            .subscribe((res: Array<Product>) => {
+            .subscribe((res: Array<Filter>) => {
 
                 this.products = res.map((r) => {
                     return {
@@ -165,7 +165,7 @@ export class OverallChartsWithFilters implements OnInit{
 
                 this.dropdowntools.setMultipleDropDownAllActive(this.dropdownProduct,
                     this.selectedProducts,
-                    (item: SelectItem) => {return new Product(parseInt(item.id),item.text, null,null,null);},
+                    (item: SelectItem) => { return new Filter(parseInt(item.id),item.text, null,null,null);},
                     true);
 
             }, this.alertError);
@@ -234,7 +234,7 @@ export class OverallChartsWithFilters implements OnInit{
 
     productSelected(value: any) {
 
-        this.selectedProducts.push(new Product(value.id,value.text,null,null,null));
+        this.selectedProducts.push(new Filter(value.id,value.text,null,null,null));
         this.dropdownProduct.active.sort((left, right) => parseInt(left.id) - parseInt(right.id));
         this.loadChart(false);
     }

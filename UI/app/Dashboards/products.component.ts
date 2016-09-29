@@ -2,7 +2,7 @@
 
 import { ChartContainerComponent } from "../charts/chartcontainer.component"
 import { Component, OnInit, Input  } from '@angular/core';
-import { DashboardView, Product } from './domain/dashboard.domain';
+import { DashboardView, Filter } from './domain/dashboard.domain';
 import { DashboardService }  from "../dashboards/services/dashboard.services";
 import { ChartsWithFilters } from "./chartswithfilters.component";
 
@@ -18,7 +18,7 @@ declare var jQuery: any;
 
 export class ProductsComponent implements OnInit {
     
-    public products: Product[];
+    public products: Filter[];
     public errorMessage: any;
     private paramsSubscription: any;
     private listRendered: boolean = false;
@@ -29,7 +29,7 @@ export class ProductsComponent implements OnInit {
 
     ngOnInit(): void {
          this.service.getProducts()
-             .subscribe((response: Product[]) => {
+             .subscribe((response: Filter[]) => {
                      this.products = response;
                  },
             error => this.errorMessage = <any>error

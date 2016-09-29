@@ -57,17 +57,16 @@
     <Compile Include="Context\IUnitOfWork.cs" />
     <Compile Include="Context\EfUnitofWork.cs" />
     <Compile Include="Maps\RecencyTypeMap.cs" />
-    <Compile Include="Maps\ProductViewMap.cs" />
+    <Compile Include="Maps\FilteredDashboardViewMap.cs" />
     <Compile Include="Maps\FilterMap.cs" />
-    <Compile Include="Maps\ProductMap.cs" />
     <Compile Include="Maps\ViewSplitMap.cs" />
     <Compile Include="Maps\DashboardViewMap.cs" />
     <Compile Include="Maps\QuestionMap.cs" />
     <Compile Include="Maps\QuestionGroupMap.cs" />
     <Compile Include="Maps\ResponseMap.cs" />
-    <Compile Include="Migrations\201609270352552_mig27.cs" />
-    <Compile Include="Migrations\201609270352552_mig27.Designer.cs">
-      <DependentUpon>201609270352552_mig27.cs</DependentUpon>
+    <Compile Include="Migrations\201609290637028_mig27.cs" />
+    <Compile Include="Migrations\201609290637028_mig27.Designer.cs">
+      <DependentUpon>201609290637028_mig27.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,8 +82,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201609270352552_mig27.resx">
-      <DependentUpon>201609270352552_mig27.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201609290637028_mig27.resx">
+      <DependentUpon>201609290637028_mig27.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

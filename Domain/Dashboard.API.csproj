@@ -51,14 +51,13 @@
     <Compile Include="Enums\SplitType.cs" />
     <Compile Include="Enums\DataAnlysisType.cs" />
     <Compile Include="Enums\ChartRenderType.cs" />
-    <Compile Include="Domain\ProductView.cs" />
+    <Compile Include="Domain\FilteredDashboardView.cs" />
     <Compile Include="Enums\RecencyTypes.cs" />
     <Compile Include="Enums\ResponseType.cs" />
     <Compile Include="Domain\ViewSplit.cs" />
     <Compile Include="Domain\DataEntity.cs" />
-    <Compile Include="Domain\Filter.cs" />
     <Compile Include="Domain\DashboardView.cs" />
-    <Compile Include="Domain\Product.cs" />
+    <Compile Include="Domain\Filter.cs" />
     <Compile Include="Domain\QuestionGroup.cs" />
     <Compile Include="Domain\Response.cs" />
     <Compile Include="Models\ChartEntry.cs" />
@@ -128,13 +127,9 @@
       <DependentUpon>Modelts.tst</DependentUpon>
       <CustomToolNamespace>Domain\Filter.cs</CustomToolNamespace>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Product.ts">
+    <TypeScriptCompile Include="FilteredDashboardView.ts">
       <DependentUpon>Modelts.tst</DependentUpon>
-      <CustomToolNamespace>Domain\Product.cs</CustomToolNamespace>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="ProductView.ts">
-      <DependentUpon>Modelts.tst</DependentUpon>
-      <CustomToolNamespace>Domain\ProductView.cs</CustomToolNamespace>
+      <CustomToolNamespace>Domain\FilteredDashboardView.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="ProductViewModel.ts">
       <DependentUpon>Modelts.tst</DependentUpon>

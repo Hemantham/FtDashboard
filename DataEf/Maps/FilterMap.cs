@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Text;
@@ -15,8 +17,12 @@ namespace DataEf.Maps
             ToTable("Filter");
 
             HasKey(x => x.Id);
-            Property(x => x.Name).HasMaxLength(100);
-            Property(x => x.FilterString).HasMaxLength(1000).IsRequired();
+            Property(x => x.Name).HasMaxLength(300).IsRequired();
+            Property(x => x.FilterString).HasMaxLength(500);
+            Property(x => x.Group).HasMaxLength(50);
+            Property(x => x.Code).HasMaxLength(200).IsRequired()
+                 .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("IX_Code")));
+            HasMany(x => x.ProductViews).WithRequired(x => x.Filter).Map(x => x.MapKey("ProductId"));
         }
     }
 }
