@@ -14,7 +14,7 @@ namespace Dashboard.API.API
     {
         ChartsContainerModel GetChartsContainerModel(ChartSearchCriteria criteria);
 
-        ChartsContainerModel GetChartsContainerModelForMultipleProducts(ChartSearchCriteria criteria);
+        ChartsContainerModel GetChartsContainerModelForMultipleFilters(ChartSearchCriteria criteria);
 
         IEnumerable<FieldValueModel> GetFieldValues(int productViewId);
 

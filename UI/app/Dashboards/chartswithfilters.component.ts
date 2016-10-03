@@ -183,13 +183,12 @@ export class ChartsWithFilters implements OnInit{
 
     loadChart(isInitial: boolean): void {
 
-        this.searchCriteria = new Charts.ChartSearchCriteria(new ViewSplit(this.selectedSplit.id, null, null, null,null ),
-            this.splitFilters
-                .filter((s) => s.IsSelected)
-                .map((s) => s.Answer),
+        this.searchCriteria = new Charts.ChartSearchCriteria(
             this.viewid,0,
             this.selectedRecencyType.id,
-            this.selectedRecencies, false, [ new Charts.SplitCriteria(this.selectedSplit.id,null) ]
+            this.selectedRecencies, false,
+                                [   new Charts.SplitCriteria(this.selectedSplit.id, null, "All"),
+                                    new Charts.SplitCriteria(null, this.splitFilters.filter((s) => s.IsSelected).map((s) => s.Answer), "Multiple") ],null
         );
 
         this.chartContainerComponent.load(this.searchCriteria,(cm)=>

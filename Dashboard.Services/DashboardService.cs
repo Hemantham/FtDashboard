@@ -20,29 +20,29 @@ namespace Dashboard.Services
         }
         
       
-        public IEnumerable<Filter> GetProducts()
+        public IEnumerable<Filter> GetFilters()
         {
             return _unitOfWork.GetRepository<Filter>()
-                .Include(p => p.ProductViews)
+                .Include(p => p.FilteredDashboardViews)
                // .Include(p => p.ProductViews.Select(pv=> pv.DashboardView))
                // .Include(p => p.Filter)
                 .Get(p=> p.Group == "Product");
         }
 
-        public Filter GetProduct(long productId)
+        public Filter GetFilter(long productId)
         {
             return _unitOfWork.GetRepository<Filter>()
-               .Include(p => p.ProductViews)
-               .Include(p => p.ProductViews.Select(pv => pv.DashboardView))
-               .Include(p => p.ProductViews.Select(pv => pv.DashboardView.FieldOfInterest))
-               .Include(p => p.ProductViews.Select(pv => pv.DashboardView.ChildrenViews))
-               .Include(p => p.ProductViews.Select(pv => pv.ViewSplits))
+               .Include(p => p.FilteredDashboardViews)
+               .Include(p => p.FilteredDashboardViews.Select(pv => pv.DashboardView))
+               .Include(p => p.FilteredDashboardViews.Select(pv => pv.DashboardView.FieldOfInterest))
+               .Include(p => p.FilteredDashboardViews.Select(pv => pv.DashboardView.ChildrenViews))
+               .Include(p => p.FilteredDashboardViews.Select(pv => pv.ViewSplits))
                .GetSingle(p=> p.Id == productId);
         }
 
         public IEnumerable<ProductViewModel> GetProductViewModels(long productId)
         {
-            var models =  GetProductViews(productId)
+            var models =  GetFilteredViews(productId)
                         .Select(MapProductViewModel).ToList();
             var children = models.SelectMany(m=> m.Children).ToList();
             return models.Where(m => !children.Any(c => c.Id == m.Id));
@@ -70,7 +70,7 @@ namespace Dashboard.Services
             };
         }
 
-        public IEnumerable<FilteredDashboardView> GetProductViews(long productId)
+        public IEnumerable<FilteredDashboardView> GetFilteredViews(long productId)
         {
             return _unitOfWork.GetRepository<FilteredDashboardView>()
                 .Include(p => p.Filter)
@@ -83,7 +83,7 @@ namespace Dashboard.Services
                 .Get(pv=> pv.Filter.Id == productId);
         }
 
-        public FilteredDashboardView GetProductView(long productViewId)
+        public FilteredDashboardView GetFilteredView(long productViewId)
         {
             return _unitOfWork.GetRepository<FilteredDashboardView>()
                .Include(p => p.DashboardView)

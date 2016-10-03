@@ -482,9 +482,9 @@ namespace DataEf.Migrations
                 context.Set<Filter>().Add(p);
                 context.SaveChanges();
 
-                p.ProductViews = new List<FilteredDashboardView>();
+                p.FilteredDashboardViews = new List<FilteredDashboardView>();
 
-                p.ProductViews.Add(new FilteredDashboardView
+                p.FilteredDashboardViews.Add(new FilteredDashboardView
                 {
                     Filter = p,
                     DashboardView = churn1,
@@ -511,7 +511,7 @@ namespace DataEf.Migrations
                         }
                 });
 
-                p.ProductViews.Add(new FilteredDashboardView
+                p.FilteredDashboardViews.Add(new FilteredDashboardView
                 {
                     Filter = p,
                     DashboardView = CHURN2A,
@@ -544,7 +544,7 @@ namespace DataEf.Migrations
                         }
                 });
 
-                p.ProductViews.Add(new FilteredDashboardView
+                p.FilteredDashboardViews.Add(new FilteredDashboardView
                 {
                     Filter = p,
                     DashboardView = np1,
@@ -559,7 +559,7 @@ namespace DataEf.Migrations
                     }
                 });
 
-                p.ProductViews.Add(new FilteredDashboardView
+                p.FilteredDashboardViews.Add(new FilteredDashboardView
                 {
                     Filter = p,
                     DashboardView = ExpAreaSat,
@@ -574,7 +574,7 @@ namespace DataEf.Migrations
                     }
                 });
 
-                p.ProductViews.Add(new FilteredDashboardView
+                p.FilteredDashboardViews.Add(new FilteredDashboardView
                 {
                     Filter = p,
                     DashboardView = IntentToReturn,

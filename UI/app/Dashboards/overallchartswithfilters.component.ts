@@ -100,6 +100,21 @@ export class OverallChartsWithFilters implements OnInit{
 
 
 
+        this.chartService
+            .getRecencyTypes()
+            .subscribe((res: Charts.RecencyType[]) => {
+                this.recenciesTypes = res.map((r) => {
+                    return {
+                        id: r.RecencyTypes,
+                        text: r.Name
+                    }
+                });
+
+                this.selectedRecencyType = { id: 0, text: 'Weekly' };
+
+            }, this.alertError);
+
+
         this.service.getDashboardViews()
             .subscribe((res: Array<DashboardView>) => {
 
@@ -123,36 +138,7 @@ export class OverallChartsWithFilters implements OnInit{
                 }
 
             }, this.alertError);
-
-
-
-        this.dropdowntools.loadSingleDropDownData(this.chartService.getRecencyTypes(),
-            this.dropdownRecencyType,
-            this.recenciesTypes,
-            this.selectedRecencyType,
-            (r) => {
-                return {
-                    id: r.RecencyTypes,
-                    text: r.Name
-                }
-            },
-            null
-        );
-
-        //this.chartService
-        //    .getRecencyTypes()
-        //    .subscribe((res: Charts.RecencyType[]) => {
-        //        this.recenciesTypes = res.map((r) => {
-        //            return {
-        //                id: r.RecencyTypes,
-        //                text: r.Name
-        //            }
-        //        });
-
-        //        this.selectedRecencyType = { id: 0, text: 'Weekly' };
-
-        //    }, this.alertError);
-
+        
         this.service.getProducts()
             .subscribe((res: Array<Filter>) => {
 
@@ -205,14 +191,11 @@ export class OverallChartsWithFilters implements OnInit{
         alert(error);
         this.errorMessage = <any>error;
     }
-
-    //ngOnDestroy() {
-    //    this.paramsSubscription.unsubscribe();
-    //}
-
+   
     viewSelected(value: any) {
         this.selectedView = { id: value.id, text: value.text };
-        this.loadChart(true);
+        this.selectedCodeframes = [];
+        this.loadChart(false);
     }
 
     recencySelected(value: any) {
@@ -250,7 +233,7 @@ export class OverallChartsWithFilters implements OnInit{
         this.selectedCodeframes.push(new Charts.Response(null,null,null,null,null,
             value.text,null));
 
-        this.dropdownCodeframes.active.sort((left, right) => parseInt(left.id) - parseInt(right.id));
+        this.dropdownCodeframes.active.sort();
         this.loadChart(false);
     }
 
@@ -314,7 +297,7 @@ export class OverallChartsWithFilters implements OnInit{
             });
         }
 
-        this.dropdowntools.setMultipleDropDownAllActive(     this.dropdownRecency,
+        this.dropdowntools.setMultipleDropDownAllActive(this.dropdownRecency,
                                                         this.selectedRecencies,
                                                         (item: SelectItem) => {return new Charts.Recency(parseInt(item.id),item.text);},
                                                         isInitial);
@@ -324,12 +307,11 @@ export class OverallChartsWithFilters implements OnInit{
     loadChart(isInitial: boolean): void {
 
        
-
         this.searchCriteria = new Charts.ChartSearchCriteria(null,
-            null,
-            null, this.selectedView.id,
-            this.selectedRecencyType.id,
-            this.selectedRecencies, true,null
+                                            this.selectedView.id,
+                                            this.selectedRecencyType.id,
+                                            this.selectedRecencies, true, [new Charts.SplitCriteria(null, this.selectedProducts.map((s) => s.Id), "FilterBasedMultiple")],
+                                            this.selectedCodeframes.map((c)=> c.answer)
         );
 
         this.chartContainerComponent.load(this.searchCriteria,
@@ -340,18 +322,34 @@ export class OverallChartsWithFilters implements OnInit{
     }
 
     loadCodeFrames(chartModels: Array<Charts.ChartModel>) {
+        
+        if (chartModels.length > 0) {
 
-        let modelList = Enumerable.asEnumerable(chartModels);
+            let series = Enumerable.asEnumerable(chartModels[0].series);
 
-        this.codeframes = modelList
-            .SelectMany((m: Charts.ChartModel) => m.series)
-            .Select((s: Charts.ChartSeriesModel) => {
-               return {
-                   id: s.key,
-                   text: s.key
-               }
-            })
-            .ToArray();
+            this.codeframes = chartModels[0].allSeriesNames
+                .map((s: string) => {
+                    return {
+                        id: s,
+                        text: s
+                    }
+                });
+
+            var selected = series
+                .Select((s: Charts.ChartSeriesModel) => {
+                    return new Charts.Response(null, null, null, null, null, s.key, null);
+                })
+                .Distinct((c) => c.answer)
+                .ToArray();
+
+           // debugger;
+            this.dropdowntools.setMultipleDropDownActive(this.dropdownCodeframes,
+                this.selectedCodeframes,
+                selected,
+                (item: SelectItem) => { return new Charts.Response(null, null, null, null, null, item.text, null); },
+                (value: Charts.Response) => { return value.answer },
+                true);
+        }
     }
 
     //loadProducts(response: Array<Product>): void {

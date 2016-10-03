@@ -22,7 +22,7 @@ namespace DataEf.Maps
             Property(x => x.Group).HasMaxLength(50);
             Property(x => x.Code).HasMaxLength(200).IsRequired()
                  .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("IX_Code")));
-            HasMany(x => x.ProductViews).WithRequired(x => x.Filter).Map(x => x.MapKey("ProductId"));
+            HasMany(x => x.FilteredDashboardViews).WithRequired(x => x.Filter).Map(x => x.MapKey("ProductId"));
         }
     }
 }

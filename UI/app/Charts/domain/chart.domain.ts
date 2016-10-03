@@ -9,6 +9,7 @@ export class ChartModel {
     series: ChartSeriesModel[];
    // allSeries: Array<string>;
     recencies: Array<Recency>;
+    allSeriesNames: Array<string>;
     chartRenderType: string;
 }
 
@@ -32,7 +33,7 @@ export class DataChart {
 }
 
 export class ChartsContainerModel {
-    constructor(public Charts: DataChart[], public AvailableRecencies: Recency[], public ChartRenderType: string) {
+    constructor(public Charts: DataChart[], public AvailableRecencies: Recency[], public ChartRenderType: string, public AvailableSeries : Array<string> ) {
     }
 }
 
@@ -46,12 +47,12 @@ export class ChartEntry {
 
 
 export class ChartSearchCriteria {
-    constructor(public SelectedSplit: ViewSplit, public SplitFilters: string[], public ProductViewId: number, public DashboardViewId: number, public RecencyType: number, public SelectedRecencies: Recency[], public UseFilterName: boolean, public SplitCriteria: SplitCriteria[]) {
+    constructor( public FilteredDashboardViewId: number, public DashboardViewId: number, public RecencyType: number, public SelectedRecencies: Recency[], public UseFilterName: boolean, public SplitCriteria: SplitCriteria[], public OutputFilters : string[]) {
     }
 }
 
 export class SplitCriteria {
-    constructor(public ViewSplitId: number, public SplitFilters: any[]) {
+    constructor(public ViewSplitId: number, public SplitFilters: any[], public SplitType: string) {
     }
 }
 

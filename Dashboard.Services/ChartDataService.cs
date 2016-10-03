@@ -24,35 +24,38 @@ namespace Dashboard.Services
         }
 
 
-        public ChartsContainerModel GetChartsContainerModelForMultipleProducts(ChartSearchCriteria criteria)
+        public ChartsContainerModel GetChartsContainerModelForMultipleFilters(ChartSearchCriteria criteria)
         {
           
             var allCharts = new List<DataChart>();
-            List<DataChart> charts;
 
             FilteredDashboardView productView = null;
 
-            foreach (var product in _dashboardService.GetProducts())
-            {
-                 charts = new List<DataChart>();
+            var filterbasedSplits =
+                criteria.SplitCriteria.Where(c => c.SplitType == SplitType.FilterBasedMultiple)
+                    .SelectMany(c => c.SplitFilters).ToList();
 
-                   productView = _dashboardService.GetProduct(product.Id)
-                    .ProductViews
+            foreach (var product in _dashboardService.GetFilters().Where(p=>   !filterbasedSplits.Any() ||
+                                                                                filterbasedSplits.Any( c=>  (long)c == p.Id)))
+            {
+                   productView = _dashboardService.GetFilter(product.Id)
+                    .FilteredDashboardViews
                     .FirstOrDefault(pv=> 
                                 pv.DashboardView.Id == criteria.DashboardViewId && pv.Filter.Id == product.Id);
 
-                GetCharts(new ChartSearchCriteria
+                   var charts =   GetCharts(new ChartSearchCriteria
                                                 {
                                                      RecencyType =  criteria.RecencyType,
-                                                     ProductViewId =  productView?.Id ?? 0,
+                                                     FilteredDashboardViewId =  productView?.Id ?? 0,
                                                      SelectedRecencies = criteria.SelectedRecencies,
                                                      UseFilterName = true,
-                                                }, productView
-                                                 , charts);
-                allCharts.AddRange(charts);
-              
+                                                }, productView);
+                   allCharts.AddRange(charts);
             }
-           
+
+            var allSeries = GetAllSeries(allCharts);
+
+            ApplyOutputFilters(criteria, allCharts);
 
             return new ChartsContainerModel
             {
@@ -65,19 +68,38 @@ namespace Dashboard.Services
                 }))
                 .GroupBy(r => r.RecencyNumber)
                 .Select(r => r.First()),
+                AvailableSeries = allSeries,
                 ChartRenderType = productView?.DashboardView?.ChartRenderType ?? ChartRenderType.line
             };
+        }
+
+        private  IEnumerable<string> GetAllSeries(List<DataChart> allCharts)
+        {
+            return allCharts.SelectMany(c => c.ChartValues.Select(cv => cv.Series)).Distinct().ToList();
+        }
+
+        private  void ApplyOutputFilters(ChartSearchCriteria criteria, List<DataChart> allCharts)
+        {
+            // apply output filters
+            foreach (var dataChart in allCharts)
+            {
+                dataChart.ChartValues =
+                    dataChart.ChartValues.Where(
+                        cv => criteria.OutputFilters == null || !criteria.OutputFilters.Any() || criteria.OutputFilters.Any(f => cv.Series == f));
+            }
         }
 
         //todo : performance
         public ChartsContainerModel GetChartsContainerModel(ChartSearchCriteria criteria)
         {
 
-            var productView = _dashboardService.GetProductView(criteria.ProductViewId);
+            var productView = _dashboardService.GetFilteredView(criteria.FilteredDashboardViewId);
 
-            var charts = new List<DataChart>();
+            var charts = GetCharts(criteria, productView);
 
-            GetCharts(criteria, productView, charts);
+            var allSeries = GetAllSeries(charts);
+
+            ApplyOutputFilters(criteria, charts);
 
             return new ChartsContainerModel
             {
@@ -89,14 +111,17 @@ namespace Dashboard.Services
 
                 }))
                 .GroupBy(r=>r.RecencyNumber).Select(r=> r.First()),
+                AvailableSeries = allSeries,
                 ChartRenderType = productView.DashboardView.ChartRenderType
 
 
             }; 
         }
 
-        private void GetCharts(ChartSearchCriteria criteria, FilteredDashboardView productView, List<DataChart> charts)
+        private List<DataChart>  GetCharts(ChartSearchCriteria criteria, FilteredDashboardView productView)
         {
+            var charts = new List<DataChart>();
+
             var filteredResponsesGroupes = FilterByProduct(productView);
 
             IEnumerable<Response> splitsAllType = new List<Response> {null};
@@ -105,9 +130,16 @@ namespace Dashboard.Services
 
             string splitsSelectiveTypeCode = null;
 
-            if (criteria.SelectedSplit != null && criteria.SelectedSplit.Id > 0)
+            var allSplit = criteria.SplitCriteria?.FirstOrDefault(c => c.SplitType == SplitType.All && c.ViewSplitId > 0);
+
+            var multipleSplits = criteria.SplitCriteria?.Where(c => c.SplitType == SplitType.Multiple)
+                                                        .SelectMany(c=> c.SplitFilters)
+                                                        .Select(sf => sf.ToString()).ToList();
+           
+
+            if (allSplit != null)
             {
-                var selectedSplit = _dashboardService.GetViewSplit(criteria.SelectedSplit.Id);
+                var selectedSplit = _dashboardService.GetViewSplit(allSplit.ViewSplitId);
 
                 var distinctResponses = GetDistinctResponses(filteredResponsesGroupes, selectedSplit.Question.Code);
 
@@ -117,12 +149,12 @@ namespace Dashboard.Services
                 }
             }
 
-            if (criteria.SplitFilters != null && criteria.SplitFilters.Any())
+            if (multipleSplits != null && multipleSplits.Any())
             {
-                splitsSelectiveTypeAnswers = criteria.SplitFilters;
+                splitsSelectiveTypeAnswers = multipleSplits;
                 splitsSelectiveTypeCode =
                     productView.ViewSplits.FirstOrDefault(vs => vs.SplitType == SplitType.Multiple)?.Question.Code;
-                filteredResponsesGroupes = FilterByQuestionAnswers(filteredResponsesGroupes, criteria.SplitFilters,
+                filteredResponsesGroupes = FilterByQuestionAnswers(filteredResponsesGroupes, multipleSplits,
                     splitsSelectiveTypeCode);
             }
 
@@ -158,9 +190,11 @@ namespace Dashboard.Services
                                        (res.Answer.Equals(split_carteasian.split2.Answer, StringComparison.InvariantCultureIgnoreCase)&&
                                         res.Question.Code.Equals(split_carteasian.split2.Code, StringComparison.InvariantCultureIgnoreCase))));
 
-
+                    //GetByAnalysis 
                     chart.ChartValues = GetByAnalysisType(criteria, productView, filteredResponsesGroupesForSplit);
+                        
                     chart.ChartName = split_carteasian.Name;
+
                     charts.Add(chart);
                 }
             }
@@ -171,8 +205,13 @@ namespace Dashboard.Services
                 chart.ChartValues = GetByAnalysisType(criteria, productView, filteredResponsesGroupes);
 
                 chart.ChartName = criteria.UseFilterName ? productView.Filter.Name : "Overall";
+
                 charts.Add(chart);
             }
+
+         
+
+            return charts;
         }
 
         public IEnumerable<RecencyType> GetRecencyTypes()
@@ -182,7 +221,7 @@ namespace Dashboard.Services
         
         public IEnumerable<FieldValueModel> GetFieldValues(int productViewId)
         {
-            var productView = _dashboardService.GetProductView(productViewId);
+            var productView = _dashboardService.GetFilteredView(productViewId);
 
             var filteredResponsesGroupes = FilterByProduct(productView);
 

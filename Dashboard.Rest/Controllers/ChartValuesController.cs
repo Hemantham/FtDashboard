@@ -12,7 +12,7 @@ using Dashboard.Rest.Models.Charts;
 
 namespace Dashboard.Rest.Controllers
 {
-   // [Authorize]
+   
     public class ChartValuesController : ApiController
     {
         private IChartDataService _chartDataService;
@@ -34,13 +34,13 @@ namespace Dashboard.Rest.Controllers
         [Route("api/charts/data")]
         public ChartsContainerModel GetChartEntries(ChartSearchCriteria criteria)
         {
-            if (criteria.ProductViewId > 0)
+            if (criteria.FilteredDashboardViewId > 0)
             {
                 return _chartDataService.GetChartsContainerModel(criteria);
             }
             else
             {
-                return _chartDataService.GetChartsContainerModelForMultipleProducts(criteria);
+                return _chartDataService.GetChartsContainerModelForMultipleFilters(criteria);
             }
         }
 

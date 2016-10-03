@@ -37,7 +37,7 @@ export class ChartValueService {
         // let options = new RequestOptions({ headers: headers });
         return this.http
             .get(`/Dashboard.Rest/api/charts/recencytypes`)
-            .map((res) => {
+            .map((res: any) => {
                 let body: Charts.RecencyType[] = res.json();
                 return body;
             })
@@ -69,6 +69,7 @@ export class ChartValueService {
                 chart.xAxislable = "This is X";
                 chart.yAxislable = "This is Y";
                 chart.recencies = chartContainerModel.AvailableRecencies;
+                chart.allSeriesNames = chartContainerModel.AvailableSeries;
                 chart.chartRenderType = chartContainerModel.ChartRenderType;
                 chart.name = datachart.ChartName;
                 chart.series = chartsList.GroupBy(chartEntry => chartEntry.Series,

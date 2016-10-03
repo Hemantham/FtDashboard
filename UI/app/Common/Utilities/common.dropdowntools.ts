@@ -30,6 +30,34 @@ export class DropDownTools {
             },
             500);
     }
+
+  public setMultipleDropDownActive<T>(dropdown: SelectComponent,
+      array: Array<T>,
+      selected: Array<T>,
+      callback: (selectItem: SelectItem) => T,
+      getId :(value : T) => string ,
+      isInitial: boolean): void {
+
+      setTimeout(() => {
+          if (dropdown.itemObjects.length > 0) {
+              if (isInitial) {
+                  dropdown.active.splice(0);
+                  array.splice(0);
+                  dropdown.itemObjects.forEach((item) => {
+                      if (selected.filter((s) => getId(s) == item.id).length > 0) {
+                          dropdown.active.push(item);
+                          array.push(callback(item));
+                      }
+
+                  });
+              }
+          } else {
+              array = [];
+              dropdown.active = [];
+          }
+      },
+          500);
+  }
  
   private  alertError(error: any): void {
       alert(error);

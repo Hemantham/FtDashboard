@@ -14,7 +14,7 @@ export class DashboardView {
 
 // Find all classes with a name ending with Model
 export class Filter {
-    constructor(public Id:number, public Name: string, public Code: string, public ProductViews: FilteredDashboardView[], public FilterString: string) {
+    constructor(public Id:number, public Name: string, public Code: string, public FilteredDashboardViews: FilteredDashboardView[], public FilterString: string) {
 
     }
 }
