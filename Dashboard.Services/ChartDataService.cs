@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Resources;
 using Dashboard.API.API;
+using Dashboard.API.API.Cache;
 using Dashboard.API.Domain;
 using Dashboard.API.Enums;
 using Dashboard.API.Models;
 using Dashboard.Models;
+using Dashboard.Services.Cache;
 using DataEf.Context;
 using Dashboard.Services.Utilities;
 namespace Dashboard.Services
@@ -15,18 +17,18 @@ namespace Dashboard.Services
     {
         private readonly EfUnitOfWork _unitOfWork;
         private readonly IDashboardService _dashboardService;
-        private IEnumerable<IGrouping<string,  Response>> responsesGroupes;
-        
+        private ICacheProvider _cacheProvider;
+
         public ChartDataService(EfUnitOfWork unitOfWork, IDashboardService dashboardService)
         {
             _unitOfWork = unitOfWork;
             _dashboardService = dashboardService;
+            _cacheProvider = MemCachProvider.Instance;
         }
-
 
         public ChartsContainerModel GetChartsContainerModelForMultipleFilters(ChartSearchCriteria criteria)
         {
-          
+
             var allCharts = new List<DataChart>();
 
             FilteredDashboardView productView = null;
@@ -35,22 +37,22 @@ namespace Dashboard.Services
                 criteria.SplitCriteria.Where(c => c.SplitType == SplitType.FilterBasedMultiple)
                     .SelectMany(c => c.SplitFilters).ToList();
 
-            foreach (var product in _dashboardService.GetFilters().Where(p=>   !filterbasedSplits.Any() ||
-                                                                                filterbasedSplits.Any( c=>  (long)c == p.Id)))
+            foreach (var product in _dashboardService.GetFilters().Where(p => !filterbasedSplits.Any() ||
+                                                                                filterbasedSplits.Any(c => (long)c == p.Id)))
             {
-                   productView = _dashboardService.GetFilter(product.Id)
-                    .FilteredDashboardViews
-                    .FirstOrDefault(pv=> 
-                                pv.DashboardView.Id == criteria.DashboardViewId && pv.Filter.Id == product.Id);
+                productView = _dashboardService.GetFilter(product.Id)
+                 .FilteredDashboardViews
+                 .FirstOrDefault(pv =>
+                             pv.DashboardView.Id == criteria.DashboardViewId && pv.Filter.Id == product.Id);
 
-                   var charts =   GetCharts(new ChartSearchCriteria
-                                                {
-                                                     RecencyType =  criteria.RecencyType,
-                                                     FilteredDashboardViewId =  productView?.Id ?? 0,
-                                                     SelectedRecencies = criteria.SelectedRecencies,
-                                                     UseFilterName = true,
-                                                }, productView);
-                   allCharts.AddRange(charts);
+                var charts = GetCharts(new ChartSearchCriteria
+                {
+                    RecencyType = criteria.RecencyType,
+                    FilteredDashboardViewId = productView?.Id ?? 0,
+                    SelectedRecencies = criteria.SelectedRecencies,
+                    UseFilterName = true,
+                }, productView);
+                allCharts.AddRange(charts);
             }
 
             var allSeries = GetAllSeries(allCharts);
@@ -67,18 +69,21 @@ namespace Dashboard.Services
 
                 }))
                 .GroupBy(r => r.RecencyNumber)
-                .Select(r => r.First()),
+                .Select(r => r.First())
+                .OrderBy(r=> r.RecencyNumber),
+               // .Select((r, i) => new XAxis { RecencyNumber = i, Lable = r.Lable }),
                 AvailableSeries = allSeries,
-                ChartRenderType = productView?.DashboardView?.ChartRenderType ?? ChartRenderType.line
+                ChartRenderType = productView?.DashboardView?.ChartRenderType ?? ChartRenderType.line,
+                DataAnlysisType = productView?.DashboardView?.DataAnlysisType ?? DataAnlysisType.percentage,
             };
         }
 
-        private  IEnumerable<string> GetAllSeries(List<DataChart> allCharts)
+        private IEnumerable<string> GetAllSeries(List<DataChart> allCharts)
         {
             return allCharts.SelectMany(c => c.ChartValues.Select(cv => cv.Series)).Distinct().ToList();
         }
 
-        private  void ApplyOutputFilters(ChartSearchCriteria criteria, List<DataChart> allCharts)
+        private void ApplyOutputFilters(ChartSearchCriteria criteria, List<DataChart> allCharts)
         {
             // apply output filters
             foreach (var dataChart in allCharts)
@@ -104,38 +109,41 @@ namespace Dashboard.Services
             return new ChartsContainerModel
             {
                 Charts = charts,
-                AvailableRecencies = charts.SelectMany(c=> c.ChartValues.Select(cv=> new XAxis
+                AvailableRecencies = charts.SelectMany(c => c.ChartValues.Select(cv => new XAxis
                 {
                     RecencyNumber = cv.XAxisId,
                     Lable = cv.XAxisLable,
 
                 }))
-                .GroupBy(r=>r.RecencyNumber).Select(r=> r.First()),
+                .GroupBy(r => r.RecencyNumber)
+                .Select(r => r.First())
+                .OrderBy(r => r.RecencyNumber),
+                // .Select((r, i)=> new XAxis { RecencyNumber = i, Lable =  r.Lable}),
                 AvailableSeries = allSeries,
-                ChartRenderType = productView.DashboardView.ChartRenderType
+                ChartRenderType = productView.DashboardView.ChartRenderType,
+                DataAnlysisType = productView?.DashboardView?.DataAnlysisType ?? DataAnlysisType.percentage,
 
-
-            }; 
+            };
         }
 
-        private List<DataChart>  GetCharts(ChartSearchCriteria criteria, FilteredDashboardView productView)
+        private List<DataChart> GetCharts(ChartSearchCriteria criteria, FilteredDashboardView productView)
         {
             var charts = new List<DataChart>();
 
             var filteredResponsesGroupes = FilterByProduct(productView);
 
-            IEnumerable<Response> splitsAllType = new List<Response> {null};
+            IEnumerable<Response> splitsAllType = new List<Response> { null };
 
-            IEnumerable<string> splitsSelectiveTypeAnswers = new List<string> {null};
+            IEnumerable<string> splitsSelectiveTypeAnswers = new List<string> { null };
 
             string splitsSelectiveTypeCode = null;
 
             var allSplit = criteria.SplitCriteria?.FirstOrDefault(c => c.SplitType == SplitType.All && c.ViewSplitId > 0);
 
             var multipleSplits = criteria.SplitCriteria?.Where(c => c.SplitType == SplitType.Multiple)
-                                                        .SelectMany(c=> c.SplitFilters)
+                                                        .SelectMany(c => c.SplitFilters)
                                                         .Select(sf => sf.ToString()).ToList();
-           
+
 
             if (allSplit != null)
             {
@@ -159,18 +167,18 @@ namespace Dashboard.Services
             }
 
             var split_carteasians = (from split1 in splitsAllType
-                from split2 in splitsSelectiveTypeAnswers
-                select new
-                {
-                    split1 = split1 != null ? new {split1.Answer, split1.Question.Code} : null,
-                    split2 =
-                    (split2 != null && splitsSelectiveTypeCode != null)
-                        ? new {Answer = split2, Code = splitsSelectiveTypeCode}
-                        : null,
-                    Name =
-                    $"{(split1 != null ? split1.Answer : string.Empty)} - {(split2 != null && splitsSelectiveTypeCode != null ? split2 : String.Empty)}"
-                        .Trim('-', ' ')
-                }).Distinct();
+                                     from split2 in splitsSelectiveTypeAnswers
+                                     select new
+                                     {
+                                         split1 = split1 != null ? new { split1.Answer, split1.Question.Code } : null,
+                                         split2 =
+                                         (split2 != null && splitsSelectiveTypeCode != null)
+                                             ? new { Answer = split2, Code = splitsSelectiveTypeCode }
+                                             : null,
+                                         Name =
+                                         $"{(split1 != null ? split1.Answer : string.Empty)} - {(split2 != null && splitsSelectiveTypeCode != null ? split2 : String.Empty)}"
+                                             .Trim('-', ' ')
+                                     }).Distinct();
 
 
             if (split_carteasians.Any(c => c.split1 != null || c.split2 != null))
@@ -183,16 +191,16 @@ namespace Dashboard.Services
                         .Where(frg =>
                             frg.Any(
                                 res => split_carteasian.split1 == null ||
-                                       (res.Answer.Equals(split_carteasian.split1.Answer,StringComparison.InvariantCultureIgnoreCase) &&
-                                        res.Question.Code.Equals(split_carteasian.split1.Code,StringComparison.InvariantCultureIgnoreCase))) &&
+                                       (res.Answer.Equals(split_carteasian.split1.Answer, StringComparison.InvariantCultureIgnoreCase) &&
+                                        res.Question.Code.Equals(split_carteasian.split1.Code, StringComparison.InvariantCultureIgnoreCase))) &&
                             frg.Any(
                                 res => split_carteasian.split2 == null ||
-                                       (res.Answer.Equals(split_carteasian.split2.Answer, StringComparison.InvariantCultureIgnoreCase)&&
+                                       (res.Answer.Equals(split_carteasian.split2.Answer, StringComparison.InvariantCultureIgnoreCase) &&
                                         res.Question.Code.Equals(split_carteasian.split2.Code, StringComparison.InvariantCultureIgnoreCase))));
 
                     //GetByAnalysis 
                     chart.ChartValues = GetByAnalysisType(criteria, productView, filteredResponsesGroupesForSplit);
-                        
+
                     chart.ChartName = split_carteasian.Name;
 
                     charts.Add(chart);
@@ -209,32 +217,32 @@ namespace Dashboard.Services
                 charts.Add(chart);
             }
 
-         
+
 
             return charts;
         }
 
         public IEnumerable<RecencyType> GetRecencyTypes()
         {
-           return  _unitOfWork.GetRepository<RecencyType>().Get();
+            return _unitOfWork.GetRepository<RecencyType>().Get();
         }
-        
+
         public IEnumerable<FieldValueModel> GetFieldValues(int productViewId)
         {
             var productView = _dashboardService.GetFilteredView(productViewId);
 
             var filteredResponsesGroupes = FilterByProduct(productView);
 
-            return GetDistinctResponses(filteredResponsesGroupes, 
+            return GetDistinctResponses(filteredResponsesGroupes,
                                 productView.ViewSplits.FirstOrDefault(vs => vs.SplitType == SplitType.Multiple)?.Question?.Code)
-                                .Select((r,i)=> new FieldValueModel
-                    {
-                        Id = r.Id,
-                        Code = r.Question.Code,
-                        Answer = r.Answer,
-                        QuestionId = r.Question.Id,
-                        IsSelected = i < 2
-                    })
+                                .Select((r, i) => new FieldValueModel
+                                {
+                                    Id = r.Id,
+                                    Code = r.Question.Code,
+                                    Answer = r.Answer,
+                                    QuestionId = r.Question.Id,
+                                    IsSelected = i < 2
+                                })
                                 ;
         }
 
@@ -242,22 +250,41 @@ namespace Dashboard.Services
     , FilteredDashboardView productView
     , IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes)
         {
+            List<ChartEntry> analised = null;
+
             if (productView.DashboardView.DataAnlysisType == DataAnlysisType.percentage)
             {
-                return GetDataFieldsByPercentage(filteredResponsesGroupes, productView, criteria);
+                analised =  GetDataFieldsByPercentage(filteredResponsesGroupes, productView, criteria);
             }
             else if (productView.DashboardView.DataAnlysisType == DataAnlysisType.avarage)
             {
-                return GetDataFieldsByAvarage(filteredResponsesGroupes, productView, criteria);
-
+                analised = GetDataFieldsByAvarage(filteredResponsesGroupes, productView, criteria);
             }
             else if (productView.DashboardView.DataAnlysisType == DataAnlysisType.percentageAndAverage)
             {
-                return GetDataFieldsByAvarage(filteredResponsesGroupes, productView, criteria)
-                   .Union(GetDataFieldsByPercentage(filteredResponsesGroupes, productView, criteria));
+                analised = GetDataFieldsByAvarage(filteredResponsesGroupes, productView, criteria)
+                   .Union(GetDataFieldsByPercentage(filteredResponsesGroupes, productView, criteria)).ToList();
             }
 
-            return null;
+            analised = AppendNulls(analised);
+
+            return analised;
+        }
+
+        private List<ChartEntry> AppendNulls(List<ChartEntry> analised)
+        {
+            var uniqueXvalues = analised.Select(e => e.XAxisId).Distinct().ToList();
+
+            foreach (var seriesGroup in analised.GroupBy(e => e.Series))
+            {
+                analised.AddRange(uniqueXvalues.Where(x => !seriesGroup.Any(e => e.XAxisId == x)).Select(x => new ChartEntry
+                {
+                    Series = seriesGroup.Key,
+                    XAxisId = x,
+                }));
+            }
+
+            return  analised.OrderBy(a => a.XAxisId).ToList();
         }
 
         private string GetRange(string value, IEnumerable<Range> ranges)
@@ -280,12 +307,12 @@ namespace Dashboard.Services
                 .Select(r => new Range
                 {
                     Text = r.Split(':')[0],
-                    Start =  float.Parse(r.Split(':')[1].Split('-')[0].Trim()),
+                    Start = float.Parse(r.Split(':')[1].Split('-')[0].Trim()),
                     End = float.Parse(r.Split(':')[1].Split('-')[1].Trim())
                 }).ToList();
         }
 
-        private  IEnumerable<ChartEntry> GetDataFieldsByPercentage(IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes, FilteredDashboardView productView, ChartSearchCriteria criteria)
+        private List<ChartEntry> GetDataFieldsByPercentage(IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes, FilteredDashboardView productView, ChartSearchCriteria criteria)
         {
             var fingleFieldOfInterest = productView.DashboardView.FieldOfInterest.FirstOrDefault()?.Code;
 
@@ -293,14 +320,14 @@ namespace Dashboard.Services
 
             var datafields = filteredResponsesGroupes.Select(rg =>
                 {
-                    var responseFoi = rg.FirstOrDefault(r => r.Question.Code.Equals(fingleFieldOfInterest,StringComparison.InvariantCultureIgnoreCase));
-                    
-                    var responseXAxis= GetResponseXAxis(productView, criteria, rg, responseFoi);
+                    var responseFoi = rg.FirstOrDefault(r => r.Question.Code.Equals(fingleFieldOfInterest, StringComparison.InvariantCultureIgnoreCase));
+
+                    var responseXAxis = GetResponseXAxis(productView, criteria, rg, responseFoi);
 
                     return new DataPoint
                     {
-                        Data = dataRanges != null && dataRanges.Any()? GetRange(responseFoi?.Answer , dataRanges) :responseFoi?.Answer,
-                        CompletionDate = responseFoi?.CompletionDate?? DateTime.MinValue,
+                        Data = dataRanges != null && dataRanges.Any() ? GetRange(responseFoi?.Answer, dataRanges) : responseFoi?.Answer,
+                        CompletionDate = responseFoi?.CompletionDate ?? DateTime.MinValue,
                         //select the field we are interested in for charting,
 
                         Id = rg.Key,
@@ -309,9 +336,9 @@ namespace Dashboard.Services
 
                     };
                 })
-                .Where(d=> d.Data != null && (criteria.SelectedRecencies == null ||
-                                             !criteria.SelectedRecencies.Any()||
-                                              criteria.SelectedRecencies.Any( r => d.XAxisId == r.RecencyNumber)))
+                .Where(d => d.Data != null && (criteria.SelectedRecencies == null ||
+                                             !criteria.SelectedRecencies.Any() ||
+                                              criteria.SelectedRecencies.Any(r => d.XAxisId == r.RecencyNumber)))
                 .GroupBy(d => d.XAxisId) // group the FOI by XAxis
                 .ToList();
 
@@ -322,9 +349,9 @@ namespace Dashboard.Services
                                 var responseRow = vg.FirstOrDefault();
                                 return new ChartEntry
                                 {
-                                    Value = vg.Count()*100/xg.Count(),
-                                    XAxisLable = responseRow?.XAxisLable ,
-                                    XAxisId = responseRow?.XAxisId ?? 0 ,
+                                    Value = vg.Count() * 100 / xg.Count(),
+                                    XAxisLable = responseRow?.XAxisLable,
+                                    XAxisId = responseRow?.XAxisId ?? 0,
                                     Series = vg.Key,
                                 };
                             })
@@ -337,13 +364,13 @@ namespace Dashboard.Services
         private static XAxis GetResponseXAxis(FilteredDashboardView productView, ChartSearchCriteria criteria, IGrouping<string, Response> rg,
             Response responseFoi)
         {
-            var responseXAxisId = 0;
+            var responseXAxisId = 0L;
             var responseXAxislabel = string.Empty;
 
             if (productView.DashboardView.XAxisId != null) // is dashboardview provides the XAxis, pick ffrom that
             {
-                responseXAxisId = int.Parse(rg.FirstOrDefault(r => r.Question.Code.Equals(productView.DashboardView.XAxisId,StringComparison.InvariantCultureIgnoreCase))?.Answer ?? "0");
-                responseXAxislabel = rg.FirstOrDefault(r => r.Question.Code.Equals( productView.DashboardView.XAxislable,StringComparison.InvariantCultureIgnoreCase))?.Answer;
+                responseXAxisId = int.Parse(rg.FirstOrDefault(r => r.Question.Code.Equals(productView.DashboardView.XAxisId, StringComparison.InvariantCultureIgnoreCase))?.Answer ?? "0");
+                responseXAxislabel = rg.FirstOrDefault(r => r.Question.Code.Equals(productView.DashboardView.XAxislable, StringComparison.InvariantCultureIgnoreCase))?.Answer;
             }
             if (responseXAxisId == 0) // else pick from completion date
             {
@@ -358,7 +385,7 @@ namespace Dashboard.Services
             };
         }
 
-        private static IEnumerable<ChartEntry> GetDataFieldsByAvarage(IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes, FilteredDashboardView productView, ChartSearchCriteria criteria)
+        private static List<ChartEntry> GetDataFieldsByAvarage(IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes, FilteredDashboardView productView, ChartSearchCriteria criteria)
         {
 
             var chartEntries = new List<ChartEntry>();
@@ -371,7 +398,7 @@ namespace Dashboard.Services
                     filteredResponsesGroupes
                         .Select(rg =>
                         {
-                            var responseFoi = rg.FirstOrDefault(r => r.Question.Code.Equals(fieldOfInterest.Code,StringComparison.InvariantCultureIgnoreCase));
+                            var responseFoi = rg.FirstOrDefault(r => r.Question.Code.Equals(fieldOfInterest.Code, StringComparison.InvariantCultureIgnoreCase));
 
                             var responseXAxis = GetResponseXAxis(productView, criteria, rg, responseFoi);
 
@@ -387,7 +414,7 @@ namespace Dashboard.Services
                                 XAxisId = responseXAxis.RecencyNumber,
                             };
                         })
-                      .Where(d => !string.IsNullOrWhiteSpace(d.Data) && 
+                      .Where(d => !string.IsNullOrWhiteSpace(d.Data) &&
                                              (criteria.SelectedRecencies == null ||
                                              !criteria.SelectedRecencies.Any() ||
                                               criteria.SelectedRecencies.Any(r => d.XAxisId == r.RecencyNumber)))
@@ -403,7 +430,7 @@ namespace Dashboard.Services
                             var recency = responseRow?.CompletionDate.GetRecency(criteria.RecencyType) ?? new XAxis();
                             return new ChartEntry
                             {
-                                Value = vg.Sum(dp => double.Parse(dp.Data))/vg.Count(),
+                                Value = vg.Sum(dp => double.Parse(dp.Data)) / vg.Count(),
                                 XAxisLable = responseRow?.XAxisLable ?? recency.Lable,
                                 XAxisId = responseRow?.XAxisId ?? recency.RecencyNumber,
                                 Series = vg.Any() ? vg.First().KeyName : string.Empty,
@@ -415,26 +442,36 @@ namespace Dashboard.Services
 
             return chartEntries;
         }
-        
+
         private static IEnumerable<Response> GetDistinctResponses(IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes, string code)
         {
 
             return filteredResponsesGroupes
-                .SelectMany(rg => rg.Where( r=>  r.Question.Code.Equals(code,StringComparison.InvariantCultureIgnoreCase)) )
+                .SelectMany(rg => rg.Where(r => r.Question.Code.Equals(code, StringComparison.InvariantCultureIgnoreCase)))
                 .GroupBy(r => r.Answer)
                 .Select(rg => rg.FirstOrDefault())
                 .Where(r => r != null);
         }
-        
+
         private static IEnumerable<IGrouping<string, Response>> FilterByQuestionAnswers(IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes, IEnumerable<string> responses, string code)
         {
             return filteredResponsesGroupes.Where(rg => !responses.Any() ||
                                                         string.IsNullOrWhiteSpace(code) ||
                                                         responses.Any(rs => rg.Any(r => r.Question.Code == code && r.Answer == rs)));
         }
-        
+
         private IEnumerable<IGrouping<string, Response>> FilterByProduct(FilteredDashboardView productView)
         {
+           
+
+            var filteredResponsesGroupes =
+                _cacheProvider.GetItem<IList<IGrouping<string, Response>>>($"data-filterdview-{productView.Id}");
+
+            if (filteredResponsesGroupes != null)
+            {
+                return filteredResponsesGroupes.ToList();
+            }
+
             var productFilters = productView.Filter?
                 .FilterString?
                 .ToLower()
@@ -449,27 +486,32 @@ namespace Dashboard.Services
                     };
                 }).ToList();
 
-            //todo cache
-            if (responsesGroupes == null)
-            {
-                responsesGroupes = _unitOfWork.GetRepository<Response>()
-                    .Include(response => response.Question)
-                    .Get()
-                    .GroupBy(r => r.ResponseId)
-                    .ToList();
-            }
+            var responsesGroupes =
+                _cacheProvider.GetItemAndAdd<IList<IGrouping<string, Response>>>("data-all", () =>
+                {
+                    return _unitOfWork.GetRepository<Response>()
+                        .Include(response => response.Question)
+                        .Get(null, null, true)
+                        .GroupBy(r => r.ResponseId)
+                        .ToList();
+                });
+             
 
             //within that response check if we have given filters. 
             //filter by the cuts/filters , etc
-            var filteredResponsesGroupes = productFilters != null
-                ? responsesGroupes
-                    .Where(rg => productFilters.All(q => 
-                                                    rg.Any(r => r.Question.Code.Equals(q.Code, StringComparison.InvariantCultureIgnoreCase) 
-                                                                && r.Answer.Equals(q.Answer,StringComparison.InvariantCultureIgnoreCase))))
-                                                    .ToList()
-                : responsesGroupes;
+            filteredResponsesGroupes = productFilters != null
+               ? responsesGroupes
+                   .Where(rg => productFilters.All(q =>
+                                                   rg.Any(r => r.Question.Code.Equals(q.Code, StringComparison.InvariantCultureIgnoreCase)
+                                                               && r.Answer.Equals(q.Answer, StringComparison.InvariantCultureIgnoreCase))))
+                                                   .ToList()
+               : responsesGroupes;
+
+
+            _cacheProvider.AddItem($"data-filterdview-{productView.Id}", filteredResponsesGroupes.ToList());
+
             return filteredResponsesGroupes;
         }
-        
+
     }
 }

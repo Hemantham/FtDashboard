@@ -8,7 +8,7 @@ namespace Dashboard.API.Models
 {
     public class XAxis
     {
-        public int RecencyNumber { get; set; }
+        public long RecencyNumber { get; set; }
         public string  Lable { get; set;}
     }
 }

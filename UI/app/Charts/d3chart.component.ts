@@ -40,11 +40,17 @@ export class D3Chart implements OnInit {
     }
 
     getLineChartValues(chart: Chartdomain.ChartModel): any {
+
+       
         return chart.series.map((s) => {
             return {
                 key: s.key,
-                values: s.data.map((dp) => {
-                    return {x:dp.x, y:dp.y};
+                values:
+                //[[10, 30], [20, null], [30, 15], [40, 55], [60, null], [70, 25], [80, 40]]
+
+                s.data.map((dp, j) => {
+                 
+                    return {x:dp.x, y:dp.y, i:j};
                 })
             };
         });
@@ -63,9 +69,11 @@ export class D3Chart implements OnInit {
     }
 
     private getLineChartOptions() {
-
+      //  alert(this.chart.dataAnlysisType);
         return {
             chart: {
+                forceY: [0, this.chart.dataAnlysisType === 'percentage' ? 100 : 10],
+
                 type: 'lineChart',
                 height: 500,
                 margin: {
@@ -74,18 +82,21 @@ export class D3Chart implements OnInit {
                     bottom: 70,
                     left: 70
                 },
-                x: function (d: any) { return d.x; },
-                y: function (d: any) { return d.y; },
+                x: (d: any) => { return d.x; },
+                y: (d: any) => { return d.y; },
+
                 showValues: true,
-               // staggerLabels: true,
-                valueFormat: function (d: any) {
-                    return d3.format(",.4f")(d);
+                // staggerLabels: true,
+                valueFormat: function(d: any) {
+                    return d3.format(",.1f")(d);
                 },
                 duration: 500,
                 xAxis: {
-                    axisLabel: 'X Axis',
-                   
+                    //axisLabel: 'X Axis',
+
                     tickFormat: (d: any) => {
+
+                       // debugger;
                         let xAx = this.chart.recencies.filter(r => r.RecencyNumber === d)[0];
                         if (xAx == null) {
                             return '';
@@ -93,13 +104,41 @@ export class D3Chart implements OnInit {
                             return xAx.Lable;
                         }
                     }
+                    ////////tickFormat: (d: any) => {
+                    ////////    debugger;
+                    ////////    return d3.time.format('%x')(new Date(d));
+                    ////////}
+
+                    //tickValues:  (values: any)=> {
+                       
+                    //    var x = this.chart.recencies.map(r => r.Lable);
+
+                        
+                    //   // debugger;
+
+                    //    return x;
+                    //    //  return values.map((v:any) => v.i);
+                    //    //var a = _.map(values[0].values, function (v, i) {
+                    //    //    return i
+                    //    //});
+                    //    //return a;
+                    //}
+
+
                 },
                 yAxis: {
-                    axisLabel: 'Y Axis'
-                    //  axisLabelDistance: -10
-                },
+                 //   ticks: [10, 20, 70, 100],
+                    axisLabel: 'Answers'
+                    tickFormat: (d: any) =>
+                    {
+                        return this.chart.dataAnlysisType === 'percentage' ? `${d}%` : d;
+                    }
+                    //{
+                    //    return d3.format('.02f')(d);
+                    //}
+                }
                
-                rotateLabels: 0, //Angle to rotate x-axis labels.
+               //  rotateLabels: 0 //Angle to rotate x-axis labels.
                // showControls: true, //Allow user to switch between 'Grouped' and 'Stacked' mode.
                // groupSpacing: 0.1 //Distance between each group of bars.
             }

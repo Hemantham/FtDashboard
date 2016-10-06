@@ -33,11 +33,13 @@ export class HighChartComponent implements OnInit {
 
         let seriesList = Enumerable.asEnumerable(chart.series);
 
+
+
         return seriesList.Select((s :Chartdomain. ChartSeriesModel, i:number) => {
                 return {
                     name: s.key,
                     type: (i !== 0) ? 'column' : 'spline',
-                    yAxis: (i !== 0) ? 1 : 0,
+                    yAxis: (i !== 0) ? 0 : 1,
                     data: s.data.map((dp) => dp.y)
                 };
             })
@@ -83,14 +85,16 @@ export class HighChartComponent implements OnInit {
                     }
                 },
                 title: {
-                    text: 'Y Axis 1',
+                    text: '% intention to return', //todo
                     style: {
                         color: Highcharts.getOptions().colors[1]
-                    }
+                    },
+                    min: 0,
+                    max: 100 
                 }
                 }, { // Secondary yAxis
                     title: {
-                        text: 'Y Axis 2',
+                        text: 'Mean', //todo
                         style: {
                             color: Highcharts.getOptions().colors[0]
                         }

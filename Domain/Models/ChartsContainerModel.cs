@@ -19,5 +19,8 @@ namespace Dashboard.API.Models
 
         [JsonConverter(typeof(StringEnumConverter))]
         public ChartRenderType ChartRenderType { get; set; }
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        public DataAnlysisType DataAnlysisType { get; set; }
     }
 }

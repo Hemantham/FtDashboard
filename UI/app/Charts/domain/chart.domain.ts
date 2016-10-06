@@ -11,6 +11,7 @@ export class ChartModel {
     recencies: Array<Recency>;
     allSeriesNames: Array<string>;
     chartRenderType: string;
+    dataAnlysisType: string;
 }
 
 export class ChartSeriesModel {
@@ -33,7 +34,7 @@ export class DataChart {
 }
 
 export class ChartsContainerModel {
-    constructor(public Charts: DataChart[], public AvailableRecencies: Recency[], public ChartRenderType: string, public AvailableSeries : Array<string> ) {
+    constructor(public Charts: DataChart[], public AvailableRecencies: Recency[], public ChartRenderType: string, public AvailableSeries: Array<string>, public DataAnlysisType: string ) {
     }
 }
 

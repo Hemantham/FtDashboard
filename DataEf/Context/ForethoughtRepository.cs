@@ -24,11 +24,13 @@ namespace DataEf.Context
             _query = _dbSet;
         }
 
+
+
         //Get : Filter, pass the lamda expression (filter), incldude properties - comma delimitted list
         public virtual IEnumerable<TEntity> Get(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = "")
+            bool noTracking = false)
         {
            // IQueryable<TEntity> _query = _dbSet;
 
@@ -37,10 +39,15 @@ namespace DataEf.Context
                 _query = _query.Where(filter);
             }
 
-            foreach (var includeProperty in includeProperties.Split
-                (new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            //foreach (var includeProperty in includeProperties.Split
+            //    (new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            //{
+            //    _query = _query.Include(includeProperty);
+            //}
+
+            if (noTracking)
             {
-                _query = _query.Include(includeProperty);
+                _query = _query.AsNoTracking();
             }
 
             if (orderBy != null)

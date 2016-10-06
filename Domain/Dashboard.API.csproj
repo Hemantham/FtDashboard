@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Cache\ICacheProvider.cs" />
     <Compile Include="API\IChartDataService.cs" />
     <Compile Include="API\IDashboardService.cs" />
     <Compile Include="Models\ComparisonChartSearchCriteria.cs" />

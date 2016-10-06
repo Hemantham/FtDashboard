@@ -71,6 +71,7 @@ export class ChartValueService {
                 chart.recencies = chartContainerModel.AvailableRecencies;
                 chart.allSeriesNames = chartContainerModel.AvailableSeries;
                 chart.chartRenderType = chartContainerModel.ChartRenderType;
+                chart.dataAnlysisType = chartContainerModel.DataAnlysisType;
                 chart.name = datachart.ChartName;
                 chart.series = chartsList.GroupBy(chartEntry => chartEntry.Series,
                         chartEntry => chartEntry,
