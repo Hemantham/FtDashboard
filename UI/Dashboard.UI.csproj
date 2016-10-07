@@ -131,8 +131,12 @@
     <Content Include="index.html" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="Styles\bootstrap-material-design.css" />
+    <Content Include="Styles\bootstrap-material-design.min.css" />
     <Content Include="Styles\font-awesome.min.css" />
     <Content Include="Styles\ng2-select.css" />
+    <Content Include="Styles\ripples.css" />
+    <Content Include="Styles\ripples.min.css" />
     <Content Include="Styles\styles.css" />
     <Content Include="Styles\sb-admin-2.css" />
     <Content Include="systemjs.config.js" />

@@ -57,7 +57,7 @@ namespace Dashboard.Services
 
             var allSeries = GetAllSeries(allCharts);
 
-            ApplyOutputFilters(criteria, allCharts);
+           
 
             return new ChartsContainerModel
             {
@@ -83,15 +83,15 @@ namespace Dashboard.Services
             return allCharts.SelectMany(c => c.ChartValues.Select(cv => cv.Series)).Distinct().ToList();
         }
 
-        private void ApplyOutputFilters(ChartSearchCriteria criteria, List<DataChart> allCharts)
+        private List<ChartEntry> ApplyOutputFilters(ChartSearchCriteria criteria, List<ChartEntry> allCharts)
         {
             // apply output filters
-            foreach (var dataChart in allCharts)
-            {
-                dataChart.ChartValues =
-                    dataChart.ChartValues.Where(
-                        cv => criteria.OutputFilters == null || !criteria.OutputFilters.Any() || criteria.OutputFilters.Any(f => cv.Series == f));
-            }
+           
+            return allCharts
+                    .Where(
+                        cv => ( criteria.OutputFilters == null || !criteria.OutputFilters.Any() || criteria.OutputFilters.Any(f => cv.Series == f)))
+                        .ToList();
+           
         }
 
         //todo : performance
@@ -104,7 +104,7 @@ namespace Dashboard.Services
 
             var allSeries = GetAllSeries(charts);
 
-            ApplyOutputFilters(criteria, charts);
+           
 
             return new ChartsContainerModel
             {
@@ -266,6 +266,8 @@ namespace Dashboard.Services
                    .Union(GetDataFieldsByPercentage(filteredResponsesGroupes, productView, criteria)).ToList();
             }
 
+            ApplyOutputFilters(criteria, analised);
+
             analised = AppendNulls(analised);
 
             return analised;
@@ -339,7 +341,10 @@ namespace Dashboard.Services
                 .Where(d => d.Data != null && (criteria.SelectedRecencies == null ||
                                              !criteria.SelectedRecencies.Any() ||
                                               criteria.SelectedRecencies.Any(r => d.XAxisId == r.RecencyNumber)))
-                .GroupBy(d => d.XAxisId) // group the FOI by XAxis
+                .GroupBy(d => d.XAxisId)
+                .OrderByDescending(d => d.Key)
+                .Take(criteria.LastNXAxis)
+                // group the FOI by XAxis
                 .ToList();
 
             var chartValues = datafields.SelectMany(xg =>
@@ -349,7 +354,7 @@ namespace Dashboard.Services
                                 var responseRow = vg.FirstOrDefault();
                                 return new ChartEntry
                                 {
-                                    Value = vg.Count() * 100 / xg.Count(),
+                                    Value = vg.Count() * 100f / xg.Count(),
                                     XAxisLable = responseRow?.XAxisLable,
                                     XAxisId = responseRow?.XAxisId ?? 0,
                                     Series = vg.Key,
@@ -419,6 +424,8 @@ namespace Dashboard.Services
                                              !criteria.SelectedRecencies.Any() ||
                                               criteria.SelectedRecencies.Any(r => d.XAxisId == r.RecencyNumber)))
                       .GroupBy(d => d.XAxisId)
+                      .OrderByDescending(d=> d.Key)
+                      .Take(criteria.LastNXAxis)
                       .ToList();
 
                 chartEntries.AddRange(xAxisGroups.SelectMany(xAxisGroup =>

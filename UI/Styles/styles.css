@@ -43,3 +43,9 @@
 #page-wrapper.nomargin {
     margin: 0;
 }
+
+.chartpageheader 
+ {
+    padding: 20px 0 20px 0;
+    font-size: 25px;
+ }

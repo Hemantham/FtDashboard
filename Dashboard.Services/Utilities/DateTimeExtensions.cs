@@ -14,31 +14,32 @@ namespace Dashboard.Services.Utilities
         public static XAxis GetRecency(this DateTime value, RecencyTypes recencyType)
         {
             int number;
+
+            var currentYear = new DateTime(value.Year, 1, 1);
             switch (recencyType)
             {
                case RecencyTypes.Weekly:
-
-                    //value = value.AddDays(2); // week starts from saturday to friday
-
+                    
                     number =   CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(value, CalendarWeekRule.FirstFullWeek,
                         DayOfWeek.Saturday);
-
-                    var dateOfWeek = new DateTime(value.Year, 1, 1).AddDays(number*7);
+                   
+                    var dateOfWeek = currentYear.AddDays(number*7);
 
                     dateOfWeek = dateOfWeek.AddDays(DayOfWeek.Monday - dateOfWeek.DayOfWeek);
                    
                     return new XAxis
                     {
-                        RecencyNumber = (long)((new DateTime(value.Year,1,1).Subtract(new DateTime(2014, 1, 1)).TotalDays/7) + number),
+                        RecencyNumber = (long)((currentYear.Subtract(new DateTime(2014, 1, 1)).TotalDays/7) + number),
                         Lable = dateOfWeek.ToShortDateString(),
                     };
-
+                   
                 case RecencyTypes.Monthly:
 
                     number = CultureInfo.InvariantCulture.Calendar.GetMonth(value);
+                    currentYear = new DateTime(value.Year, 1, 1);
                     return new XAxis
                     {
-                        RecencyNumber = int.Parse($"2000{value.Year}{number:00}"),
+                        RecencyNumber = (long)((currentYear.Subtract(new DateTime(2014, 1, 1)).TotalDays / 30) + number),
                         Lable = new DateTime(value.Year, number, 1).ToString("MMM", CultureInfo.InvariantCulture),
                     };
                   
@@ -48,7 +49,7 @@ namespace Dashboard.Services.Utilities
                     number = (int) Math.Ceiling(CultureInfo.InvariantCulture.Calendar.GetMonth(value)/3d);
                     return new XAxis
                     {
-                        RecencyNumber = int.Parse($"2000{value.Year}{number:00}"),
+                        RecencyNumber = (long)((currentYear.Subtract(new DateTime(2014, 1, 1)).TotalDays / 90) + number),
                         Lable = $"FY{value.Year}Q{number}",
                     };
 
@@ -57,11 +58,12 @@ namespace Dashboard.Services.Utilities
                     number =(int)Math.Ceiling(CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(value, CalendarWeekRule.FirstFullWeek,
                                 DayOfWeek.Saturday)/2d);
 
-                    dateOfWeek = new DateTime(value.Year, 1, 1).AddDays(number * 14);
+                    currentYear = new DateTime(value.Year, 1, 1);
+                    dateOfWeek = currentYear.AddDays(number * 14);
 
                     return new XAxis
                     {
-                        RecencyNumber = int.Parse($"2000{value.Year}{number:00}"),
+                        RecencyNumber = (long)((currentYear.Subtract(new DateTime(2014, 1, 1)).TotalDays / 14) + number),
                         Lable = dateOfWeek.AddDays(DayOfWeek.Monday - dateOfWeek.DayOfWeek).ToShortDateString(),
                     };
 

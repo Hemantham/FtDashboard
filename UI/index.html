@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="node_modules/bootstrap-material-design/dist/css/bootstrap-material-design.css" rel="stylesheet" />
+    <link href="node_modules/bootstrap-material-design/dist/css/ripples.css" rel="stylesheet" />
     <link href="node_modules/metismenu/dist/metisMenu.css" rel="stylesheet"/>
     <link href="Styles/sb-admin-2.css" rel="stylesheet"/>
     <link href="Styles/font-awesome.min.css" rel="stylesheet"/>
@@ -29,6 +31,8 @@
     <script src="node_modules/linq-es5/dist/linq.js"></script>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="node_modules/bootstrap-material-design/dist/js/material.js"></script>
+    <script src="node_modules/bootstrap-material-design/dist/js/ripples.js"></script>
     <script src="node_modules/metismenu/dist/metisMenu.js"></script>
     <script src="systemjs.config.js"></script>
 
@@ -45,7 +49,10 @@
         //Loads the correct sidebar on window load,
         //collapses the sidebar on window resize.
         // Sets the min-height of #page-wrapper to window size
-        $(function() {
+        $(function () {
+
+            $.material.init();
+
             $(window)
                 .bind("load resize",
                     function() {
@@ -66,30 +73,35 @@
                         }
                     });
 
-            var url = window.location;
+            // var url = window.location;
             // var element = $('ul.nav a').filter(function() {
             //     return this.href == url;
             // }).addClass('active').parent().parent().addClass('in').parent();
-            var element = $('ul.nav a')
-                .filter(function() {
-                    return this.href == url;
-                })
-                .addClass('active')
-                .parent();
+         
+            //var element = $('ul.nav a')
+            //    .filter(function () {
 
-            while (true) {
-                if (element.is('li')) {
-                    element = element.parent().addClass('in').parent();
-                } else {
-                    break;
-                }
-            }
+            //        alert(this.href);
+            //        alert(url);
+
+            //        return this.href == url;
+            //    })
+            //    .addClass('active')
+            //    .parent();
+
+            //while (true) {
+            //    if (element.is('li')) {
+            //        element = element.parent().addClass('in').parent();
+            //    } else {
+            //        break;
+            //    }
+            //}
         });
 
     </script>
 </head>
 
-<body>
+<body class="clienttheme">
     <div id="wrapper" style="width: 100%;">
 
         <app>

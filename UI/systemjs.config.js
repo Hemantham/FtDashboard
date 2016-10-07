@@ -24,7 +24,7 @@
   var packages = {
         'app': { main: 'main.js', defaultExtension: 'js' },
         'ng2-select': { main: 'ng2-select.js', defaultExtension: 'js' },
-       'angular2-highcharts': {  defaultExtension: 'js' },
+        //'angular2-highcharts': {  defaultExtension: 'js' },
         'rxjs': { defaultExtension: 'js' },
         'angular2-highcharts': { main: 'index', format: 'cjs', defaultExtension: 'js' }
   };

@@ -6,7 +6,6 @@ import { DashboardView, Filter } from './domain/dashboard.domain';
 import { DashboardService }  from "../dashboards/services/dashboard.services";
 import { ChartsWithFilters } from "./chartswithfilters.component";
 
-declare var jQuery: any;
 
 @Component({
     selector: 'products',

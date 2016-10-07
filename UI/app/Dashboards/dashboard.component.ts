@@ -38,6 +38,20 @@ export class DashboardComponent implements OnInit {
         }
     }
 
+    onNavigate(anchor : any) {
+        var element = jQuery(anchor)
+            .addClass('active')
+            .parent();
+        debugger;
+        while (true) {
+            if (element.is('li')) {
+                element = element.parent().addClass('in').parent();
+            } else {
+                break;
+            }
+        }
+    }
+
     ngOnInit(): void {
 
         this.paramsSubscription = this.activatedRoute.params.subscribe((params: any) => {

@@ -87,9 +87,9 @@ export class D3Chart implements OnInit {
 
                 showValues: true,
                 // staggerLabels: true,
-                valueFormat: function(d: any) {
-                    return d3.format(",.1f")(d);
-                },
+                //valueFormat: function(d: any) {
+                //    return d3.format(",.2f")(d);
+                //},
                 duration: 500,
                 xAxis: {
                     //axisLabel: 'X Axis',
@@ -128,10 +128,10 @@ export class D3Chart implements OnInit {
                 },
                 yAxis: {
                  //   ticks: [10, 20, 70, 100],
-                    axisLabel: 'Answers'
+                    axisLabel: 'Answers',
                     tickFormat: (d: any) =>
                     {
-                        return this.chart.dataAnlysisType === 'percentage' ? `${d}%` : d;
+                        return this.chart.dataAnlysisType === 'percentage' ? `${d3.format('.02f')(d)}%` : d3.format('.02f')(d);
                     }
                     //{
                     //    return d3.format('.02f')(d);

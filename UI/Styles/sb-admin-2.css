@@ -6,13 +6,17 @@
 body {
   background-color: #f8f8f8;
 }
+body.clienttheme {
+    background-color: #008D94;
+}
+
 #wrapper {
   width: 100%;
 }
 #page-wrapper {
   padding: 0 15px;
   min-height: 568px;
-  background-color: white;
+  background-color: #eeeeee;
 }
 @media (min-width: 768px) {
   #page-wrapper {
@@ -22,6 +26,51 @@ body {
     border-left: 1px solid #e7e7e7;
   }
 }
+
+
+
+/**Optus related */
+.navbar.navbar-clienttheme {
+    background-color: #00A3AD;
+    -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    min-height: 70px;
+}
+
+.navbar.navbar-clienttheme .navbar-brand {
+    padding: 20px 20px;
+    height: 70px;
+    color: #ffffff;
+    font-size: 22px;
+}
+
+.thumbnail.clienttheme {
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    border-width: 0;
+    -ms-border-radius: 1px;
+    border-radius: 1px;
+}
+
+.panel.clienttheme {
+    border-radius: 1px;
+    border-width: 0;
+    -webkit-box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.12), 0 5px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.panel.clienttheme .panel-heading {
+    border-radius: 1px;
+    border-width: 0;
+    background-color: #fff;
+    padding: 20px 0px 10px 30px;
+    font-size: 25px;
+    font-weight: 500;
+    color: #00A3AD;
+}
+
+/*******/
+
 .navbar-top-links {
   margin-right: 0;
 }
@@ -72,15 +121,49 @@ body {
   padding-left: 0;
   padding-right: 0;
 }
-.sidebar .sidebar-search {
-  padding: 15px;
+
+.sidebar.clienttheme .sidebar-search {
+  padding: 20px;
+  background-color: #008D94;
+
 }
 .sidebar ul li {
   border-bottom: 1px solid #e7e7e7;
 }
-.sidebar ul li a.active {
-  background-color: #eeeeee;
+
+/*.sidebar.clienttheme ul li a.active {
+ background-color: #5FC5CC ;
+    color: #FBD32A;
+}*/
+
+.sidebar.clienttheme ul li a.active {
+
+    background-color: #5FC5CC;
+   
 }
+
+.sidebar.clienttheme ul li a.active:hover , a.active:focus {
+
+    background-color: #5FC5CC;
+    color: #eee;
+}
+
+.sidebar.clienttheme ul li {
+    border-bottom: 1px solid #B2DCDE;
+}
+
+
+.sidebar.clienttheme ul li a:hover, a:focus {
+  /*background-color: #5FC5CC;*/
+  color: #FBD32A;
+}
+
+.sidebar.clienttheme ul li a {
+    background-color: #008D94;
+    color: #eee;
+}
+
+
 .sidebar .arrow {
   float: right;
 }
@@ -101,19 +184,38 @@ body {
   padding-left: 52px;
 }
 
+/*.sidebar a, a:hover, a:focus {
+    color:  rgba(255,255,255, 0.84);
+}*/
+
+
+
 @media (min-width: 768px) {
   .sidebar {
     z-index: 1;
     position: absolute;
     width: 250px;
-    margin-top: 51px;
+    margin-top: 70px;
+   
+    color: rgba(255,255,255, 0.84);
   }
   .navbar-top-links .dropdown-messages,
   .navbar-top-links .dropdown-tasks,
   .navbar-top-links .dropdown-alerts {
     margin-left: auto;
   }
+
 }
+
+.chartpageheader.clienttheme {
+ color: #008D94;
+}
+
+
+.chartpageheader.clienttheme  a, a:hover, .chartpageheader.clienttheme a:focus {
+    color: #008D94 ;
+}
+
 .btn-outline {
   color: inherit;
   background-color: transparent;

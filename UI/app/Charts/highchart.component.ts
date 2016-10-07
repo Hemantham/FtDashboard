@@ -28,96 +28,108 @@ export class HighChartComponent implements OnInit {
     constructor() {
         //this.options = this.getBarAndLineChartOptions(this.chart);
     }
-    
+
     getChartValues(chart: Chartdomain.ChartModel): any {
 
         let seriesList = Enumerable.asEnumerable(chart.series);
 
 
 
-        return seriesList.Select((s :Chartdomain. ChartSeriesModel, i:number) => {
-                return {
-                    name: s.key,
-                    type: (i !== 0) ? 'column' : 'spline',
-                    yAxis: (i !== 0) ? 0 : 1,
-                    data: s.data.map((dp) => dp.y)
-                };
-            })
+        return seriesList.Select((s: Chartdomain.ChartSeriesModel, i: number) => {
+            return {
+                name: s.key,
+                type: (i == 0) ?  'spline' : 'column',
+                yAxis: (i == 0) ? 0 : 1,
+                data: s.data.map((dp) => dp.y)
+            };
+        })
             .OrderByDescending((s) => s.yAxis)
             .ToArray();
-       
+
     }
 
     getChartXAxis(chart: Chartdomain.ChartModel): any {
         let seriesList = Enumerable.asEnumerable(chart.series);
         let recenciesList = Enumerable.asEnumerable(chart.recencies);
-        var x =  seriesList.SelectMany((s) => s.data)
+        var x = seriesList.SelectMany((s) => s.data)
             .Select((d: Chartdomain.DataPointModel) => recenciesList.FirstOrDefault(r => r.RecencyNumber === d.x).Lable)
             .Distinct()
             .ToArray();
 
-       // console.log(JSON.stringify(x));
+        // console.log(JSON.stringify(x));
         return x;
     }
 
     private getBarAndLineChartOptions(chart: Chartdomain.ChartModel) {
-      
+
         return {
             chart: {
-               // renderTo: 'container',
+                // renderTo: 'container',
                 zoomType: 'xy'
             },
-            //title: {
-            //    text: 'Average Monthly Temperature and Rainfall in Tokyo'
-            //},
+            title: {
+                text: ''
+            },
             //subtitle: {
             //    text: 'Source: WorldClimate.com'
             //},
             xAxis: [{
-                categories:this.getChartXAxis(chart),
+                categories: this.getChartXAxis(chart),
                 crosshair: true
             }],
-            yAxis: [{ // Primary yAxis
-                labels: {
-                   // format: '{value}°C',
-                    style: {
-                        color: Highcharts.getOptions().colors[1]
-                    }
-                },
-                title: {
-                    text: '% intention to return', //todo
-                    style: {
-                        color: Highcharts.getOptions().colors[1]
+            yAxis: [
+
+                { // Primary yAxis
+                    labels: {
+                        // format: '{value}°C',
+                        style: {
+                            color: Highcharts.getOptions().colors[1]
+                        }
                     },
-                    min: 0,
-                    max: 100 
-                }
-                }, { // Secondary yAxis
                     title: {
                         text: 'Mean', //todo
                         style: {
-                            color: Highcharts.getOptions().colors[0]
+                            color: Highcharts.getOptions().colors[1]
                         }
                     },
-                    labels: {
-                      //  format: '{value} mm',
-                        style: {
-                            color: Highcharts.getOptions().colors[0]
-                        }
+                    opposite: true,
+                    min: 0,
+                    max: 10
+
+                },
+
+                { // Secondary yAxis
+                title: {
+                    text: ' % intention to return', //todo
+                    style: {
+                        color: Highcharts.getOptions().colors[0]
+                    }
+                },
+                labels: {
+                    formatter: function () {
+                        return  `${this.axis.defaultLabelFormatter.call(this)}%`;
                     },
-                    opposite: true
+                    style: {
+                        color: Highcharts.getOptions().colors[0]
+                    }
+                },
+                
+                min: 0,
+                max: 100
+
                 }],
+
             tooltip: {
                 shared: true
             },
             legend: {
-               // layout: 'vertical',
-               // align: 'middle',
-               //// x: 120,
-               // verticalAlign: 'top',
-               // y: 100,
-               // floating: true,
-               // backgroundColor:  '#FFFFFF'
+                // layout: 'vertical',
+                // align: 'middle',
+                //// x: 120,
+                // verticalAlign: 'top',
+                // y: 100,
+                // floating: true,
+                // backgroundColor:  '#FFFFFF'
             },
             plotOptions: {
                 column: {
@@ -130,7 +142,7 @@ export class HighChartComponent implements OnInit {
 
     ngOnInit() {
 
-       // setTimeout(() =>
+        // setTimeout(() =>
         this.options = this.getBarAndLineChartOptions(this.chart);
         //    3000
         // );
