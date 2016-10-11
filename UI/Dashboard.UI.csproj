@@ -131,6 +131,7 @@
     <Content Include="index.html" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="scripts\print_this.js" />
     <Content Include="Styles\bootstrap-material-design.css" />
     <Content Include="Styles\bootstrap-material-design.min.css" />
     <Content Include="Styles\font-awesome.min.css" />
@@ -187,6 +188,7 @@
     <TypeScriptCompile Include="app\Charts\d3chart.component.ts" />
     <TypeScriptCompile Include="app\Charts\domain\chart.domain.ts" />
     <TypeScriptCompile Include="app\Charts\services\chart.services.ts" />
+    <TypeScriptCompile Include="app\Common\Directives\dropdownPanel.directive.ts" />
     <TypeScriptCompile Include="app\Common\domain\common.domain.ts" />
     <TypeScriptCompile Include="app\Common\Utilities\common.dropdowntools.ts" />
     <TypeScriptCompile Include="app\Dashboards\overallchartswithfilters.component.ts" />

@@ -51,6 +51,7 @@ namespace Dashboard.Services
                     FilteredDashboardViewId = productView?.Id ?? 0,
                     SelectedRecencies = criteria.SelectedRecencies,
                     UseFilterName = true,
+                    OutputFilters = criteria.OutputFilters,
                 }, productView);
                 allCharts.AddRange(charts);
             }
@@ -247,31 +248,31 @@ namespace Dashboard.Services
         }
 
         private IEnumerable<ChartEntry> GetByAnalysisType(ChartSearchCriteria criteria
-    , FilteredDashboardView productView
-    , IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes)
-        {
-            List<ChartEntry> analised = null;
-
-            if (productView.DashboardView.DataAnlysisType == DataAnlysisType.percentage)
+        , FilteredDashboardView productView
+        , IEnumerable<IGrouping<string, Response>> filteredResponsesGroupes)
             {
-                analised =  GetDataFieldsByPercentage(filteredResponsesGroupes, productView, criteria);
-            }
-            else if (productView.DashboardView.DataAnlysisType == DataAnlysisType.avarage)
-            {
-                analised = GetDataFieldsByAvarage(filteredResponsesGroupes, productView, criteria);
-            }
-            else if (productView.DashboardView.DataAnlysisType == DataAnlysisType.percentageAndAverage)
-            {
-                analised = GetDataFieldsByAvarage(filteredResponsesGroupes, productView, criteria)
-                   .Union(GetDataFieldsByPercentage(filteredResponsesGroupes, productView, criteria)).ToList();
-            }
+                List<ChartEntry> analised = null;
 
-            ApplyOutputFilters(criteria, analised);
+                if (productView.DashboardView.DataAnlysisType == DataAnlysisType.percentage)
+                {
+                    analised =  GetDataFieldsByPercentage(filteredResponsesGroupes, productView, criteria);
+                }
+                else if (productView.DashboardView.DataAnlysisType == DataAnlysisType.avarage)
+                {
+                    analised = GetDataFieldsByAvarage(filteredResponsesGroupes, productView, criteria);
+                }
+                else if (productView.DashboardView.DataAnlysisType == DataAnlysisType.percentageAndAverage)
+                {
+                    analised = GetDataFieldsByAvarage(filteredResponsesGroupes, productView, criteria)
+                       .Union(GetDataFieldsByPercentage(filteredResponsesGroupes, productView, criteria)).ToList();
+                }
 
-            analised = AppendNulls(analised);
+                analised = ApplyOutputFilters(criteria, analised);
 
-            return analised;
-        }
+                analised = AppendNulls(analised);
+
+                return analised;
+            }
 
         private List<ChartEntry> AppendNulls(List<ChartEntry> analised)
         {
@@ -358,6 +359,7 @@ namespace Dashboard.Services
                                     XAxisLable = responseRow?.XAxisLable,
                                     XAxisId = responseRow?.XAxisId ?? 0,
                                     Series = vg.Key,
+                                    Samples = xg.Count(),
                                 };
                             })
                 )
@@ -441,6 +443,7 @@ namespace Dashboard.Services
                                 XAxisLable = responseRow?.XAxisLable ?? recency.Lable,
                                 XAxisId = responseRow?.XAxisId ?? recency.RecencyNumber,
                                 Series = vg.Any() ? vg.First().KeyName : string.Empty,
+                                Samples = xAxisGroup.Count(),
                             };
                         })).OrderBy(df => df.XAxisId)
                         );

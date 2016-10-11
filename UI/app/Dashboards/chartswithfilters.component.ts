@@ -10,17 +10,15 @@ import { SelectItem } from 'ng2-select/components/select/select-item';
 import * as Charts from "../Charts/domain/chart.domain";
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx'
-import {DropDownTools} from  "../common/utilities/common.dropdowntools";
-
-
-
+import { DropDownTools } from  "../common/utilities/common.dropdowntools";
+import { DropDownPanelDirective } from "../Common/Directives/dropdownPanel.directive";
 declare var jQuery: any;
 
 @Component({
     selector: 'chart-with-filters',
     templateUrl: 'app/dashboards/templates/ChartsWithFilters.html',
     providers: [DashboardService, ChartValueService, DropDownTools],
-    directives: [ChartContainerComponent, SELECT_DIRECTIVES, NgClass, CORE_DIRECTIVES, FORM_DIRECTIVES]
+    directives: [ChartContainerComponent, SELECT_DIRECTIVES, NgClass, CORE_DIRECTIVES, FORM_DIRECTIVES, DropDownPanelDirective]
 })
 
 export class ChartsWithFilters implements OnInit{
@@ -113,6 +111,21 @@ export class ChartsWithFilters implements OnInit{
                 );
             });
     }
+
+    //panelHeaderClick(element:any) {
+        
+    //            var $this = jQuery(element).parent();
+    //            if (!$this.hasClass('panel-collapsed')) {
+    //                $this.parents('.panel').find('.panel-body').slideUp();
+    //                $this.addClass('panel-collapsed');
+    //                $this.find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+    //            } else {
+    //                $this.parents('.panel').find('.panel-body').slideDown();
+    //                $this.removeClass('panel-collapsed');
+    //                $this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+    //            }
+
+    //}
 
     alertError(error: any): void {
         alert(error);

@@ -85,6 +85,7 @@ export class ChartValueService {
                                     seriesData.y = datavalue.Value;
                                     seriesData.x = datavalue.XAxisId;
                                     seriesData.label = datavalue.XAxisLable;
+                                    seriesData.samples = datavalue.Samples;
                                     return seriesData;
                                 })
                                 .ToArray();

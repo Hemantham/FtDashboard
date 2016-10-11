@@ -19,13 +19,9 @@
                 <div class="panel clienttheme panel-default">
                     <div class="panel-heading">
                         <i class="fa fa-bar-chart-o fa-fw"></i> Filters
-                        <div class="pull-right">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default btn-xs">
-                                    <span class="caret"></span>
-                                </button>
-                            </div>
-                        </div>
+                        <span ng-dropdown-panel class="pull-right clickable">
+                            <i class="glyphicon glyphicon-chevron-up"></i>
+                        </span>
                     </div>
 
                     <div class="panel-body">
@@ -51,7 +47,7 @@
                                        placeholder="">
                             </ng-select>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group clienttheme">
                             <label>Select Data Points</label>
                             <ng-select [allowClear]="false" #dropdownRecency
                                        [items]="recencies"
@@ -71,22 +67,28 @@
                 <div class="panel clienttheme panel-default">
                     <div class="panel-heading">
                         <i class="fa fa-bar-chart-o fa-fw"></i> {{multipleSplitField}}
-                        <div class="pull-right">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default btn-xs">
-                                    <span class="caret"></span>
-                                </button>
-
-                            </div>
-                        </div>
+                        <span ng-dropdown-panel class="pull-right clickable">
+                            <i class="glyphicon glyphicon-chevron-up"></i>
+                        </span>
                     </div>
 
                     <div class="panel-body">
-                        <div class="checkbox-button" *ngFor="let splitFilter of splitFilters">
-                            <label>
-                                <input (change)="limitSelected(splitFilter, $event.target.checked)"  type="checkbox"  [(ngModel)]="splitFilter.IsSelected"><span>{{splitFilter.Answer}}</span>
-                            </label>
+                        
+                        <div class="form-group">
+                            <div class="checkbox" *ngFor="let splitFilter of splitFilters">
+                                <label>
+                                    <input (change)="limitSelected(splitFilter, $event.target.checked)" [(ngModel)]="splitFilter.IsSelected"  type="checkbox">
+                                    <span class="checkbox-material"><span class="check"></span></span> <span class ="checkboxtext">{{splitFilter.Answer}}</span> 
+                                </label>
+                            </div>
                         </div>
+
+
+                        <!--<div class="checkbox-button" *ngFor="let splitFilter of splitFilters">
+                            <label>
+                                <input (change)="limitSelected(splitFilter, $event.target.checked)" type="checkbox" [(ngModel)]="splitFilter.IsSelected"><span>{{splitFilter.Answer}}</span>
+                            </label>
+                        </div>-->
                     </div>
                 </div>
             </div>

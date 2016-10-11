@@ -13,6 +13,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx'
 import * as Enumerable from "linq-es2015";
 import {DropDownTools} from  "../common/utilities/common.dropdowntools";
+import { DropDownPanelDirective } from "../Common/Directives/dropdownPanel.directive";
+
 
 declare var jQuery: any;
 
@@ -20,7 +22,7 @@ declare var jQuery: any;
     selector: 'overall-chart-with-filters',
     templateUrl: 'app/dashboards/templates/OvarallChartsWithFilters.html',
     providers: [DashboardService, ChartValueService , DropDownTools],
-    directives: [ChartContainerComponent, SELECT_DIRECTIVES, NgClass, CORE_DIRECTIVES, FORM_DIRECTIVES]
+    directives: [ChartContainerComponent, SELECT_DIRECTIVES, NgClass, CORE_DIRECTIVES, FORM_DIRECTIVES, DropDownPanelDirective]
 })
 
 export class OverallChartsWithFilters implements OnInit{

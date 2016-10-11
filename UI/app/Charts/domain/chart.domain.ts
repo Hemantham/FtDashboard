@@ -23,6 +23,7 @@ export class ChartSeriesModel {
 export class DataPointModel {
     x: any;
     y: any;
+    samples : number;
     label: string;
 }
 
@@ -40,10 +41,11 @@ export class ChartsContainerModel {
 
 
 export class ChartEntry {
-   public  Value: number;
-   public  XAxisLable: string;
-   public  XAxisId: number;
-   public  Series: string;
+    public Value: number;
+    public Samples : number;
+    public  XAxisLable: string;
+    public  XAxisId: number;
+    public  Series: string;
 }
 
 

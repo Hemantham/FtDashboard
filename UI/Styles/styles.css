@@ -1,4 +1,6 @@
 
+
+
 .checkbox-button {
     margin:4px;
     background-color:#EFEFEF;
@@ -49,3 +51,47 @@
     padding: 20px 0 20px 0;
     font-size: 25px;
  }
+
+.checkboxtext {
+    margin-left: 10px;
+    color: #262626;
+}
+
+.clienttheme .checkboxtext {
+    margin-left: 10px;
+    color: #262626;
+}
+
+.clienttheme .checkbox input[type=checkbox]:checked + .checkbox-material .check, 
+.clienttheme label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check {
+    color: #FBD32A;
+    border-color: #FBD32A;
+}
+
+.clienttheme .checkbox input[type=checkbox]:checked + .checkbox-material .check:before,
+.clienttheme label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check:before {
+    color: #FBD32A;
+}
+
+.clienttheme .checkbox {
+        margin-bottom: 20px;
+ }
+
+.clienttheme.dasshboardwrapper {
+    background-color: #008D94;
+}
+
+
+/*Chart related*/
+
+.nv-lineChart circle.nv-point
+{
+    fill-opacity: 1;
+}
+
+.clienttheme .nvd3.nv-line .nvd3.nv-scatter .nv-groups .nv-point {
+    fill-opacity: 1;
+    stroke-opacity: 1;
+}
+
+/*chart related*/

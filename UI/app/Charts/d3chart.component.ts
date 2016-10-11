@@ -16,13 +16,13 @@ export class D3Chart implements OnInit {
 
     options: any;
     data: any;
-   // private service: ChartValueService;
+    // private service: ChartValueService;
 
     //this component takes in parameters from outside
     @Input() chart: Chartdomain.ChartModel;
 
     constructor(service: ChartValueService) {
-    //    this.service = service;
+        //    this.service = service;
     }
 
     getBarChartValues(chart: Chartdomain.ChartModel): any {
@@ -41,23 +41,20 @@ export class D3Chart implements OnInit {
 
     getLineChartValues(chart: Chartdomain.ChartModel): any {
 
-       
         return chart.series.map((s) => {
             return {
                 key: s.key,
                 values:
                 //[[10, 30], [20, null], [30, 15], [40, 55], [60, null], [70, 25], [80, 40]]
-
                 s.data.map((dp, j) => {
-                 
-                    return {x:dp.x, y:dp.y, i:j};
+                    return { x: dp.x, y: dp.y, i: j, n: dp.samples };
                 })
             };
         });
     }
-    
+
     getChartValuesForLineAndBar(chart: Chartdomain.ChartModel): any {
-        return chart.series.map((s,i) => {
+        return chart.series.map((s, i) => {
             return {
                 key: s.key,
                 bar: (i !== 0),
@@ -68,8 +65,19 @@ export class D3Chart implements OnInit {
         });
     }
 
+    xFormat(d: any) {
+
+        let xAx = this.chart.recencies.filter(r => r.RecencyNumber === d)[0];
+
+        if (xAx == null) {
+            return '';
+        } else {
+            return xAx.Lable;
+        }
+    }
+
     private getLineChartOptions() {
-      //  alert(this.chart.dataAnlysisType);
+        //  alert(this.chart.dataAnlysisType);
         return {
             chart: {
                 forceY: [0, this.chart.dataAnlysisType === 'percentage' ? 100 : 10],
@@ -94,53 +102,63 @@ export class D3Chart implements OnInit {
                 xAxis: {
                     //axisLabel: 'X Axis',
 
-                    tickFormat: (d: any) => {
-
-                       // debugger;
-                        let xAx = this.chart.recencies.filter(r => r.RecencyNumber === d)[0];
-                        if (xAx == null) {
-                            return '';
-                        } else {
-                            return xAx.Lable;
-                        }
-                    }
+                    tickFormat: (d: any)=> { return this.xFormat(d); }
                     ////////tickFormat: (d: any) => {
                     ////////    debugger;
                     ////////    return d3.time.format('%x')(new Date(d));
                     ////////}
 
                     //tickValues:  (values: any)=> {
-                       
+
                     //    var x = this.chart.recencies.map(r => r.Lable);
-
-                        
-                    //   // debugger;
-
-                    //    return x;
-                    //    //  return values.map((v:any) => v.i);
-                    //    //var a = _.map(values[0].values, function (v, i) {
-                    //    //    return i
-                    //    //});
-                    //    //return a;
-                    //}
-
-
                 },
                 yAxis: {
-                 //   ticks: [10, 20, 70, 100],
+                    //  ticks: [10, 20, 70, 100],
                     axisLabel: 'Answers',
-                    tickFormat: (d: any) =>
-                    {
-                        return this.chart.dataAnlysisType === 'percentage' ? `${d3.format('.02f')(d)}%` : d3.format('.02f')(d);
+                    tickFormat: (d: any) => {
+                        if (d == null) {
+                            return d;
+                        } else {
+                            return this.chart.dataAnlysisType === 'percentage'
+                                ? `${d3.format('.02f')(d)}%`
+                                : d3.format('.02f')(d);
+                        }
                     }
-                    //{
-                    //    return d3.format('.02f')(d);
-                    //}
                 }
-               
-               //  rotateLabels: 0 //Angle to rotate x-axis labels.
-               // showControls: true, //Allow user to switch between 'Grouped' and 'Stacked' mode.
-               // groupSpacing: 0.1 //Distance between each group of bars.
+                ,
+
+                tooltip: {
+                    contentGenerator: (e: any) => {
+                       
+                        var series = e.series[0];
+                        if (series.value === null)
+                            return '';
+
+                        var rows =
+                            `<tr> 
+                             <td colspan = 2 class='x-value'> ${this.xFormat(e.value)} <strong>(n=${e.point.n})</strong></td>                           
+                            </tr>
+                            <tr>
+                            <td colspan = 2  class='key'>Percentage: <strong> ${(series.value ? series.value.toFixed(2) : 0)} %</strong> </td>
+                           
+                            </tr>`;
+
+                        var header =
+                            `<thead>
+                            <tr>
+                            <td class='legend-color-guide'><div style='background-color: ${ series.color} ;'></div>                           
+                            </td>
+                            <td class='key'><strong>${series.key}</strong></td>
+                            </tr>
+                            </thead>`;
+
+                        return `<table> ${header} <tbody> ${rows}</tbody></table>`;
+                    }
+                }
+
+                //  rotateLabels: 0 //Angle to rotate x-axis labels.
+                // showControls: true, //Allow user to switch between 'Grouped' and 'Stacked' mode.
+                // groupSpacing: 0.1 //Distance between each group of bars.
             }
         };
     }
@@ -179,7 +197,7 @@ export class D3Chart implements OnInit {
     }
 
     private getBarAndLineChartOptions() {
-      
+
         return {
             chart: {
                 type: 'linePlusBarChart',
@@ -208,7 +226,7 @@ export class D3Chart implements OnInit {
                 xAxis: {
                     axisLabel: 'X Axis',
                     tickFormat: (d: any) => {
-                        let xAx = this.chart.recencies.filter((r:any) => r.RecencyNumber === d)[0];
+                        let xAx = this.chart.recencies.filter((r: any) => r.RecencyNumber === d)[0];
                         if (xAx == null) {
                             return '';
                         } else {
@@ -231,11 +249,11 @@ export class D3Chart implements OnInit {
                 },
                 focusEnable: false,
                 rotateLabels: 0, //Angle to rotate x-axis labels.
-              
+
             }
         };
     }
-    
+
     ngOnInit() {
 
         //todo
@@ -250,13 +268,13 @@ export class D3Chart implements OnInit {
                 debugger;
                 break;
 
-            
-        default:
+
+            default:
         }
 
         //this.options = this.getLineChartOptions();
-        
-       
+
+
 
         // return this.getBarChartValues(this.service.getCharts());
 

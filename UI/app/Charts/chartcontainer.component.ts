@@ -5,7 +5,8 @@ import { HighChartComponent  } from "./highchart.component";
 import { ChartSearchCriteria, ChartModel, ChartsContainerModel, Recency} from '../charts/domain/chart.domain';
 import { ViewSplit } from "../Dashboards/domain/dashboard.domain";
 import { ChartValueService } from  "./services/chart.services";
-
+declare var jQuery: any;
+declare var jsPDF: any;
 
 @Component({
     selector: 'chart-container',
@@ -13,10 +14,35 @@ import { ChartValueService } from  "./services/chart.services";
     directives: [D3Chart, HighChartComponent],
     providers: [ChartValueService]
 })
+
+
 export class ChartContainerComponent implements OnInit {
     
     public charts: Array<ChartModel>;
     public isComparisonView : boolean;
+
+    printThisDiv(event: any) {
+        event.preventDefault();
+      
+        jQuery(event.target).closest('.panel').printThis({
+            virtualfolder: 'Dashboard.UI' //todo
+        });
+
+        //var doc = new jsPDF();
+        //var specialElementHandlers = {
+        //    '#editor': function (element: any, renderer: any) {
+        //        return true;
+        //    }
+        //};
+
+        //doc.fromHTML(jQuery(element).closest('.panel').find('.panel-body').html(), 15, 15, {
+        //    'width': 670,
+        //    'elementHandlers': specialElementHandlers
+        //});
+        //doc.save('sample-file.pdf');
+
+
+    }
 
     public load(criteria: ChartSearchCriteria, callback: (chartmodels: Array<ChartModel>) => any) {
 

@@ -30,7 +30,7 @@ namespace Dashboard.Services.Utilities
                     return new XAxis
                     {
                         RecencyNumber = (long)((currentYear.Subtract(new DateTime(2014, 1, 1)).TotalDays/7) + number),
-                        Lable = dateOfWeek.ToShortDateString(),
+                        Lable = dateOfWeek.ToString("dd/MM/yyyy"),
                     };
                    
                 case RecencyTypes.Monthly:
@@ -64,7 +64,7 @@ namespace Dashboard.Services.Utilities
                     return new XAxis
                     {
                         RecencyNumber = (long)((currentYear.Subtract(new DateTime(2014, 1, 1)).TotalDays / 14) + number),
-                        Lable = dateOfWeek.AddDays(DayOfWeek.Monday - dateOfWeek.DayOfWeek).ToShortDateString(),
+                        Lable = dateOfWeek.ToString("dd/MM/yyyy"),
                     };
 
             }
