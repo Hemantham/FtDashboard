@@ -1,5 +1,14 @@
 {
   "compilerOptions": {
+
+   //"typeRoots": [
+   //         "./node_modules/@types"
+   //     ],
+   //     "types": [
+   //       "html2canvas",
+   //       "jspdf"
+   //     ],
+
     "target": "es5",
     "module": "commonjs",
     "moduleResolution": "node",

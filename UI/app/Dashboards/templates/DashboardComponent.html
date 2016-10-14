@@ -22,12 +22,12 @@
                         <a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        <a (click)="print()" href="#"><i class="fa fa-gear fa-fw"></i> Print</a>
                     </li>
-                    <li class="divider"></li>
+                    <!--<li class="divider"></li>
                     <li>
                         <a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                    </li>
+                    </li>-->
                 </ul>
                 <!-- /.dropdown-user -->
             </li>
@@ -69,9 +69,9 @@
 
     <div id="page-wrapper" [ngClass]="{nomargin: !productViews}">
 
-        <!--<chart-with-filtersx>
+        <!--<chart-with-filters>
 
-        </chart-with-filtersx>-->
+        </chart-with-filters>-->
 
         <router-outlet></router-outlet>
 

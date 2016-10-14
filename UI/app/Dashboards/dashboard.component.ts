@@ -6,6 +6,8 @@ import { DashboardView, ProductViewModel } from './domain/dashboard.domain';
 import { DashboardService }  from "../dashboards/services/dashboard.services";
 import { ChartsWithFilters } from "./chartswithfilters.component";
 import { ActivatedRoute, Router } from '@angular/router';
+import { PrintTools }  from "../common/utilities/common.printtools"
+
 
 declare var jQuery: any;
 
@@ -13,7 +15,7 @@ declare var jQuery: any;
 @Component({
     selector: 'dashboard',
     templateUrl: 'app/dashboards/templates/DashboardComponent.html',
-    providers: [DashboardService],
+    providers: [DashboardService, PrintTools],
     directives: [ChartsWithFilters]
 })
    
@@ -27,8 +29,16 @@ export class DashboardComponent implements OnInit {
     public productId: number;
     public productLink: string;
     
-    constructor(private service: DashboardService, private activatedRoute: ActivatedRoute, private router: Router) {
+    constructor(private service: DashboardService, private activatedRoute: ActivatedRoute, private router: Router, private printTools : PrintTools) {
         
+    }
+
+    print() {
+
+        event.preventDefault();
+
+        this.printTools.printHeadersAndSvg(jQuery('svg'));
+
     }
 
     onListRendered() {

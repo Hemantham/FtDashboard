@@ -16,7 +16,13 @@
     'babel-polyfill': 'node_modules/babel-polyfill/dist/polyfill.js',
     'ng2-select': 'node_modules/ng2-select',
     'angular2-highcharts': 'node_modules/angular2-highcharts/dist',
-    'highcharts/highstock.src': 'node_modules/highcharts/highstock.src.js'
+    'highcharts/highstock.src': 'node_modules/highcharts/highstock.src.js',
+    'jspdf': 'node_modules/jspdf/dist/jspdf.min.js',
+  
+    'rgbcolor': 'node_modules/rgbcolor',
+    'stackblur': 'node_modules/stackblur',
+    'xmldom': 'node_modules/xmldom',
+    'canvg-browser': 'node_modules/canvg-browser'
 
   };
 
@@ -24,13 +30,16 @@
   var packages = {
         'app': { main: 'main.js', defaultExtension: 'js' },
         'ng2-select': { main: 'ng2-select.js', defaultExtension: 'js' },
-        //'angular2-highcharts': {  defaultExtension: 'js' },
         'rxjs': { defaultExtension: 'js' },
-        'angular2-highcharts': { main: 'index', format: 'cjs', defaultExtension: 'js' }
+        'angular2-highcharts': { main: 'index', format: 'cjs', defaultExtension: 'js' },
+        'canvg-browser': { main: 'index.js', format: 'cjs', defaultExtension: 'js' },
+        'rgbcolor': { main: 'index', format: 'cjs', defaultExtension: 'js' },
+        'stackblur': { main: 'index', format: 'cjs', defaultExtension: 'js' },
+        'xmldom': { main: 'dom',  defaultExtension: 'js' },
+        'jspdf': { format: 'global', defaultExtension: 'js' }//,
+     //   'es6-promise': { main: 'es6-promise.min.js', defaultExtension: 'js' }
   };
-
-
-
+    
   var ngPackageNames = [
     'common',
     'compiler',

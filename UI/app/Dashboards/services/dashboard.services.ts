@@ -8,24 +8,24 @@ import '../../rxjs-operators'
 
 @Injectable()
 export class DashboardService {
-    constructor(private http: Http) { }
-    
-    public getViews(id: number): Observable<ProductViewModel[]> {
+    constructor(private http: Http) {
+        this.headers = new Headers();
+        this.headers.append('Accept', 'application/json');
+    }
+    private headers: Headers;
 
-        //let headers = new Headers({ 'Content-Type': 'application/json' });
-        //let options = new RequestOptions({ headers: headers });
+    public getViews(id: number): Observable<ProductViewModel[]> {
+        
         let url = `/Dashboard.Rest/api/products/${id}/views`; 
-        return this.http.get(url)
+        return this.http.get(url, {headers: this.headers})
                     .map(this.extractViewData)
                     .catch(this.handleError);
     }
 
     public getDashboardViews(): Observable<DashboardView[]> {
-
-        //let headers = new Headers({ 'Content-Type': 'application/json' });
-        //let options = new RequestOptions({ headers: headers });
+        
         let url = `/Dashboard.Rest/api/dashboardviews`;
-        return this.http.get(url)
+        return this.http.get(url, { headers: this.headers })
             .map((res: Response)=> {
                     let body: DashboardView[] = res.json();
                     return body;
@@ -34,22 +34,18 @@ export class DashboardService {
     }
 
     public getProducts(): Observable<Filter[]> {
-
-        //let headers = new Headers({ 'Content-Type': 'application/json' });
-        //let options = new RequestOptions({ headers: headers });
+      
         let url = `/Dashboard.Rest/api/products`;
-        return this.http.get(url)
+        return this.http.get(url, { headers: this.headers })
             .map(this.extractProducts)
             .catch(this.handleError);
     }
 
 
     public getView(id: number): Observable<ProductView> {
-
-        //let headers = new Headers({ 'Content-Type': 'application/json' });
-        //let options = new RequestOptions({ headers: headers });
+       
         let url = `/Dashboard.Rest/api/products/views/${id}`;  
-        return this.http.get(url)
+        return this.http.get(url, { headers: this.headers })
             .map(this.extractSingleViewData)
             .catch(this.handleError);
     }

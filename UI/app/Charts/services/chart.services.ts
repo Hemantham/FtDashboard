@@ -1,4 +1,4 @@
-﻿import * as Charts from '../domain/chart.domain'
+import * as Charts from '../domain/chart.domain'
 import * as Enumerable from "linq-es2015";
 import { Injectable }     from '@angular/core';
 import { Http, Response, Request, Headers, RequestOptions } from '@angular/http';
@@ -7,36 +7,40 @@ import '../../rxjs-operators'
 
 @Injectable()
 export class ChartValueService {
-    constructor(private http: Http) { }
-    
+    constructor(private http: Http) {
+        this.headersGet = new Headers();
+        this.headersGet.append('Accept', 'application/json');
+
+    }
+
+    private headersGet: Headers;
+    private headersPost: Headers;
+
    
     public getCharts(chartCriteria: Charts.ChartSearchCriteria): Observable<Charts.ChartsContainerModel> {
         
         let headers = new Headers({ 'Content-Type': 'application/json' });
+        headers.append('Accept', 'application/json');
         let options = new RequestOptions({ headers: headers });
 
         return (this.http
-            .post('/Dashboard.Rest/api/charts/data', JSON.stringify(chartCriteria) , options)
+            .post('/Dashboard.Rest/api/charts/data', JSON.stringify(chartCriteria), options)
             .map(this.extractChartData)
             .catch(this.handleError));
     }
 
     public getSplitFields(id: number): Observable<Charts.FieldValueModel[]> {
-
-        // let headers = new Headers({ 'Content-Type': 'application/json' });
-        // let options = new RequestOptions({ headers: headers });
+        
         return this.http
-            .get(`/Dashboard.Rest/api/products/views/${id}/splitfilters`)
+            .get(`/Dashboard.Rest/api/products/views/${id}/splitfilters`, { headers: this.headersGet })
             .map(this.extractFieldData)
             .catch(this.handleError);
     }
 
      public getRecencyTypes(): Observable<Charts.RecencyType[]> {
-
-        // let headers = new Headers({ 'Content-Type': 'application/json' });
-        // let options = new RequestOptions({ headers: headers });
+         
         return this.http
-            .get(`/Dashboard.Rest/api/charts/recencytypes`)
+            .get(`/Dashboard.Rest/api/charts/recencytypes`, { headers: this.headersGet })
             .map((res: any) => {
                 let body: Charts.RecencyType[] = res.json();
                 return body;
@@ -53,11 +57,13 @@ export class ChartValueService {
     private extractChartData(res: Response): Charts.ChartModel[] {
 
         try {
+            
 
         let chartContainerModel = res.json();
         let data: Array<Charts.DataChart> = chartContainerModel.Charts;
         let charts: Array<Charts.ChartModel> = new Array<Charts.ChartModel>();
-        
+
+          
 
         data.forEach(datachart => {
 

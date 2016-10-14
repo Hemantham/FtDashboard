@@ -1,6 +1,6 @@
 ﻿<div class="row chartpageheader clienttheme">
     <div class="col-lg-12">
-         <a [routerLink]="['/products']">Home</a> > {{ productView != null ? productView.Filter.Name + ' > ' : ''}}{{ productView != null ? productView.DashboardView.Name : ''}}
+        <a [routerLink]="['/products']">Home</a> >  <span attr.data-print="0-View" >{{ productView != null ? productView.Filter.Name + ' > ' : ''}}{{ productView != null ? productView.DashboardView.Name : ''}}</span> 
     </div>
 </div>
 
@@ -27,7 +27,7 @@
                     <div class="panel-body">
                         <div class="form-group">
                             <label>Select Cut</label>
-                            <ng-select [allowClear]="false"
+                            <ng-select attr.data-print="2-Cut"  [allowClear]="false"
                                        (selected)="splitSelected($event)"
                                        [initData]="[selectedSplit]"
                                        #dropdownCut
@@ -38,7 +38,7 @@
 
                         <div class="form-group">
                             <label>Time Period</label>
-                            <ng-select 
+                            <ng-select attr.data-print="3-Time Period"
                                         #dropdownRecencyType
                                        [allowClear]="false"
                                        [items]="recenciesTypes"
@@ -78,7 +78,7 @@
                             <div class="checkbox" *ngFor="let splitFilter of splitFilters">
                                 <label>
                                     <input (change)="limitSelected(splitFilter, $event.target.checked)" [(ngModel)]="splitFilter.IsSelected"  type="checkbox">
-                                    <span class="checkbox-material"><span class="check"></span></span> <span class ="checkboxtext">{{splitFilter.Answer}}</span> 
+                                    <span class="checkbox-material"><span class="check"></span></span> <span attr.data-print="'4-' + {{multipleSplitField}}" class ="checkboxtext">{{splitFilter.Answer}}</span> 
                                 </label>
                             </div>
                         </div>

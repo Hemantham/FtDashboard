@@ -30,7 +30,7 @@
                         
                         <div class="form-group clienttheme">
                             <label>Select Products</label>
-                            <ng-select [allowClear]="false" #dropdownProduct
+                            <ng-select attr.data-print-multiple="4-Products"  [allowClear]="false" #dropdownProduct
                                        [items]="products"
                                        [multiple]="true"
                                        (selected)="productSelected($event)"
@@ -41,7 +41,7 @@
 
                         <div class="form-group">
                             <label>Select View</label>
-                            <ng-select [allowClear]="false"
+                            <ng-select attr.data-print="5-View" [allowClear]="false"
                                        (selected)="viewSelected($event)"
                                        [initData]="[selectedView]"
                                        #dropdownView
@@ -52,7 +52,7 @@
 
                         <div class="form-group clienttheme">
                             <label>Select Code-Frames</label>
-                            <ng-select [allowClear]="false" #dropdownCodeframes
+                            <ng-select  attr.data-print-multiple="6-Code Frames" [allowClear]="false" #dropdownCodeframes
                                        [items]="codeframes"
                                        [multiple]="true"
                                        (selected)="codeframeSelected($event)"
@@ -63,7 +63,7 @@
 
                         <div class="form-group">
                             <label>Time Period</label>
-                            <ng-select
+                            <ng-select attr.data-print="7-Time Period"
                                 #dropdownRecencyType
                                 [allowClear]="false"
                                 [items]="recenciesTypes"

@@ -134,25 +134,23 @@ export class D3Chart implements OnInit {
                         if (series.value === null)
                             return '';
 
-                        var rows =
-                            `<tr> 
-                             <td colspan = 2 class='x-value'> ${this.xFormat(e.value)} <strong>(n=${e.point.n})</strong></td>                           
-                            </tr>
+                        return `<table> 
+                            <thead>
                             <tr>
-                            <td colspan = 2  class='key'>Percentage: <strong> ${(series.value ? series.value.toFixed(2) : 0)} %</strong> </td>
-                           
-                            </tr>`;
-
-                        var header =
-                            `<thead>
-                            <tr>
-                            <td class='legend-color-guide'><div style='background-color: ${ series.color} ;'></div>                           
+                                <td class='legend-color-guide'><div style='background-color: ${ series.color} ;'></div>                           
                             </td>
-                            <td class='key'><strong>${series.key}</strong></td>
+                                <td class='key'><strong>${series.key}</strong></td>
                             </tr>
-                            </thead>`;
-
-                        return `<table> ${header} <tbody> ${rows}</tbody></table>`;
+                            </thead> 
+                            <tbody> 
+                            <tr>
+                                <td colspan = 2 class='x-value'> ${this.xFormat(e.value)} <strong>(n=${e.point.n})</strong></td>                           
+                            </tr>
+                            <tr>
+                                <td colspan = 2  class='key'><strong> ${(series.value ? series.value.toFixed(2) : 0)} %</strong> </td>                           
+                            </tr>
+                            </tbody>
+                            </table>`;
                     }
                 }
 
