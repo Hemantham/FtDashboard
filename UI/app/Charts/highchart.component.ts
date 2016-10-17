@@ -12,21 +12,37 @@ declare let jQuery: any;
     providers: [ChartValueService],
     styles: [`
       chart {
-        display: block;
+        display: block;      
       }
     `],
-    template: '<chart  [options]="options"></chart>'
+    template: '<chart  [options]="options" (load)="saveInstance($event.context)" ></chart>'
 })
 
 export class HighChartComponent implements OnInit {
 
     options: HighchartsChartOptions;
+    chartObject: any;
 
     //this component takes in parameters from outside
     @Input() chart: Chartdomain.ChartModel;
+    @Input() renderIn: string;
+   
 
     constructor() {
-      
+    
+    }
+
+    public reflowIfRenderedInModal(width:number,height:number) {
+        if (this.renderIn === 'modal') {
+           
+            this.chartObject.setSize(width, height);
+            //this.chartObject.redraw();
+            //this.chartObject.reflow();
+        }
+    }
+
+    saveInstance(chartInstance: any) {
+        this.chartObject = chartInstance;
     }
 
     getBarAndLineChartValues(chart: Chartdomain.ChartModel): any {
@@ -73,8 +89,9 @@ export class HighChartComponent implements OnInit {
 
         return {
             chart: {
-                 renderTo: 'container',
-                zoomType: 'xy'
+                // renderTo: 'container',
+                zoomType: 'xy',
+              
             },
             title: {
                 text: ''
@@ -162,6 +179,9 @@ export class HighChartComponent implements OnInit {
             plotOptions: {
                 column: {
                     stacking: 'normal'
+                },
+                 series: {
+                    animation: this.renderIn !== 'printer'
                 }
             },
             series: this.getBarAndLineChartValues(chart)
@@ -169,12 +189,20 @@ export class HighChartComponent implements OnInit {
     }
 
     private getLineChartOptions(chart: Chartdomain.ChartModel) {
-      
+
+     
         return {
             chart: {
-             renderTo: 'container'
-              //  zoomType: 'xy'
+                zoomType: 'xy',
+               
             },
+
+            plotOptions: {
+                series: {
+                    animation: this.renderIn !== 'printer' 
+                }
+            },
+
             title: {
                 text: ''
             },

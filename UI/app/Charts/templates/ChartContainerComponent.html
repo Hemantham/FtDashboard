@@ -4,32 +4,45 @@
         <div [ngClass]="{ 'col-lg-6' : charts.length > 3 || isComparisonView, 'col-lg-12' : charts.length <= 3  }" >
             <div class="panel clienttheme panel-default">
                 <div class="panel-heading">
-                    <i  class="fa fa-bar-chart-o fa-fw"></i> <span attr.data-print="1-Chart Name"> {{chartModel.name}} </span>
+                    <i  class="fa fa-bar-chart-o fa-fw"></i> <span attr.data-print-name> {{chartModel.name}} </span>
                     <div class="pull-right">
                         <div class="btn-group">
                             
-                            <button type="button" class="btn btn-default btn-xs" data-toggle="modal fade" (click)="show('#dialog-' + idx)" >View</button>
+                            <!--<button type="button" class="btn btn-default btn-xs" data-toggle="modal fade" (click)="show('#dialog-' + idx)" >View</button>-->
                             <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
                                 <span class="fa arrow"></span>
                             </button>
                             <ul class="dropdown-menu pull-right" role="menu">
                                 <li>
-                                    <a attr.data-print-target (click)="printThisDiv($event)" href="#">Print</a>
+                                    <a attr.data-print-target (click)="$event.preventDefault();show('#dialog-' + idx);" href="#">View</a>
+                                </li>
+                                <li>
+                                    <a attr.data-print-target (click)="$event.preventDefault();printThisDiv($event);" href="#">Print</a>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body">
                 
-                    <highchart_chart [chart]="chartModel">
+
+
+                <!-- /.panel-heading -->
+                <div class="panel-body" >
+                
+                    <highchart_chart [renderIn]="'container'" [chart]="chartModel">
 
                     </highchart_chart>
-                    
-                  
                    
                 </div>
+                
+                <div *ngIf="printRequested" class="chartprinter" >
+
+                    <highchart_chart [renderIn]="'printer'" [chart]="chartModel">
+
+                    </highchart_chart>
+
+                </div>
+
             </div>
            
         </div>
@@ -41,8 +54,8 @@
                         <button type="button" (click)="hide('#dialog-' + idx)" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         <h4 class="modal-title">{{chartModel.name}}</h4>
                     </div>
-                    <div class="modal-body" >
-                        <highchart_chart [chart]="chartModel">
+                    <div class="modal-body" style="height: 80%;" >
+                        <highchart_chart *ngIf="viewRequested"   [renderIn]="'modal'" [chart]="chartModel">
 
                         </highchart_chart>
                     </div>

@@ -94,4 +94,14 @@
     stroke-opacity: 1;
 }
 
+
+.chartprinter {
+    position: absolute;
+    left: -2000px;
+    top: -2000px;
+
+    width: 1000px;
+    height: 800px
+}
+
 /*chart related*/

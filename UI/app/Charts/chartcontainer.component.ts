@@ -1,5 +1,5 @@
 
-import { Component, OnInit, Input  } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, ElementRef, QueryList } from '@angular/core';
 import { D3Chart  } from "./d3chart.component";
 import { HighChartComponent  } from "./highchart.component";
 import { ChartSearchCriteria, ChartModel, ChartsContainerModel, Recency} from '../charts/domain/chart.domain';
@@ -16,32 +16,50 @@ declare var jQuery: any;
     directives: [D3Chart, HighChartComponent],
     providers: [ChartValueService, PrintTools]
 })
-
-
 export class ChartContainerComponent implements OnInit {
     
     public charts: Array<ChartModel>;
     public isComparisonView: boolean;
+    public printRequested: boolean;
+    public viewRequested: boolean;
+
+    
+
+    @ViewChildren(HighChartComponent)
+    childChildren: QueryList<ElementRef>;
 
     printThisDiv(event: any) {
 
-        event.preventDefault();
+        this.printRequested = true;
 
-        this.printTools.printHeadersAndSvg(jQuery(event.target).closest('.panel').find('svg'));
-
+        setTimeout(() => { //wait for rendering //todo
+            this.printTools.printHeadersAndSvg(jQuery(event.target).closest('.panel').find('.chartprinter svg'));
+        }, 500);
     }
 
     public show(element: string) {
+
+        this.viewRequested = true;
+
         jQuery(element).show();
 
         jQuery(element)
             .find('.modal-dialog')
             .css({
                 width: 'auto',
-                height: 'auto',
-                'max-height': '100%',
+                // height: 'auto',
+                'height': '90%',
                 'max-width': '80%'
             });
+      
+        setTimeout(() => {
+            this.childChildren.toArray().forEach((e :any)=> {
+                e.reflowIfRenderedInModal(parseInt(jQuery(element).find('.modal-body').width()),
+                    parseInt(jQuery(element).find('.modal-body').height()));
+            });
+            }
+            , 200);
+        ;
     }
     public hide(element: string) {
         jQuery(element).hide();

@@ -37,7 +37,7 @@ export class DashboardComponent implements OnInit {
 
         event.preventDefault();
 
-        this.printTools.printHeadersAndSvg(jQuery('svg'));
+        this.printTools.printHeadersAndSvg(jQuery('.chartprinter svg'));
 
     }
 
